@@ -1,0 +1,22 @@
+.Visualisation {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    visibility: hidden;
+
+    &.is-visible {
+        visibility: visible;
+    }
+
+    &__svg {
+        .axis--x path {
+            display: none;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+    }
+}

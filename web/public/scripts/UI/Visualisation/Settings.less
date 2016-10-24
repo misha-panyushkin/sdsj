@@ -1,0 +1,81 @@
+.Settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-flow: row wrap;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.73);
+    color: #e7e7e7;
+    justify-content: space-around;
+    
+    display: none;
+
+    &.is-visible {
+        display: flex;
+    }
+
+    &__Controls {
+        width: 100%;
+    }
+
+    &__CloseButton {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: #eee;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+.Controls {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    padding: 20px 0;
+
+    &__CustomFilterButtom {
+        cursor: pointer;
+        background-color: #eee;
+        color: #3f3f3f;
+        font-weight: 200;
+        padding: 0 5px;
+        border-radius: 3px;
+        margin: 4px 10px;
+    }
+}
+
+.ItemsList {
+    padding: 0;
+    margin: 0;
+    width: 40%;
+    list-style: none;
+    overflow-y: scroll;
+
+    &__Item {
+        padding: 4px 0px;
+    }
+}
+
+.Checkbox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    &__Input {
+        width: 15px;
+        height: 15px;
+        padding: 0px;
+        margin-right: 10px;
+    }
+
+    &__Label {
+        flex: 1;
+        font-weight: 100;
+    }
+}

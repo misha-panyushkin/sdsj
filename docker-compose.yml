@@ -1,0 +1,26 @@
+nginx:
+    image: mpanyushkin/aloudly:nginx
+    links:
+        - web:web
+        - api:api
+    ports:
+        - "80:80"
+
+web:
+    image: mpanyushkin/aloudly:web
+    links:
+        - redis
+    ports:
+        - "8080"
+
+api:
+    image: mpanyushkin/aloudly:api
+    links:
+        - redis
+    ports:
+        - "8080"
+
+redis:
+    image: mpanyushkin/aloudly:redis
+    ports:
+        - "6379"

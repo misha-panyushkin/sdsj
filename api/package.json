@@ -1,0 +1,57 @@
+{
+  "name": "aloud.ly",
+  "version": "0.0.1",
+  "description": "make it aloudly",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misha-panyushkin/aloud.ly.git"
+  },
+  "keywords": [
+    "aloud"
+  ],
+  "author": "Misha Panyushkin <misha.panyushkin@gmail.com> (http://mi.panyushk.in)",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/misha-panyushkin/aloud.ly/issues"
+  },
+  "homepage": "https://github.com/misha-panyushkin/aloud.ly#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "d3": "^3.5.15",
+    "dtw": "0.0.3",
+    "es6-promise": "^3.0.2",
+    "express": "^4.13.4",
+    "fft-js": "0.0.9",
+    "gamma": "^1.0.0",
+    "http": "0.0.0",
+    "immutable": "^3.7.6",
+    "inline-worker": "^1.0.0",
+    "lodash": "^4.0.0",
+    "mathjs": "^2.6.0",
+    "ml-fft": "^1.0.5",
+    "moment": "^2.11.0",
+    "moment-duration-format": "^1.3.0",
+    "ndarray-convolve": "^2.0.0",
+    "winston": "^2.1.1"
+  },
+  "scripts": {
+    "nodemon": "nodemon -L app.js",
+    "prod": "NODE_ENV=development node --harmony app.js"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.1.0",
+    "babel": "^6.3.13",
+    "babel-core": "^6.3.21",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-syntax-decorators": "^6.3.13",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "css-loader": "^0.23.0",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "style-loader": "^0.13.0"
+  }
+}

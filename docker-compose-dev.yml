@@ -1,0 +1,36 @@
+nginx:
+    # image: mpanyushkin/aloudly:nginx
+    build: ./nginx
+    links:
+        - web:web
+        - api:api
+    ports:
+        - "80:80"
+
+web:
+    # image: mpanyushkin/aloudly:web
+    build: ./web
+    links:
+        - redis
+    volumes:
+        - ./web:/usr/src/app
+    ports:
+        - "8080"
+    command: npm run nodemon
+
+api:
+    # image: mpanyushkin/aloudly:api
+    build: ./api
+    links:
+        - redis
+    volumes:
+        - ./api:/usr/src/app
+    ports:
+        - "8080"
+    command: npm run nodemon
+
+redis:
+    # image: mpanyushkin/aloudly:redis
+    build: ./redis
+    ports:
+        - "6379"
