@@ -31,27 +31,27 @@ class Visualisation extends Component {
         const {
             visible,
             customersList,
-            weekDays,
+            weekDaysIncomes,
         } = this.props
         
         const income = customersList.map(c => c.get('income'))
         const expense = customersList.map(c => c.get('expense'))
         const budget = customersList.map(c => c.get('budget'))
-        debugger
+        
         return (
             <section
                 className={ this._b.state({ visible }) }>
 
-                <LineChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ income.toJS() } />
-                <AreaStackedChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ income.toJS() } />
-                <BarChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ income.toJS() } />
+                <LineChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ expense.toJS() } />
+                <AreaStackedChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ expense.toJS() } />
+                <BarChart {...this.props} D3DataHub={ this.D3DataHub } dataList={ expense.toJS() } />
                 
-                <Brush {...this.props} D3DataHub={ this.D3DataHub } dataList={ income.toJS() } />
+                <Brush {...this.props} D3DataHub={ this.D3DataHub } dataList={ expense.toJS() } />
+
+                <WeekDays data={ weekDaysIncomes.toJS() }/>
 
             </section>
         )
-
-        // <WeekDays data={ weekDays.toJS() }/>
     }
 
     shouldComponentUpdate (nextProps, nextState) {
@@ -75,7 +75,7 @@ class Visualisation extends Component {
 export default connect(
     state => ({
         customersList: state.Transactions.getIn(['generic', 'customersList']),
-        weekDays: state.Transactions.getIn(['generic', 'weekDays']),
+        weekDaysIncomes: state.Transactions.getIn(['generic', 'weekDaysIncomes']),
         shouldUpdate: !!state.Transactions.getIn(['state', 'shouldUpdate']),
     }),
     dispatch => ({

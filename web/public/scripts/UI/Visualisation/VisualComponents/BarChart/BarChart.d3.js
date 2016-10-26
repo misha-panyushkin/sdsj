@@ -52,8 +52,6 @@ export default class BarChart {
             return result
         }, [])
 
-        debugger
-
         const max = d3.max(this.fusedData, d => d.y)
         if (max <= 0) {
             this.y.range([0, this.height])

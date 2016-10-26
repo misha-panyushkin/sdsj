@@ -28815,7 +28815,9 @@
 	            }
 
 	            nextState = nextState.setIn(['generic', 'customersList'], _immutable2.default.fromJS(customersList));
-	            nextState = nextState.setIn(['generic', 'weekDays'], _immutable2.default.fromJS(WDTC.getRowData()));
+	            nextState = nextState.setIn(['generic', 'weekDaysIncomes'], _immutable2.default.fromJS(WDTC.getRowData({
+	                dataType: 'expenses'
+	            })));
 	            nextState = nextState.setIn(['state', 'shouldUpdate'], true);
 
 	            return nextState;
@@ -28828,7 +28830,7 @@
 
 	            nextState.getIn(['data', 'transactions']).forEach(function (data) {
 
-	                WDTC.addTransaction(data);
+	                WDTC.addTransaction(data, action.filter);
 
 	                var customer = customersMap[data.get('customer_id')] || new _CustomerDataCalculator2.default(data.get('customer_id'));
 	                customer.setData(data, action.filter);
@@ -28840,7 +28842,9 @@
 	            }
 
 	            nextState = nextState.setIn(['generic', 'customersList'], _immutable2.default.fromJS(customersList));
-	            nextState = nextState.setIn(['generic', 'weekDays'], _immutable2.default.fromJS(WDTC.getRowData()));
+	            nextState = nextState.setIn(['generic', 'weekDaysIncomes'], _immutable2.default.fromJS(WDTC.getRowData({
+	                dataType: 'expenses'
+	            })));
 	            nextState = nextState.setIn(['state', 'shouldUpdate'], true);
 
 	            return nextState;
@@ -33861,7 +33865,7 @@
 	        data: {},
 	        generic: {
 	            customersList: [],
-	            weekDays: []
+	            weekDaysIncomes: []
 	        }
 	    },
 
@@ -50317,18 +50321,41 @@
 
 	    _createClass(WeekDaysTransactionCalculator, [{
 	        key: 'addTransaction',
-	        value: function addTransaction(data) {
+	        value: function addTransaction(data, filter) {
 	            var dayNumber = data.get('day');
 	            var weekNumber = Math.floor((dayNumber + this.baseWeekDayIndex) / 7);
 	            var weekDay = dayNumber + this.baseWeekDayIndex - weekNumber * 7;
 	            var amount = data.get('amount');
+	            var time = data.get('time');
+	            var timeOfDay = parseInt(time.split(':')[0]);
 
-	            this.week.update(weekDay, amount);
+	            if (this.validationCheck(data, filter)) {
+	                this.week.update(weekDay, amount, timeOfDay);
+	            }
+	        }
+	    }, {
+	        key: 'validationCheck',
+	        value: function validationCheck(data, filter) {
+	            if (!filter) return true;
+
+	            var codes = filter.mccCodes;
+	            if (codes && codes.size && !codes.find(function (d) {
+	                return d.get('code') == data.get('mcc_code');
+	            })) return false;
+
+	            var types = filter.transactionTypes;
+	            if (types && types.size && !types.find(function (d) {
+	                return d.get('type') == data.get('tr_type');
+	            })) return false;
+
+	            return true;
 	        }
 	    }, {
 	        key: 'getRowData',
 	        value: function getRowData() {
-	            return this.week.getRowData();
+	            var _week;
+
+	            return (_week = this.week).getRowData.apply(_week, arguments);
 	        }
 	    }]);
 
@@ -50349,14 +50376,18 @@
 
 	    _createClass(Week, [{
 	        key: 'update',
-	        value: function update(weekDay, amount) {
-	            this.week[weekDay].update(amount);
+	        value: function update(weekDay, amount, timeOfDay) {
+	            this.week[weekDay].update(amount, timeOfDay);
 	        }
 	    }, {
 	        key: 'getRowData',
 	        value: function getRowData() {
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	            }
+
 	            return this.week.map(function (d) {
-	                return d.getRowData();
+	                return d.getRowData.apply(d, args);
 	            });
 	        }
 	    }]);
@@ -50368,24 +50399,60 @@
 	    function Day() {
 	        _classCallCheck(this, Day);
 
-	        this.amount = 0;
+	        this.timeOfDay = [];
+	        for (var i = 0; i < 24; i++) {
+	            this.timeOfDay.push(new TimeOfDay(i));
+	        }
 	    }
 
 	    _createClass(Day, [{
 	        key: 'update',
-	        value: function update(amount) {
-	            this.amount += amount;
+	        value: function update(amount, timeOfDay) {
+	            this.timeOfDay[timeOfDay].update(amount);
 	        }
 	    }, {
 	        key: 'getRowData',
 	        value: function getRowData() {
-	            return {
-	                amount: this.amount
-	            };
+	            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	                args[_key2] = arguments[_key2];
+	            }
+
+	            return this.timeOfDay.map(function (d) {
+	                return d.getRowData.apply(d, args);
+	            });
 	        }
 	    }]);
 
 	    return Day;
+	}();
+
+	var TimeOfDay = function () {
+	    function TimeOfDay() {
+	        _classCallCheck(this, TimeOfDay);
+
+	        this.incomes = 0;
+	        this.expenses = 0;
+	    }
+
+	    _createClass(TimeOfDay, [{
+	        key: 'update',
+	        value: function update(amount) {
+	            if (amount > 0) {
+	                this.incomes += amount;
+	            } else if (amount < 0) {
+	                this.expenses += amount;
+	            }
+	        }
+	    }, {
+	        key: 'getRowData',
+	        value: function getRowData(_ref) {
+	            var dataType = _ref.dataType;
+
+	            return this[dataType] || 0;
+	        }
+	    }]);
+
+	    return TimeOfDay;
 	}();
 
 /***/ },
@@ -52018,7 +52085,7 @@
 	            var _props = this.props;
 	            var visible = _props.visible;
 	            var customersList = _props.customersList;
-	            var weekDays = _props.weekDays;
+	            var weekDaysIncomes = _props.weekDaysIncomes;
 
 
 	            var income = customersList.map(function (c) {
@@ -52030,18 +52097,17 @@
 	            var budget = customersList.map(function (c) {
 	                return c.get('budget');
 	            });
-	            debugger;
+
 	            return _react2.default.createElement(
 	                'section',
 	                {
 	                    className: this._b.state({ visible: visible }) },
-	                _react2.default.createElement(_VisualComponents.LineChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: income.toJS() })),
-	                _react2.default.createElement(_VisualComponents.AreaStackedChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: income.toJS() })),
-	                _react2.default.createElement(_VisualComponents.BarChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: income.toJS() })),
-	                _react2.default.createElement(_VisualComponents.Brush, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: income.toJS() }))
+	                _react2.default.createElement(_VisualComponents.LineChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: expense.toJS() })),
+	                _react2.default.createElement(_VisualComponents.AreaStackedChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: expense.toJS() })),
+	                _react2.default.createElement(_VisualComponents.BarChart, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: expense.toJS() })),
+	                _react2.default.createElement(_VisualComponents.Brush, _extends({}, this.props, { D3DataHub: this.D3DataHub, dataList: expense.toJS() })),
+	                _react2.default.createElement(_VisualComponents.WeekDays, { data: weekDaysIncomes.toJS() })
 	            );
-
-	            // <WeekDays data={ weekDays.toJS() }/>
 	        }
 	    }, {
 	        key: 'shouldComponentUpdate',
@@ -52070,7 +52136,7 @@
 	exports.default = (0, _reactRedux.connect)(function (state) {
 	    return {
 	        customersList: state.Transactions.getIn(['generic', 'customersList']),
-	        weekDays: state.Transactions.getIn(['generic', 'weekDays']),
+	        weekDaysIncomes: state.Transactions.getIn(['generic', 'weekDaysIncomes']),
 	        shouldUpdate: !!state.Transactions.getIn(['state', 'shouldUpdate'])
 	    };
 	}, function (dispatch) {
@@ -52374,16 +52440,174 @@
 
 
 	// module
-	exports.push([module.id, ".WeekDays {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.WeekDays__SVG .axis--x path {\n  display: none;\n}\n.WeekDays__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.WeekDays__Aside {\n  width: 300px;\n  height: 245px;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".WeekDays {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.WeekDays__SVG .axis--x path {\n  display: none;\n}\n.WeekDays__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.WeekDays__SVG rect.bordered {\n  stroke: #E6E6E6;\n  stroke-width: 2px;\n}\n.WeekDays__SVG text.mono {\n  font-size: 9pt;\n  font-family: Consolas, courier;\n  fill: #aaa;\n}\n.WeekDays__Aside {\n  width: 300px;\n  height: 245px;\n  overflow-y: scroll;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
 /* 300 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _d = __webpack_require__(268);
+
+	var d3 = _interopRequireWildcard(_d);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var WeekDays = function () {
+	    function WeekDays(root, hub) {
+	        var _this = this;
+
+	        _classCallCheck(this, WeekDays);
+
+	        this.svg = d3.select(root);
+	        this.hub = hub;
+
+	        this.margin = { top: 50, right: 0, bottom: 100, left: 30 };
+	        this.width = +this.svg.attr("width") - this.margin.left - this.margin.right;
+	        this.height = +this.svg.attr("height") - this.margin.top - this.margin.bottom;
+
+	        this.gridSize = Math.floor(this.width / 24);
+	        this.legendElementWidth = this.gridSize * 2;
+	        this.buckets = 9;
+
+	        this.colors = d3.scaleLinear().range(["#2c7bb6", "#d7191c"]).interpolate(d3.interpolateHcl);
+
+	        // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]
+	        this.days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+	        this.times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
+
+	        this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+	        this.dayLabels = this.focus.selectAll(".dayLabel").data(this.days).enter().append("text").text(function (d) {
+	            return d;
+	        }).attr("x", 0).attr("y", function (d, i) {
+	            return i * _this.gridSize;
+	        }).style("text-anchor", "end").attr("transform", "translate(-6," + this.gridSize / 1.5 + ")").attr("class", function (d, i) {
+	            return i >= 0 && i <= 4 ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis";
+	        });
+
+	        this.timeLabels = this.focus.selectAll(".timeLabel").data(this.times).enter().append("text").text(function (d) {
+	            return d;
+	        }).attr("x", function (d, i) {
+	            return i * _this.gridSize;
+	        }).attr("y", 0).style("text-anchor", "middle").attr("transform", "translate(" + this.gridSize / 2 + ", -6)").attr("class", function (d, i) {
+	            return i >= 7 && i <= 16 ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis";
+	        });
+	    }
+
+	    _createClass(WeekDays, [{
+	        key: "update",
+	        value: function update(data) {
+	            this.data = data;
+	            this.updateWithData();
+	        }
+	    }, {
+	        key: "updateWithData",
+	        value: function updateWithData() {
+	            var _this2 = this;
+
+	            var min = d3.min(this.data, function (d) {
+	                return d3.min(d, function (d) {
+	                    return d;
+	                });
+	            });
+	            var max = d3.max(this.data, function (d) {
+	                return d3.max(d, function (d) {
+	                    return d;
+	                });
+	            });
+	            if (min < 0 || max == 0) {
+	                this.colors.domain([d3.max(this.data, function (d) {
+	                    return d3.max(d, function (d) {
+	                        return d;
+	                    });
+	                }), d3.min(this.data, function (d) {
+	                    return d3.min(d, function (d) {
+	                        return d;
+	                    });
+	                })]);
+	            } else if (max > 0 || min == 0) {
+	                this.colors.domain([d3.min(this.data, function (d) {
+	                    return d3.min(d, function (d) {
+	                        return d;
+	                    });
+	                }), d3.max(this.data, function (d) {
+	                    return d3.max(d, function (d) {
+	                        return d;
+	                    });
+	                })]);
+	            }
+
+	            this.focus.selectAll('.matrix').remove();
+
+	            this.matrix = this.focus.append("g").attr("class", "matrix");
+
+	            this.rows = this.matrix.selectAll(".row").data(this.data, function (d, day) {
+	                return d;
+	            }).enter();
+
+	            this.cards = this.rows.selectAll(".card").data(function (times, day) {
+	                return times.map(function (value, time) {
+	                    return {
+	                        value: value,
+	                        time: time,
+	                        day: day
+	                    };
+	                });
+	            }).enter().append("rect");
+
+	            this.cards.attr("x", function (d) {
+	                return d.time * _this2.gridSize;
+	            }).attr("y", function (d) {
+	                return d.day * _this2.gridSize;
+	            }).attr("rx", 4).attr("ry", 4).attr("class", "hour bordered").attr("width", this.gridSize).attr("height", this.gridSize).style("fill", this.colors(0));
+
+	            this.cards.transition().duration(1000).style("fill", function (d) {
+	                return _this2.colors(d.value);
+	            });
+
+	            // this.cards.select("title").text(d => d.value)
+
+	            // var legend = svg.selectAll(".legend")
+	            // .data([0].concat(colorScale.quantiles()), function(d) { return d; });
+
+	            // legend.enter().append("g")
+	            // .attr("class", "legend");
+
+	            // legend.append("rect")
+	            // .attr("x", function(d, i) { return legendElementWidth * i; })
+	            // .attr("y", height)
+	            // .attr("width", legendElementWidth)
+	            // .attr("height", gridSize / 2)
+	            // .style("fill", function(d, i) { return colors[i]; });
+
+	            // legend.append("text")
+	            // .attr("class", "mono")
+	            // .text(function(d) { return "≥ " + Math.round(d); })
+	            // .attr("x", function(d, i) { return legendElementWidth * i; })
+	            // .attr("y", height + gridSize);
+
+	            // legend.exit().remove();
+	        }
+	    }]);
+
+	    return WeekDays;
+	}();
+
+	exports.default = WeekDays;
 
 /***/ },
 /* 301 */
@@ -53457,8 +53681,6 @@
 	                return result;
 	            }, []);
 
-	            debugger;
-
 	            var max = d3.max(this.fusedData, function (d) {
 	                return d.y;
 	            });
@@ -53697,7 +53919,7 @@
 
 
 	// module
-	exports.push([module.id, ".Brush {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.Brush__SVG .axis--x path {\n  display: none;\n}\n.Brush__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.Brush__Aside {\n  width: 300px;\n  height: 245px;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".Brush {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.Brush__SVG .axis--x path {\n  display: none;\n}\n.Brush__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.Brush__Aside {\n  width: 300px;\n  height: 60px;\n  overflow-y: scroll;\n}\n", ""]);
 
 	// exports
 
@@ -54387,7 +54609,7 @@
 
 
 	// module
-	exports.push([module.id, ".Settings {\n  position: absolute;\n  top: 51px;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  padding: 20px;\n  background-color: rgba(0, 0, 0, 0.73);\n  color: #e7e7e7;\n  display: none;\n}\n.Settings.is-visible {\n  display: block;\n}\n.Settings__Lists {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Settings__Controls {\n  width: 100%;\n}\n.Settings__CloseButton {\n  position: absolute;\n  top: 0;\n  right: 0;\n  color: #1fd748;\n  font-size: 20px;\n  cursor: pointer;\n  margin: 10px;\n  padding: 2px;\n}\n.Controls {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  padding: 20px 0;\n}\n.Controls__CustomFilterButtom {\n  cursor: pointer;\n  background-color: #eee;\n  color: #3f3f3f;\n  padding: 2px 5px;\n  border-radius: 3px;\n  margin: 4px 10px;\n  font-size: 15px;\n  font-weight: 200;\n}\n.Items {\n  width: 40%;\n  overflow-y: scroll;\n}\n.Items__SearchBox {\n  display: block;\n  width: 100%;\n  position: relative;\n}\n.Items__SearchIcon {\n  position: absolute;\n  top: 0;\n  left: 0;\n  color: #696969;\n  font-size: 20px;\n  cursor: pointer;\n}\n.Items__SearchInput {\n  padding: 3px 5px;\n  margin: 0 0 0 25px;\n  background-color: #eee;\n  color: #3f3f3f;\n  font-size: 15px;\n  font-weight: 100;\n  width: 100%;\n}\n.Items__List {\n  list-style: none;\n  padding: 0;\n  margin: 8px 0 0 0;\n}\n.Items__Item {\n  padding: 4px 0px;\n}\n.Checkbox {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n}\n.Checkbox.is-checked {\n  color: #bad9fa;\n}\n.Checkbox__Input {\n  width: 15px;\n  height: 15px;\n  padding: 0px;\n  margin-right: 10px;\n  margin-top: 4px;\n}\n.Checkbox__Label {\n  -ms-flex: 1;\n      flex: 1;\n  font-size: 15px;\n  font-weight: 100;\n}\n", ""]);
+	exports.push([module.id, ".Settings {\n  position: fixed;\n  top: 51px;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  padding: 20px;\n  background-color: rgba(0, 0, 0, 0.73);\n  color: #e7e7e7;\n  display: none;\n}\n.Settings.is-visible {\n  display: block;\n}\n.Settings__Lists {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Settings__Controls {\n  width: 100%;\n}\n.Settings__CloseButton {\n  position: absolute;\n  top: 0;\n  right: 0;\n  color: #1fd748;\n  font-size: 20px;\n  cursor: pointer;\n  margin: 10px;\n  padding: 2px;\n}\n.Controls {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  padding: 20px 0;\n}\n.Controls__CustomFilterButtom {\n  cursor: pointer;\n  background-color: #eee;\n  color: #3f3f3f;\n  padding: 2px 5px;\n  border-radius: 3px;\n  margin: 4px 10px;\n  font-size: 15px;\n  font-weight: 200;\n}\n.Items {\n  width: 40%;\n  overflow-y: scroll;\n}\n.Items__SearchBox {\n  display: block;\n  width: 100%;\n  position: relative;\n}\n.Items__SearchIcon {\n  position: absolute;\n  top: 0;\n  left: 0;\n  color: #696969;\n  font-size: 20px;\n  cursor: pointer;\n}\n.Items__SearchInput {\n  padding: 3px 5px;\n  margin: 0 0 0 25px;\n  background-color: #eee;\n  color: #3f3f3f;\n  font-size: 15px;\n  font-weight: 100;\n  width: 100%;\n}\n.Items__List {\n  list-style: none;\n  padding: 0;\n  margin: 8px 0 0 0;\n}\n.Items__Item {\n  padding: 4px 0px;\n}\n.Checkbox {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n}\n.Checkbox.is-checked {\n  color: #bad9fa;\n}\n.Checkbox__Input {\n  width: 15px;\n  height: 15px;\n  padding: 0px;\n  margin-right: 10px;\n  margin-top: 4px;\n}\n.Checkbox__Label {\n  -ms-flex: 1;\n      flex: 1;\n  font-size: 15px;\n  font-weight: 100;\n}\n", ""]);
 
 	// exports
 

@@ -38,7 +38,9 @@ export default function Transactions (state = DEFAULT_STATE, action) {
             }
 
             nextState = nextState.setIn(['generic', 'customersList'], I.fromJS(customersList))
-            nextState = nextState.setIn(['generic', 'weekDays'], I.fromJS(WDTC.getRowData()))
+            nextState = nextState.setIn(['generic', 'weekDaysIncomes'], I.fromJS(WDTC.getRowData({
+                dataType: 'expenses',
+            })))
             nextState = nextState.setIn(['state', 'shouldUpdate'], true)
 
             return nextState
@@ -51,7 +53,7 @@ export default function Transactions (state = DEFAULT_STATE, action) {
 
             nextState.getIn(['data', 'transactions']).forEach(data => {
 
-                WDTC.addTransaction(data)
+                WDTC.addTransaction(data, action.filter)
 
                 const customer = customersMap[data.get('customer_id')] || new CustomerDataCalculator(data.get('customer_id'))
                 customer.setData(data, action.filter)
@@ -64,7 +66,9 @@ export default function Transactions (state = DEFAULT_STATE, action) {
 
 
             nextState = nextState.setIn(['generic', 'customersList'], I.fromJS(customersList))
-            nextState = nextState.setIn(['generic', 'weekDays'], I.fromJS(WDTC.getRowData()))
+            nextState = nextState.setIn(['generic', 'weekDaysIncomes'], I.fromJS(WDTC.getRowData({
+                dataType: 'expenses',
+            })))
             nextState = nextState.setIn(['state', 'shouldUpdate'], true)
 
             return nextState

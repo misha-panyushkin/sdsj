@@ -7,7 +7,7 @@ export default I.fromJS({
         data: {},
         generic: {
             customersList: [],
-            weekDays: [],
+            weekDaysIncomes: [],
         },
     },
 
