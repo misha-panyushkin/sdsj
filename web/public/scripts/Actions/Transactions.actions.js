@@ -6,7 +6,7 @@ export const TRANSACTIONS_SHOULD_UPDATE = 'TRANSACTIONS_SHOULD_UPDATE'
 
 export function getTransactions () {
     return (dispatch, getState) => {
-        d3.csv('/data/xab.csv', typePrettifier, (error, data) => {
+        d3.csv('/data/xac.csv', typePrettifier, (error, data) => {
             dispatch({
                 type: TRANSACTIONS_GET,
                 data,

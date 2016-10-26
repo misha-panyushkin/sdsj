@@ -6,11 +6,14 @@ import {
     TRANSACTIONS_SHOULD_UPDATE,
 } from 'Actions/Transactions.actions'
 
+import WeekDaysTransactionCalculator from 'Helpers/WeekDaysTransactionCalculator'
+import CustomerDataCalculator from 'Helpers/CustomerDataCalculator'
+
 const DEFAULT_STATE = APP_MOCKS.get('TRANSACTIONS')
 
 export default function Transactions (state = DEFAULT_STATE, action) {
     let nextState = state
-    let customersMap, customersList
+    let customersMap, customersList, WDTC
     
     switch (action.type) {
 
@@ -18,17 +21,24 @@ export default function Transactions (state = DEFAULT_STATE, action) {
             customersMap = {}
             customersList = []
             nextState = nextState.setIn(['data', 'transactions'], I.fromJS(action.data))
+
+            WDTC = new WeekDaysTransactionCalculator(4)
+            
             nextState.getIn(['data', 'transactions']).forEach(data => {
-                const customer = customersMap[data.get('customer_id')] || new Customer(data.get('customer_id'))
+
+                WDTC.addTransaction(data)
+
+                const customer = customersMap[data.get('customer_id')] || new CustomerDataCalculator(data.get('customer_id'))
                 customer.setData(data)
                 customersMap[data.get('customer_id')] = customer
             })
 
             for (var i in customersMap) {
-                customersList.push(customersMap[i])
+                customersList.push(customersMap[i].getRowData())
             }
 
             nextState = nextState.setIn(['generic', 'customersList'], I.fromJS(customersList))
+            nextState = nextState.setIn(['generic', 'weekDays'], I.fromJS(WDTC.getRowData()))
             nextState = nextState.setIn(['state', 'shouldUpdate'], true)
 
             return nextState
@@ -36,17 +46,25 @@ export default function Transactions (state = DEFAULT_STATE, action) {
         case TRANSACTIONS_FILTER:
             customersMap = {}
             customersList = []
+
+            WDTC = new WeekDaysTransactionCalculator(4)
+
             nextState.getIn(['data', 'transactions']).forEach(data => {
-                const customer = customersMap[data.get('customer_id')] || new Customer(data.get('customer_id'))
+
+                WDTC.addTransaction(data)
+
+                const customer = customersMap[data.get('customer_id')] || new CustomerDataCalculator(data.get('customer_id'))
                 customer.setData(data, action.filter)
                 customersMap[data.get('customer_id')] = customer
             })
 
             for (var i in customersMap) {
-                customersList.push(customersMap[i])
+                customersList.push(customersMap[i].getRowData())
             }
 
+
             nextState = nextState.setIn(['generic', 'customersList'], I.fromJS(customersList))
+            nextState = nextState.setIn(['generic', 'weekDays'], I.fromJS(WDTC.getRowData()))
             nextState = nextState.setIn(['state', 'shouldUpdate'], true)
 
             return nextState
@@ -57,86 +75,5 @@ export default function Transactions (state = DEFAULT_STATE, action) {
 
         default:
             return nextState
-    }
-}
-
-class Point {
-    constructor (x, y) {
-        Object.assign(this, {
-            x,
-            y,
-        })
-    }
-}
-
-class Customer {
-    constructor (id) {
-        Object.assign(this, {
-            id,
-            income: {
-                id,
-                points: [],
-                total: 0,
-            },
-            expense: {
-                id,
-                points: [],
-                total: 0,
-            },
-            budget: {
-                id,
-                points: [],
-                total: 0,
-            },
-
-            currentIndex: -1,
-        })
-    }
-
-    setData (data, filter) {
-        const daysDiff = data.get('day') - this.currentIndex
-
-        for (var day = 0; day < daysDiff; day++) {
-            this.currentIndex++
-            this.addPoint()
-            this.calculateValues(0)
-        }
-
-        if (this.validationCheck(data, filter)) 
-            this.calculateValues(data.get('amount'))
-    }
-
-    validationCheck (data, filter) {
-        if (!filter)
-            return true
-
-        const codes = filter.mccCodes
-        if (codes && codes.size && !codes.find(d => d.get('code') == data.get('mcc_code')))
-            return false
-
-        const types = filter.transactionTypes
-        if (types && types.size && !types.find(d => d.get('type') == data.get('tr_type')))
-            return false
-
-        return true
-    }
-
-    addPoint () {
-        this.income.points.push(new Point(this.currentIndex, 0))
-        this.expense.points.push(new Point(this.currentIndex, 0))
-        this.budget.points.push(new Point(this.currentIndex, 0))
-    }
-
-    calculateValues (value) {
-        if (value > 0) {
-            this.income.points[this.currentIndex].y += value
-            this.income.total += value
-        
-        } else if (value < 0) {
-            this.expense.points[this.currentIndex].y += value
-            this.expense.total += value
-        }
-
-        this.budget.points[this.currentIndex].y = this.income.total + this.expense.total
     }
 }

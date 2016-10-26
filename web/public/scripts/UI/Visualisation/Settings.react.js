@@ -24,13 +24,14 @@ class Settings extends Component {
 
         return (
             <section
-                className={this._b.state({ visible })}>
+                className={ this._b.state({ visible }) }>
                 <Controls className={ this._b('Controls') }/>
-                <ItemsList items={ this.props.transactionTypes } handleChange={ (...args) => this.handleTransactionTypesChange(...args) }/>
-                <ItemsList items={ this.props.mccCodes } handleChange={ (...args) => this.handleMccCodesChange(...args) }/>
+                <div className={ this._b('Lists') }>
+                    <ItemsList items={ this.props.transactionTypes } handleChange={ (...args) => this.handleTransactionTypesChange(...args) }/>
+                    <ItemsList items={ this.props.mccCodes } handleChange={ (...args) => this.handleMccCodesChange(...args) }/>
+                </div>
                 <FontAwsome 
-                    name="close" 
-                    size="2x"
+                    name="check" 
                     className={ this._b('CloseButton').toString() }
                     onClick={ () => this.handleSettingsClose() }
                     />
@@ -69,8 +70,8 @@ class Settings extends Component {
 
 export default connect(
     state => ({
-        transactionTypes: state.VisualisationSettings.get('transactionTypes').sortBy(t => !t.get('checked')),
-        mccCodes: state.VisualisationSettings.get('mccCodes').sortBy(c => !c.get('checked')),
+        transactionTypes: state.VisualisationSettings.get('transactionTypes'),
+        mccCodes: state.VisualisationSettings.get('mccCodes'),
     }),
     dispatch => ({
         SettingsActions: bindActionCreators(SettingsActions, dispatch),
@@ -215,17 +216,53 @@ const Controls = connect(
 class ItemsList extends Component {
     constructor (props) {
         super(props)
-        this.boxClassName = 'ItemsList'
+        this.boxClassName = 'Items'
         this._b = _b(this.boxClassName)
+        this.state = {
+            searchValue: '',
+        }
     }
 
     render () {
+        const id = Math.floor(Math.random()*1e20)
         return (
-            <ul
-                className={this._b}>
-                { this.props.items.map((...args) => this.renderItem(...args)) }
-            </ul>
+            <div className={this._b}>
+                <div className={ this._b('SearchBox') }>
+                    <label 
+                        className={ this._b('SearchIcon') }
+                        htmlFor={ id }
+                        >
+                        <FontAwsome 
+                            name="search" 
+                            />
+                    </label>
+                    <input 
+                        id={ id }
+                        className={this._b('SearchInput')}
+                        onChange={ (...a) => this.handleSearchChange(...a) }
+                        value={ this.state.searchValue }
+                        />
+                </div>
+                <ul
+                    className={this._b('List')}>
+                    { this.getStructurizedItems() }
+                </ul>
+            </div>
         )
+    }
+
+    getStructurizedItems () {
+        return this.props.items
+        .filter(item => item.get('label').indexOf(this.state.searchValue) + 1)
+        .sortBy(item => item.get('label'))
+        .sortBy(item => !item.get('checked'))
+        .map((...args) => this.renderItem(...args))
+    }
+
+    handleSearchChange (event) {
+        this.setState({
+            searchValue: event.target.value,
+        })
     }
 
     renderItem (item, index) {
@@ -253,9 +290,10 @@ class Checkbox extends Component {
 
     render () {
         const id = Math.floor(Math.random()*1e20)
+        const checked = this.props.checked
         return (
-            <div className={ this._b }>
-                <input className={ this._b('Input') } type="checkbox" id={ id } checked={ this.props.checked } onChange={ (...args) => this.handleChange(...args) }/>
+            <div className={ this._b.state({ checked }) }>
+                <input className={ this._b('Input') } type="checkbox" id={ id } checked={ checked } onChange={ (...args) => this.handleChange(...args) }/>
                 <label className={ this._b('Label') } htmlFor={ id }>{ this.props.label }</label>
             </div>
         )

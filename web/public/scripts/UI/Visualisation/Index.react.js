@@ -8,10 +8,10 @@ import _b from 'bem-cn'
 import * as TransactionsActions from 'Actions/Transactions.actions'
 import * as TransactionTypesActions from 'Actions/TransactionTypes.actions'
 import * as MccCodesActions from 'Actions/MccCodes.actions'
-import * as UIActions from 'Actions/Visualisation/UI.actions'
 
 import Visualisation from './Visualisation.react'
 import Settings from './Settings.react'
+import Header from './Header.react'
 import FontAwsome from 'react-fontawesome'
 
 class Index extends Component {
@@ -27,27 +27,12 @@ class Index extends Component {
         return (
             <section
                 className={this._b}>
+
+                <Header />
                 <Visualisation visible={ !isSettingsVisible } />
                 <Settings visible={ isSettingsVisible }/>
-                { isSettingsVisible 
-                    ? null
-                    : <FontAwsome 
-                        name="cog" 
-                        size="2x"
-                        className={ this._b('OpenSettingsButton').toString() }
-                        onClick={ () => this.handleSettingsOpen() }
-                        />
-                }
             </section>
         )
-    }
-
-    handleSettingsOpen () {
-        const {
-            UIActions,
-        } = this.props
-
-        UIActions.openSettings()
     }
 
     componentDidMount () {
@@ -71,6 +56,5 @@ export default connect(
         TransactionsActions: bindActionCreators(TransactionsActions, dispatch),
         TransactionTypesActions: bindActionCreators(TransactionTypesActions, dispatch),
         MccCodesActions: bindActionCreators(MccCodesActions, dispatch),
-        UIActions: bindActionCreators(UIActions, dispatch),
     })
 )(Index)

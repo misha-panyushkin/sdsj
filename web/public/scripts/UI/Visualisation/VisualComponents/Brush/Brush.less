@@ -1,0 +1,22 @@
+.Brush {
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__SVG {
+        .axis--x path {
+            display: none;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+    }
+
+    &__Aside {
+        width: 300px;
+        height: 245px;
+        overflow-y: scroll;
+    }
+}

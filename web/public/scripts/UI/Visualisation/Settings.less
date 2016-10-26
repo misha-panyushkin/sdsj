@@ -1,21 +1,25 @@
 .Settings {
     position: absolute;
-    top: 0;
+    top: 51px;
     right: 0;
     bottom: 0;
     left: 0;
     overflow-x: hidden;
     overflow-y: scroll;
-    flex-flow: row wrap;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.73);
     color: #e7e7e7;
-    justify-content: space-around;
     
     display: none;
 
     &.is-visible {
+        display: block;
+    }
+
+    &__Lists {
         display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
     }
 
     &__Controls {
@@ -24,11 +28,13 @@
 
     &__CloseButton {
         position: absolute;
-        top: 15px;
-        right: 15px;
-        color: #eee;
+        top: 0;
+        right: 0;
+        color: #1fd748;
         font-size: 20px;
         cursor: pointer;
+        margin: 10px;
+        padding: 2px;
     }
 }
 
@@ -43,18 +49,48 @@
         background-color: #eee;
         color: #3f3f3f;
         font-weight: 200;
-        padding: 0 5px;
+        padding: 2px 5px;
         border-radius: 3px;
         margin: 4px 10px;
+        font-size: 15px;
+        font-weight: 200;
     }
 }
 
-.ItemsList {
-    padding: 0;
-    margin: 0;
+.Items {
     width: 40%;
-    list-style: none;
     overflow-y: scroll;
+
+    &__SearchBox {
+        display: block;
+        width: 100%;
+        position: relative;
+    }
+
+    &__SearchIcon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #696969;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    &__SearchInput {
+        padding: 3px 5px;
+        margin: 0 0 0 25px;
+        background-color: #eee;
+        color: #3f3f3f;
+        font-size: 15px;
+        font-weight: 100;
+        width: 100%;
+    }
+
+    &__List {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 0 0;
+    }
 
     &__Item {
         padding: 4px 0px;
@@ -65,17 +101,23 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+
+    &.is-checked {
+        color: #bad9fa;
+    }
 
     &__Input {
         width: 15px;
         height: 15px;
         padding: 0px;
         margin-right: 10px;
+        margin-top: 4px;
     }
 
     &__Label {
         flex: 1;
+        font-size: 15px;
         font-weight: 100;
     }
 }
