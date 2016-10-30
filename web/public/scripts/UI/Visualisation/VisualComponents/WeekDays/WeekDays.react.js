@@ -17,7 +17,7 @@ export default class WeekDays extends Component {
     render () {
         return (
             <div className={ this._b }>
-                <svg className={ this._b('SVG') } ref="svg" width={ window.innerWidth - 300 } height={ 245 } />
+                <svg className={ this._b('SVG') } ref="svg" width={ window.innerWidth - 300 } height={ 400 } />
                 <aside  className={ this._b('Aside') }></aside>
             </div>
         )
