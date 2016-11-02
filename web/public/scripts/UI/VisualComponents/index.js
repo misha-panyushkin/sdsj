@@ -6,3 +6,5 @@ export AreaStackedChart from './AreaStackedChart/AreaStackedChart.react'
 export BarChart from './BarChart/BarChart.react'
 
 export Brush from './Brush/Brush.react'
+
+export SeasonsSeries from './SeasonsSeries/SeasonsSeries.react'

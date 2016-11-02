@@ -10,8 +10,8 @@ nginx:
 web:
     # image: mpanyushkin/aloudly:web
     build: ./web
-    links:
-        - redis
+    # links:
+    #     - redis
     volumes:
         - ./web:/usr/src/app
     ports:
@@ -21,16 +21,16 @@ web:
 api:
     # image: mpanyushkin/aloudly:api
     build: ./api
-    links:
-        - redis
+    # links:
+    #     - redis
     volumes:
         - ./api:/usr/src/app
     ports:
         - "8080"
     command: npm run nodemon
 
-redis:
-    # image: mpanyushkin/aloudly:redis
-    build: ./redis
-    ports:
-        - "6379"
+# redis:
+#     # image: mpanyushkin/aloudly:redis
+#     build: ./redis
+#     ports:
+#         - "6379"

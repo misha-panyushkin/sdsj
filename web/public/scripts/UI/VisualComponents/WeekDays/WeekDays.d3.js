@@ -14,7 +14,7 @@ export default class WeekDays {
         this.buckets = 9
         
         this.colors = d3.scaleLinear()
-            .range(["#2c7bb6", "#d7191c"])
+            .range(["#fff", "#396"])
             .interpolate(d3.interpolateHcl)
 
         // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]

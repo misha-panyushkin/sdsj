@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 
 import * as Reducers from './Reducers'
 
+import Home from 'UI/Home/Home.react'
 import App from 'UI/App/App.react'
 import VisualisationIndex from 'UI/Visualisation/Index.react'
 
@@ -43,6 +44,7 @@ render((
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={App}>
+                <IndexRoute component={Home}/>
                 <Route path="visualisation" component={VisualisationIndex}/>
             </Route>
         </Router>

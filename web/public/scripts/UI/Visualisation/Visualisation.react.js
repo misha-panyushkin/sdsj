@@ -15,7 +15,7 @@ import {
     BarChart,
 
     Brush,
-} from './VisualComponents'
+} from 'UI/VisualComponents'
 
 import * as TransactionsActions from 'Actions/Transactions.actions'
 

@@ -47,4 +47,37 @@ export default I.fromJS({
             visible: false,
         }
     },
+
+
+
+
+    DEMO: {
+        SEASONS_SERIES: {
+            data: {
+                series: [],
+            },
+            state: {
+
+            },
+            consts: {
+                PROCESS: 'PROCESS'
+            },
+        },
+
+        SEASONS_SERIES_BY_WEEKS: {
+            ui: {
+                sort: {
+                    
+                },
+            },
+        },
+
+        SEASONS_SERIES_BY_MONTHS: {
+            ui: {
+                sort: {
+                    
+                },
+            },
+        },
+    }
 })

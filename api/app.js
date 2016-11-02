@@ -15,7 +15,7 @@ const AppRouter = require('./Routers/App.router');
 
 app.use(bodyParser.json({limit: '50mb'}));
 
-app.use(config.getApiPrefix().concat('/data'), AppRouter);
+app.use(config.getApiPrefix().concat('/demo'), AppRouter);
 
 server.listen(config.clientPort, function () {
     const location = server.address();
