@@ -1,1 +1,2 @@
 api/data/ filter=lfs -crlf
+api/data/csv/transactionsAll.csv filter=lfs -crlf
