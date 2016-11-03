@@ -71,8 +71,10 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
+                    
                     smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
@@ -88,8 +90,11 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
+                    onClick={ (...args) => this.handleOYClick(...args) }
+
                     smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: 1,
@@ -127,6 +132,28 @@ class SeasonsSeriesByMonth extends Component {
             ByMonthsActions.setSelectedCoordinates({})
             ByWeeksActions.setWeekDaysByDataPoints([])
         }
+    }
+
+    handleOYClick (point) {
+        const {
+            ByMonthsActions,
+            ByWeeksActions,
+            selectedCoordinates,
+            SeriesByMonths,
+        } = this.props
+        
+        if (selectedCoordinates.y != point.y) {
+            ByMonthsActions.setSelectedCoordinates({
+                y: point.y,
+            })
+            ByWeeksActions.setWeekDaysByDataPoints(
+                SeriesByMonths.filter(point => point.state.selected).map(point => point.data)
+            )
+        
+        } else {
+            ByMonthsActions.setSelectedCoordinates({})
+            ByWeeksActions.setWeekDaysByDataPoints([])
+        }   
     }
 
     handleMainMouseOver (point) {
@@ -244,12 +271,12 @@ export default connect(
             x: stateProps.selectedCoordinates.x, 
             y: stateProps.selectedCoordinates.y,
         })
-        // this.__markSelectedPoints(SeriesByMonthsSumByOX, {
-        //     x: selectedCoordinates.x,
+        // __markSelectedPoints(stateProps.SeriesByMonthsSumByOX, {
+        //     x: stateProps.selectedCoordinates.x,
         // })
-        // this.__markSelectedPoints(SeriesByMonthsSumByOY, {
-        //     y: selectedCoordinates.y,
-        // })
+        __markSelectedPoints(stateProps.SeriesByMonthsSumByOY, {
+            y: stateProps.selectedCoordinates.y,
+        })
 
         return Object.assign(
             {},

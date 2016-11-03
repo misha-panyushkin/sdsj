@@ -19,6 +19,10 @@ export default class SeasonsSeries {
             .range(["#fff", "#656565"])
             .interpolate(d3.interpolateHcl)
 
+        this.selectedColors = d3.scaleLinear()
+            .range(["#d1d4ff", "#363da3"])
+            .interpolate(d3.interpolateHcl)
+
         // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]
 
         this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
@@ -68,11 +72,14 @@ export default class SeasonsSeries {
                 d3.max(this.data, d => d.value),
                 d3.min(this.data, d => d.value),
             ])
+            this.selectedColors.domain(this.colors.domain())
+            
         } else if (max > 0 || min == 0) {
             this.colors.domain([
                 d3.min(this.data, d => d.value),
                 d3.max(this.data, d => d.value),
             ])
+            this.selectedColors.domain(this.colors.domain())
         }
 
         // this.focus.selectAll(".yLabel").text(d => d)
@@ -179,22 +186,22 @@ export default class SeasonsSeries {
             this.enteredCards
                 .transition('fill').duration((d, i) => {
                     return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
-                }).style("fill", d => getColorFillByState(d, this.colors(d.value)))
+                }).style("fill", d => getColorFillByState(d, this.colors(d.value), this.selectedColors(d.value)))
 
         } else {
             this.enteredCards
                 .interrupt('fill')
-                .style("fill", d => getColorFillByState(d, this.colors(d.value)))
+                .style("fill", d => getColorFillByState(d, this.colors(d.value), this.selectedColors(d.value)))
         }
 
-        function getColorFillByState (d, defaultColor) {
+        function getColorFillByState (d, defaultColor, selectedColor) {
             let color = defaultColor
             if (d.state) {
                 if (d.state.selected) {
-                    color = '#00f'
+                    color = selectedColor
                 
                 } else if (d.state.major) {
-                    color = '#00f'
+                    color = selectedColor
                 }
             }
             return color

@@ -55249,6 +55249,8 @@
 
 	        this.colors = d3.scaleLinear().range(["#fff", "#656565"]).interpolate(d3.interpolateHcl);
 
+	        this.selectedColors = d3.scaleLinear().range(["#d1d4ff", "#363da3"]).interpolate(d3.interpolateHcl);
+
 	        // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]
 
 	        this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
@@ -55304,12 +55306,14 @@
 	                }), d3.min(this.data, function (d) {
 	                    return d.value;
 	                })]);
+	                this.selectedColors.domain(this.colors.domain());
 	            } else if (max > 0 || min == 0) {
 	                this.colors.domain([d3.min(this.data, function (d) {
 	                    return d.value;
 	                }), d3.max(this.data, function (d) {
 	                    return d.value;
 	                })]);
+	                this.selectedColors.domain(this.colors.domain());
 	            }
 
 	            // this.focus.selectAll(".yLabel").text(d => d)
@@ -55404,21 +55408,21 @@
 	                this.enteredCards.transition('fill').duration(function (d, i) {
 	                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", function (d) {
-	                    return getColorFillByState(d, _this.colors(d.value));
+	                    return getColorFillByState(d, _this.colors(d.value), _this.selectedColors(d.value));
 	                });
 	            } else {
 	                this.enteredCards.interrupt('fill').style("fill", function (d) {
-	                    return getColorFillByState(d, _this.colors(d.value));
+	                    return getColorFillByState(d, _this.colors(d.value), _this.selectedColors(d.value));
 	                });
 	            }
 
-	            function getColorFillByState(d, defaultColor) {
+	            function getColorFillByState(d, defaultColor, selectedColor) {
 	                var color = defaultColor;
 	                if (d.state) {
 	                    if (d.state.selected) {
-	                        color = '#00f';
+	                        color = selectedColor;
 	                    } else if (d.state.major) {
-	                        color = '#00f';
+	                        color = selectedColor;
 	                    }
 	                }
 	                return color;
@@ -70607,12 +70611,14 @@
 	                    rowsLabels: [],
 	                    columnsLabels: [],
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleOXMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
 	                    },
+
 	                    smoothTransitions: !hasHoverCoordinates,
 	                    sizes: {
 	                        width: columnsLabels.length,
@@ -70627,12 +70633,17 @@
 	                    rowsLabels: [],
 	                    columnsLabels: [],
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleOYMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOYMouseOut.apply(_this2, arguments);
 	                    },
+	                    onClick: function onClick() {
+	                        return _this2.handleOYClick.apply(_this2, arguments);
+	                    },
+
 	                    smoothTransitions: !hasHoverCoordinates,
 	                    sizes: {
 	                        width: 1,
@@ -70658,6 +70669,30 @@
 	            if (selectedCoordinates.x != point.x || selectedCoordinates.y != point.y) {
 	                ByMonthsActions.setSelectedCoordinates({
 	                    x: point.x,
+	                    y: point.y
+	                });
+	                ByWeeksActions.setWeekDaysByDataPoints(SeriesByMonths.filter(function (point) {
+	                    return point.state.selected;
+	                }).map(function (point) {
+	                    return point.data;
+	                }));
+	            } else {
+	                ByMonthsActions.setSelectedCoordinates({});
+	                ByWeeksActions.setWeekDaysByDataPoints([]);
+	            }
+	        }
+	    }, {
+	        key: 'handleOYClick',
+	        value: function handleOYClick(point) {
+	            var _props3 = this.props;
+	            var ByMonthsActions = _props3.ByMonthsActions;
+	            var ByWeeksActions = _props3.ByWeeksActions;
+	            var selectedCoordinates = _props3.selectedCoordinates;
+	            var SeriesByMonths = _props3.SeriesByMonths;
+
+
+	            if (selectedCoordinates.y != point.y) {
+	                ByMonthsActions.setSelectedCoordinates({
 	                    y: point.y
 	                });
 	                ByWeeksActions.setWeekDaysByDataPoints(SeriesByMonths.filter(function (point) {
@@ -70793,12 +70828,12 @@
 	        x: stateProps.selectedCoordinates.x,
 	        y: stateProps.selectedCoordinates.y
 	    });
-	    // this.__markSelectedPoints(SeriesByMonthsSumByOX, {
-	    //     x: selectedCoordinates.x,
+	    // __markSelectedPoints(stateProps.SeriesByMonthsSumByOX, {
+	    //     x: stateProps.selectedCoordinates.x,
 	    // })
-	    // this.__markSelectedPoints(SeriesByMonthsSumByOY, {
-	    //     y: selectedCoordinates.y,
-	    // })
+	    __markSelectedPoints(stateProps.SeriesByMonthsSumByOY, {
+	        y: stateProps.selectedCoordinates.y
+	    });
 
 	    return Object.assign({}, ownProps, stateProps, dispatchProps);
 	})(SeasonsSeriesByMonth);
