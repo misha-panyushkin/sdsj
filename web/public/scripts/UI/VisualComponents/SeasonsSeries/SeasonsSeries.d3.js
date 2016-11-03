@@ -31,6 +31,7 @@ export default class SeasonsSeries {
         rowsLabels,
         gridSize,
         eventHandlers,
+        smoothTransitions,
      }) {
         this.data = data
 
@@ -45,6 +46,8 @@ export default class SeasonsSeries {
         this.buckets = 9
 
         this.eventHandlers = eventHandlers
+
+        this.smoothTransitions = smoothTransitions
 
         this.updateWithData()
     }
@@ -101,49 +104,45 @@ export default class SeasonsSeries {
 
         this.cards = this.matrix.selectAll(".card").data(this.data, d => d.x + ':' + d.y)
         
-        this.cards.exit().transition().duration((d, i) => {
-            return 200 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
-        }).style("fill", '#fff').remove()
+        if (this.smoothTransitions) {
+            this.cards.exit().transition('fill').duration((d, i) => {
+                return 200 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+            }).style("fill", '#fff').remove()
+        } else {
+            this.cards.exit().interrupt().remove()
+        }
 
-        this.cards.enter().append("rect")
+        this.enteredCards = this.cards.enter().append("rect")
             .style("fill", '#fff')
-            .on("mouseover", function (d) {
-                d3.select(this)
-                    .attr("class", "card bordered hover")
-
-                d3.selectAll('.x' + d.x)
-                    .transition().duration(300)
-                    .style('fill', '#5baa7f')
-                    .style('font-weight', '500')
-                d3.selectAll('.y' + d.y)
-                    .transition().duration(300)
-                    .style('fill', '#5baa7f')
-                    .style('font-weight', '500')
+            .style("stroke", '#fff')
+            .on("mouseover", d => {
+                this.eventHandlers.onMouseOver(d)
             })
-            .on("mouseout", function (d) {
-                d3.select(this)
-                    .attr("class", "card bordered")
-
-                d3.selectAll('.xLabel')
-                    .transition().duration(100)
-                    .style('fill', null)
-                    .style('font-weight', null)
-                d3.selectAll('.yLabel')
-                    .transition().duration(100)
-                    .style('fill', null)
-                    .style('font-weight', null)
+            .on("mouseout", d => {
+                this.eventHandlers.onMouseOut(d)
             })
             .merge(this.cards)
-            .attr("x", d => d.x * this.gridSize)
-            .attr("y", d => d.y * this.gridSize)
             .attr("rx", 4)
             .attr("ry", 4)
-            .attr("width", this.gridSize)
-            .attr("height", this.gridSize)
+
+        this.enteredCards.transition('position:size').duration(300)
+            .attr("x", d => d.x * this.gridSize + (d.state && d.state.active ? 5 : 0))
+            .attr("y", d => d.y * this.gridSize + (d.state && d.state.active ? 5 : 0))
+            .attr("width", d => this.gridSize + (d.state && d.state.active ? -10 : 0))
+            .attr("height", d => this.gridSize + (d.state && d.state.active ? -10 : 0))
             .attr("class", "card bordered")
-            .transition().duration((d, i) => {
-                return 500 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
-            }).style("fill", d => this.colors(d.value))
+
+        if (this.smoothTransitions) {
+            this.enteredCards
+                .transition('fill').duration((d, i) => {
+                    return 500 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+                }).style("fill", d => this.colors(d.value))
+
+        } else {
+            this.enteredCards
+                .interrupt('fill')
+                .style("fill", d => this.colors(d.value))
+        }
 
         // this.cards.select("title").text(d => d.value)
 

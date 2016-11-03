@@ -20,6 +20,33 @@ class SeasonsSeriesByMonth extends Component {
         this._b = _b(this.boxClassName)
     }
 
+    __markHoverPoints (points, {
+        x,
+        y,
+    }) {
+        points.forEach(point => {
+            point.state.active = false
+            
+            if (!isNaN(x) && !isNaN(y)) {
+                if (point.x == x && point.y == y) {
+                    point.state.active = true
+                }
+            
+            } else if (!isNaN(x)) {
+                if (point.x == x) {
+                    point.state.active = true
+                }
+                return
+            
+            } else if (!isNaN(y)) {
+                if (point.y == y) {
+                    point.state.active = true
+                }
+                return
+            }
+        })
+    }
+
     render () {
         const {
             className,
@@ -31,8 +58,21 @@ class SeasonsSeriesByMonth extends Component {
             rowsLabels,
             columnsLabels,
 
-            ByWeeksActions,
+            hoverCoordinates,
         } = this.props
+
+        const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
+
+        this.__markHoverPoints(SeriesByMonths, {
+            x: hoverCoordinates.x, 
+            y: hoverCoordinates.y,
+        })
+        this.__markHoverPoints(SeriesByMonthsSumByOX, {
+            x: hoverCoordinates.x,
+        })
+        this.__markHoverPoints(SeriesByMonthsSumByOY, {
+            y: hoverCoordinates.y,
+        })
 
         return (
             <article className={ this._b.mix( className ) }>
@@ -44,6 +84,9 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ rowsLabels }
                     columnsLabels={ columnsLabels }
                     gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
                     />
 
                 <VisualSeasonsSeries 
@@ -54,6 +97,9 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
                     />
 
                 <VisualSeasonsSeries 
@@ -64,9 +110,43 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
                     />
             </article>
         )
+    }
+
+    handleMainMouseOver (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({
+            x: point.x,
+            y: point.y,
+        })
+    }
+
+    handleMainMouseOut (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({})
+    }
+
+    handleOXMouseOver (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({
+            x: point.x,
+        })
+    }
+
+    handleOXMouseOut (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({})
+    }
+
+    handleOYMouseOver (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({
+            y: point.y,
+        })
+    }
+
+    handleOYMouseOut (point) {
+        this.props.ByMonthsActions.setHoverCoordinates({})
     }
 
     // <OrderSwitcher 
@@ -75,9 +155,9 @@ class SeasonsSeriesByMonth extends Component {
     //     onChange={ (order) => ByMonthsActions.setSort('y', order) }/>
 
     componentDidMount () {
-        const {
-            ByMonthsActions,
-        } = this.props
+        // const {
+        //     ByMonthsActions,
+        // } = this.props
 
         // setTimeout(() => {
         //     ByMonthsActions.setSort({
@@ -122,9 +202,13 @@ class SeasonsSeriesByMonth extends Component {
 
 export default connect(
     state => Object.assign(
+        {},
         ByMonthsSelector({
             state
-        })
+        }),
+        {
+            hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], I.Map()).toJS(),
+        },
     ),
     dispatch => ({
         ByMonthsActions: bindActionCreators(ByMonthsActions, dispatch),

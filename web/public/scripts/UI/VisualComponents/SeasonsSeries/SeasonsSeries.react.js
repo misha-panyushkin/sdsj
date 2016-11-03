@@ -46,7 +46,18 @@ export default class SeasonsSeries extends Component {
             rowsLabels,
             columnsLabels,
             gridSize,
+            
+            onMouseOver,
+            onMouseOut,
+
+            smoothTransitions,
+
         } = this.props
+
+        const eventHandlers = {
+            onMouseOver,
+            onMouseOut,
+        }
         
         if (data && data.length) {
             
@@ -56,6 +67,8 @@ export default class SeasonsSeries extends Component {
                     rowsLabels,
                     columnsLabels,
                     gridSize,
+                    eventHandlers,
+                    smoothTransitions,
                 })
             } else {
                 this._d3Layer = new D3SeasonsSeries({
@@ -70,6 +83,8 @@ export default class SeasonsSeries extends Component {
                     rowsLabels,
                     columnsLabels,
                     gridSize,
+                    eventHandlers,
+                    smoothTransitions,
                 })
             }
         }
@@ -79,4 +94,9 @@ export default class SeasonsSeries extends Component {
 SeasonsSeries.defaultProps = {
     gridSize: 20,
     data: [],
+
+    onMouseOver: () => {},
+    onMouseOut: () => {},
+
+    smoothTransitions: true,
 }

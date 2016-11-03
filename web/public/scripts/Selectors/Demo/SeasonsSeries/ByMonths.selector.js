@@ -76,6 +76,7 @@ const ByMonths = createSelector(
                 value: 0,
                 x: columnIndex,
                 y: 0,
+                state: {},
             })
             SeriesByMonthsSumByOX[columnIndex].value += hv
         }))
@@ -86,6 +87,7 @@ const ByMonths = createSelector(
                 value: 0,
                 x: 0,
                 y: rowIndex,
+                state: {},
             })
             SeriesByMonthsSumByOY[rowIndex].value += hv
         }))
@@ -95,6 +97,7 @@ const ByMonths = createSelector(
                 value,
                 x: columnIndex,
                 y: rowIndex,
+                state: {},
             }))
         ), [])
 

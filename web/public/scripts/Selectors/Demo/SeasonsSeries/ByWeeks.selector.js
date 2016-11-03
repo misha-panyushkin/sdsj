@@ -75,6 +75,7 @@ const ByWeeks = createSelector(
                 value: 0,
                 x: columnIndex,
                 y: 0,
+                state: {},
             })
             SeriesByWeeksSumByOX[columnIndex].value += hv
         }))
@@ -85,6 +86,7 @@ const ByWeeks = createSelector(
                 value: 0,
                 x: 0,
                 y: rowIndex,
+                state: {},
             })
             SeriesByWeeksSumByOY[rowIndex].value += hv
         }))
@@ -94,6 +96,7 @@ const ByWeeks = createSelector(
                 value,
                 x: columnIndex,
                 y: rowIndex,
+                state: {},
             }))
         ), [])
         

@@ -20,6 +20,33 @@ class SeasonsSeriesByWeeks extends Component {
         this._b = _b(this.boxClassName)
     }
 
+    __markHoverPoints (points, {
+        x,
+        y,
+    }) {
+        points.forEach(point => {
+            point.state.active = false
+            
+            if (!isNaN(x) && !isNaN(y)) {
+                if (point.x == x && point.y == y) {
+                    point.state.active = true
+                }
+            
+            } else if (!isNaN(x)) {
+                if (point.x == x) {
+                    point.state.active = true
+                }
+                return
+            
+            } else if (!isNaN(y)) {
+                if (point.y == y) {
+                    point.state.active = true
+                }
+                return
+            }
+        })
+    }
+
     render () {
         const {
             className,
@@ -31,8 +58,21 @@ class SeasonsSeriesByWeeks extends Component {
             rowsLabels,
             columnsLabels,
 
-            ByWeeksActions,
+            hoverCoordinates,
         } = this.props
+
+        const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
+
+        this.__markHoverPoints(SeriesByWeeks, {
+            x: hoverCoordinates.x, 
+            y: hoverCoordinates.y,
+        })
+        this.__markHoverPoints(SeriesByWeeksSumByOX, {
+            x: hoverCoordinates.x,
+        })
+        this.__markHoverPoints(SeriesByWeeksSumByOY, {
+            y: hoverCoordinates.y,
+        })
 
         return (
             <article className={ this._b.mix( className ) }>
@@ -43,7 +83,11 @@ class SeasonsSeriesByWeeks extends Component {
                     data={ SeriesByWeeks } 
                     rowsLabels={ rowsLabels }
                     columnsLabels={ columnsLabels }
-                    gridSize={ 25 }/>
+                    gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
+                    />
 
                 <VisualSeasonsSeries 
                     className={ this._b('OX') }
@@ -53,6 +97,9 @@ class SeasonsSeriesByWeeks extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
                     />
 
                 <VisualSeasonsSeries 
@@ -63,10 +110,44 @@ class SeasonsSeriesByWeeks extends Component {
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
+                    onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
+                    smoothTransitions={ !hasHoverCoordinates }
                     />
 
             </article>
         )
+    }
+
+    handleMainMouseOver (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({
+            x: point.x,
+            y: point.y,
+        })
+    }
+
+    handleMainMouseOut (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({})
+    }
+
+    handleOXMouseOver (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({
+            x: point.x,
+        })
+    }
+
+    handleOXMouseOut (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({})
+    }
+
+    handleOYMouseOver (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({
+            y: point.y,
+        })
+    }
+
+    handleOYMouseOut (point) {
+        this.props.ByWeeksActions.setHoverCoordinates({})
     }
 
     // <OrderSwitcher 
@@ -122,9 +203,13 @@ class SeasonsSeriesByWeeks extends Component {
 
 export default connect(
     state => Object.assign(
+        {},
         ByWeeksSelector({
             state
-        })
+        }),
+        {
+            hoverCoordinates: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'hover'], I.Map()).toJS(),
+        },
     ),
     dispatch => ({
         ByWeeksActions: bindActionCreators(ByWeeksActions, dispatch),
