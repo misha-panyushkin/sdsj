@@ -51,7 +51,7 @@ export default class SeasonsSeries extends Component {
             onMouseOut,
 
             smoothTransitions,
-
+            sizes,
         } = this.props
 
         const eventHandlers = {
@@ -69,6 +69,7 @@ export default class SeasonsSeries extends Component {
                     gridSize,
                     eventHandlers,
                     smoothTransitions,
+                    sizes,
                 })
             } else {
                 this._d3Layer = new D3SeasonsSeries({
@@ -85,6 +86,7 @@ export default class SeasonsSeries extends Component {
                     gridSize,
                     eventHandlers,
                     smoothTransitions,
+                    sizes,
                 })
             }
         }
@@ -97,6 +99,7 @@ SeasonsSeries.defaultProps = {
 
     onMouseOver: () => {},
     onMouseOut: () => {},
+    onMouseLeave: () => {},
 
     smoothTransitions: true,
 }

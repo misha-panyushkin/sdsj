@@ -53028,7 +53028,7 @@
 
 
 	// module
-	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  margin: 50px;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 50px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 50px;\n}\n", ""]);
+	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 50px;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 50px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 50px;\n}\n", ""]);
 
 	// exports
 
@@ -55041,6 +55041,7 @@
 	            var onMouseOver = _props2.onMouseOver;
 	            var onMouseOut = _props2.onMouseOut;
 	            var smoothTransitions = _props2.smoothTransitions;
+	            var sizes = _props2.sizes;
 
 
 	            var eventHandlers = {
@@ -55057,7 +55058,8 @@
 	                        columnsLabels: columnsLabels,
 	                        gridSize: gridSize,
 	                        eventHandlers: eventHandlers,
-	                        smoothTransitions: smoothTransitions
+	                        smoothTransitions: smoothTransitions,
+	                        sizes: sizes
 	                    });
 	                } else {
 	                    this._d3Layer = new _SeasonsSeries2.default({
@@ -55073,7 +55075,8 @@
 	                        columnsLabels: columnsLabels,
 	                        gridSize: gridSize,
 	                        eventHandlers: eventHandlers,
-	                        smoothTransitions: smoothTransitions
+	                        smoothTransitions: smoothTransitions,
+	                        sizes: sizes
 	                    });
 	                }
 	            }
@@ -55092,6 +55095,7 @@
 
 	    onMouseOver: function onMouseOver() {},
 	    onMouseOut: function onMouseOut() {},
+	    onMouseLeave: function onMouseLeave() {},
 
 	    smoothTransitions: true
 	};
@@ -55131,7 +55135,7 @@
 
 
 	// module
-	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
 
 	// exports
 
@@ -55180,6 +55184,7 @@
 
 	        this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 	        this.matrix = this.focus.append("g").attr("class", "matrix");
+	        this.background = this.matrix.append("rect").attr("class", "background");
 	    }
 
 	    _createClass(SeasonsSeries, [{
@@ -55191,6 +55196,7 @@
 	            var gridSize = _ref2.gridSize;
 	            var eventHandlers = _ref2.eventHandlers;
 	            var smoothTransitions = _ref2.smoothTransitions;
+	            var sizes = _ref2.sizes;
 
 	            this.data = data;
 
@@ -55203,6 +55209,8 @@
 	            this.gridSize = gridSize;
 	            this.legendElementWidth = this.gridSize * 2;
 	            this.buckets = 9;
+
+	            this.background.attr("width", sizes.width * this.gridSize).attr("height", sizes.height * this.gridSize);
 
 	            this.eventHandlers = eventHandlers;
 
@@ -55277,9 +55285,11 @@
 
 	            this.enteredCards = this.cards.enter().append("rect").style("fill", '#fff').style("stroke", '#fff').on("mouseover", function (d) {
 	                _this.eventHandlers.onMouseOver(d);
-	            }).on("mouseout", function (d) {
-	                _this.eventHandlers.onMouseOut(d);
 	            }).merge(this.cards).attr("rx", 4).attr("ry", 4);
+
+	            this.background.on("mouseleave", function (d) {
+	                _this.eventHandlers.onMouseOut();
+	            });
 
 	            this.enteredCards.transition('position:size').duration(300).attr("x", function (d) {
 	                return d.x * _this.gridSize + (d.state && d.state.active ? 5 : 0);
@@ -55375,6 +55385,10 @@
 
 	var ByWeeksActions = _interopRequireWildcard(_ByWeeks3);
 
+	var _AsideInfo = __webpack_require__(470);
+
+	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
+
 	var _VisualComponents = __webpack_require__(306);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -55454,6 +55468,10 @@
 	                y: hoverCoordinates.y
 	            });
 
+	            var activePoints = SeriesByWeeks.filter(function (point) {
+	                return point.state.active;
+	            });
+
 	            return _react2.default.createElement(
 	                'article',
 	                { className: this._b.mix(className) },
@@ -55471,7 +55489,11 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleMainMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: columnsLabels.length,
+	                        height: rowsLabels.length
+	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
@@ -55487,7 +55509,11 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: columnsLabels.length,
+	                        height: 1
+	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OY'),
@@ -55503,7 +55529,14 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOYMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: 1,
+	                        height: rowsLabels.length
+	                    }
+	                }),
+	                _react2.default.createElement(_AsideInfo2.default, {
+	                    points: activePoints
 	                })
 	            );
 	        }
@@ -55646,7 +55679,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByWeeks {\n  position: relative;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: -50px;\n  top: 0;\n}\n", ""]);
+	exports.push([module.id, ".ByWeeks {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: -50px;\n  top: 0;\n}\n", ""]);
 
 	// exports
 
@@ -55738,43 +55771,47 @@
 
 	    SeriesByWeeks = SeriesByWeeks.map(function (day) {
 	        return day.get('byHour').map(function (hour) {
-	            return hour.getIn(['total', 'expenses']);
+	            return _immutable2.default.Map({
+	                value: hour.getIn(['total', 'expenses']),
+	                data: hour
+	            });
 	        });
 	    }).toJS();
 
 	    var SeriesByWeeksSumByOX = [];
 	    SeriesByWeeks.forEach(function (d, rowIndex) {
-	        return d.forEach(function (hv, columnIndex) {
+	        return d.forEach(function (point, columnIndex) {
 	            SeriesByWeeksSumByOX[columnIndex] = SeriesByWeeksSumByOX[columnIndex] || {
 	                value: 0,
 	                x: columnIndex,
 	                y: 0,
 	                state: {}
 	            };
-	            SeriesByWeeksSumByOX[columnIndex].value += hv;
+	            SeriesByWeeksSumByOX[columnIndex].value += point.value;
 	        });
 	    });
 
 	    var SeriesByWeeksSumByOY = [];
 	    SeriesByWeeks.forEach(function (d, rowIndex) {
-	        return d.forEach(function (hv, columnIndex) {
+	        return d.forEach(function (point, columnIndex) {
 	            SeriesByWeeksSumByOY[rowIndex] = SeriesByWeeksSumByOY[rowIndex] || {
 	                value: 0,
 	                x: 0,
 	                y: rowIndex,
 	                state: {}
 	            };
-	            SeriesByWeeksSumByOY[rowIndex].value += hv;
+	            SeriesByWeeksSumByOY[rowIndex].value += point.value;
 	        });
 	    });
 
 	    SeriesByWeeks = SeriesByWeeks.reduce(function (result, list, rowIndex) {
-	        return result.concat(list.map(function (value, columnIndex) {
+	        return result.concat(list.map(function (point, columnIndex) {
 	            return {
-	                value: value,
+	                value: point.value,
 	                x: columnIndex,
 	                y: rowIndex,
-	                state: {}
+	                state: {},
+	                data: point.data
 	            };
 	        }));
 	    }, []);
@@ -70346,6 +70383,10 @@
 
 	var ByMonthsActions = _interopRequireWildcard(_ByMonths3);
 
+	var _AsideInfo = __webpack_require__(470);
+
+	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
+
 	var _VisualComponents = __webpack_require__(306);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -70425,6 +70466,10 @@
 	                y: hoverCoordinates.y
 	            });
 
+	            var activePoints = SeriesByMonths.filter(function (point) {
+	                return point.state.active;
+	            });
+
 	            return _react2.default.createElement(
 	                'article',
 	                { className: this._b.mix(className) },
@@ -70442,7 +70487,11 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleMainMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: columnsLabels.length,
+	                        height: rowsLabels.length
+	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
@@ -70458,7 +70507,11 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: columnsLabels.length,
+	                        height: 1
+	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OY'),
@@ -70474,7 +70527,15 @@
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOYMouseOut.apply(_this2, arguments);
 	                    },
-	                    smoothTransitions: !hasHoverCoordinates
+	                    smoothTransitions: !hasHoverCoordinates,
+	                    sizes: {
+	                        width: 1,
+	                        height: rowsLabels.length
+	                    }
+	                }),
+	                _react2.default.createElement(_AsideInfo2.default, {
+	                    className: this._b('Aside'),
+	                    points: activePoints
 	                })
 	            );
 	        }
@@ -70619,7 +70680,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByMonths {\n  position: relative;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: -85px;\n  top: 0;\n}\n", ""]);
+	exports.push([module.id, ".ByMonths {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: -85px;\n  top: 0;\n}\n.ByMonths__Aside {\n  width: 292px;\n}\n", ""]);
 
 	// exports
 
@@ -70711,43 +70772,47 @@
 
 	    SeriesByMonths = SeriesByMonths.map(function (month) {
 	        return month.get('byDay').map(function (day) {
-	            return day.getIn(['total', 'expenses']);
+	            return _immutable2.default.Map({
+	                value: day.getIn(['total', 'expenses']),
+	                data: day
+	            });
 	        });
 	    }).toJS();
 
 	    var SeriesByMonthsSumByOX = [];
 	    SeriesByMonths.forEach(function (d, rowIndex) {
-	        return d.forEach(function (hv, columnIndex) {
+	        return d.forEach(function (point, columnIndex) {
 	            SeriesByMonthsSumByOX[columnIndex] = SeriesByMonthsSumByOX[columnIndex] || {
 	                value: 0,
 	                x: columnIndex,
 	                y: 0,
 	                state: {}
 	            };
-	            SeriesByMonthsSumByOX[columnIndex].value += hv;
+	            SeriesByMonthsSumByOX[columnIndex].value += point.value;
 	        });
 	    });
 
 	    var SeriesByMonthsSumByOY = [];
 	    SeriesByMonths.forEach(function (d, rowIndex) {
-	        return d.forEach(function (hv, columnIndex) {
+	        return d.forEach(function (point, columnIndex) {
 	            SeriesByMonthsSumByOY[rowIndex] = SeriesByMonthsSumByOY[rowIndex] || {
 	                value: 0,
 	                x: 0,
 	                y: rowIndex,
 	                state: {}
 	            };
-	            SeriesByMonthsSumByOY[rowIndex].value += hv;
+	            SeriesByMonthsSumByOY[rowIndex].value += point.value;
 	        });
 	    });
 
 	    SeriesByMonths = SeriesByMonths.reduce(function (result, list, rowIndex) {
-	        return result.concat(list.map(function (value, columnIndex) {
+	        return result.concat(list.map(function (point, columnIndex) {
 	            return {
-	                value: value,
+	                value: point.value,
 	                x: columnIndex,
 	                y: rowIndex,
-	                state: {}
+	                state: {},
+	                data: point.data
 	            };
 	        }));
 	    }, []);
@@ -70871,7 +70936,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  margin: 0;\n}\n.App {\n  font-style: normal;\n  font-family: \"Myriad Set Pro\", \"Helvetica Neue\", \"Helvetica\", \"Arial\", sans-serif;\n  line-height: 1.45;\n  font-weight: 100;\n  letter-spacing: .999px;\n  color: #2A2622;\n}\n.unselectable {\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -o-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.selectable-text {\n  -moz-user-select: text;\n  -webkit-user-select: text;\n  -o-user-select: text;\n  -ms-user-select: text;\n  user-select: text;\n}\n", ""]);
+	exports.push([module.id, "body {\n  margin: 0;\n}\n.App {\n  font-style: normal;\n  font-family: \"PT Serif\", serif;\n  line-height: 1.45;\n  font-weight: 100;\n  letter-spacing: .999px;\n  color: #2A2622;\n}\n.unselectable {\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -o-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.selectable-text {\n  -moz-user-select: text;\n  -webkit-user-select: text;\n  -o-user-select: text;\n  -ms-user-select: text;\n  user-select: text;\n}\n", ""]);
 
 	// exports
 
@@ -73680,6 +73745,223 @@
 /***/ function(module, exports) {
 
 	/* (ignored) */
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(471);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AsideInfo = function (_Component) {
+	    _inherits(AsideInfo, _Component);
+
+	    function AsideInfo(props) {
+	        _classCallCheck(this, AsideInfo);
+
+	        var _this = _possibleConstructorReturn(this, (AsideInfo.__proto__ || Object.getPrototypeOf(AsideInfo)).call(this, props));
+
+	        _this.boxClassName = 'AsideInfo';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(AsideInfo, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var points = _props.points;
+	            var className = _props.className;
+
+
+	            var info = this.__processPoints(points);
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b.mix(className) },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('TotalExpenses').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalExpensesLabel') },
+	                        'TOTAL EXPENSES'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalExpensesNumber') },
+	                        this.__processNumberDimensions(info.total.expenses)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('TotalIncomes').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalIncomesLabel') },
+	                        'TOTAL INCOMES'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalIncomesNumber') },
+	                        this.__processNumberDimensions(info.total.incomes)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('CountExpenses').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountExpensesLabel') },
+	                        'EXPENSES TR. COUNT'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountExpensesNumber') },
+	                        this.__processNumberDimensions(info.count.expenses)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('CountIncomes').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountIncomesLabel') },
+	                        'INCOMES TR. COUNT'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountIncomesNumber') },
+	                        this.__processNumberDimensions(info.count.incomes)
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: '__processPoints',
+	        value: function __processPoints(points) {
+	            return points.reduce(function (result, point) {
+	                var data = point.data;
+
+	                result.total.expenses += Math.abs(data.total.expenses);
+	                result.total.incomes += data.total.incomes;
+
+	                result.count.expenses += data.count.expenses;
+	                result.count.incomes += data.count.incomes;
+
+	                return result;
+	            }, {
+	                total: {
+	                    expenses: 0,
+	                    incomes: 0
+	                },
+	                count: {
+	                    expenses: 0,
+	                    incomes: 0
+	                }
+	            });
+	        }
+	    }, {
+	        key: '__processNumberDimensions',
+	        value: function __processNumberDimensions(number) {
+	            var rounded = Math.round(number);
+	            var stringified = rounded.toString();
+	            var length = stringified.length;
+
+	            var result = stringified;
+	            var postfix = '';
+	            if (length > 9) {
+	                result = result.slice(0, -9);
+	                postfix = 'B';
+	            } else if (length > 6) {
+	                result = result.slice(0, -6);
+	                postfix = 'M';
+	            } else if (length > 3) {
+	                result = result.slice(0, -3);
+	                postfix = 'K';
+	            }
+
+	            return result + postfix;
+	        }
+	    }]);
+
+	    return AsideInfo;
+	}(_react.Component);
+
+	exports.default = AsideInfo;
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(472);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".AsideInfo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  width: 500px;\n}\n.AsideInfo .Item {\n  margin: 10px;\n  width: 200px;\n  overflow: hidden;\n}\n.AsideInfo__TotalExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #be0000;\n}\n.AsideInfo__TotalIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #00be09;\n}\n.AsideInfo__CountExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n.AsideInfo__CountIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

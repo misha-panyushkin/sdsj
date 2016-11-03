@@ -9,6 +9,7 @@ import I from 'immutable'
 import ByWeeksSelector from 'Selectors/Demo/SeasonsSeries/ByWeeks.selector'
 import * as ByWeeksActions from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
+import AsideInfo from './AsideInfo.react'
 import {
     SeasonsSeries as VisualSeasonsSeries,
 } from 'UI/VisualComponents'
@@ -74,6 +75,8 @@ class SeasonsSeriesByWeeks extends Component {
             y: hoverCoordinates.y,
         })
 
+        const activePoints = SeriesByWeeks.filter(point => point.state.active)
+
         return (
             <article className={ this._b.mix( className ) }>
                 <VisualSeasonsSeries 
@@ -87,6 +90,10 @@ class SeasonsSeriesByWeeks extends Component {
                     onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
                     smoothTransitions={ !hasHoverCoordinates }
+                    sizes={ {
+                        width: columnsLabels.length,
+                        height: rowsLabels.length,
+                    } }
                     />
 
                 <VisualSeasonsSeries 
@@ -100,6 +107,10 @@ class SeasonsSeriesByWeeks extends Component {
                     onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
                     smoothTransitions={ !hasHoverCoordinates }
+                    sizes={ {
+                        width: columnsLabels.length,
+                        height: 1,
+                    } }
                     />
 
                 <VisualSeasonsSeries 
@@ -113,6 +124,14 @@ class SeasonsSeriesByWeeks extends Component {
                     onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
                     smoothTransitions={ !hasHoverCoordinates }
+                    sizes={ {
+                        width: 1,
+                        height: rowsLabels.length,
+                    } }
+                    />
+
+                <AsideInfo
+                    points={ activePoints }
                     />
 
             </article>

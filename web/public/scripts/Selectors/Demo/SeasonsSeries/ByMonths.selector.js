@@ -66,38 +66,41 @@ const ByMonths = createSelector(
 
 
         SeriesByMonths = SeriesByMonths.map(month => {
-            return month.get('byDay').map(day => day.getIn(['total', 'expenses']))
+            return month.get('byDay').map(day => I.Map({
+                value: day.getIn(['total', 'expenses']),
+                data: day,
+            }))
         }).toJS()
-
         
         const SeriesByMonthsSumByOX = []
-        SeriesByMonths.forEach((d, rowIndex) => d.forEach((hv, columnIndex) => {
+        SeriesByMonths.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByMonthsSumByOX[columnIndex] = (SeriesByMonthsSumByOX[columnIndex] || {
                 value: 0,
                 x: columnIndex,
                 y: 0,
                 state: {},
             })
-            SeriesByMonthsSumByOX[columnIndex].value += hv
+            SeriesByMonthsSumByOX[columnIndex].value += point.value
         }))
 
         const SeriesByMonthsSumByOY = []
-        SeriesByMonths.forEach((d, rowIndex) => d.forEach((hv, columnIndex) => {
+        SeriesByMonths.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByMonthsSumByOY[rowIndex] = (SeriesByMonthsSumByOY[rowIndex] || {
                 value: 0,
                 x: 0,
                 y: rowIndex,
                 state: {},
             })
-            SeriesByMonthsSumByOY[rowIndex].value += hv
+            SeriesByMonthsSumByOY[rowIndex].value += point.value
         }))
 
         SeriesByMonths = SeriesByMonths.reduce((result, list, rowIndex) => result.concat(
-            list.map((value, columnIndex) => ({
-                value,
+            list.map((point, columnIndex) => ({
+                value: point.value,
                 x: columnIndex,
                 y: rowIndex,
                 state: {},
+                data: point.data,
             }))
         ), [])
 

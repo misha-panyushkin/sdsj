@@ -23,6 +23,8 @@ export default class SeasonsSeries {
 
         this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
         this.matrix = this.focus.append("g").attr("class", "matrix")
+        this.background = this.matrix.append("rect")
+            .attr("class", "background")
     }
 
     update ({ 
@@ -32,6 +34,7 @@ export default class SeasonsSeries {
         gridSize,
         eventHandlers,
         smoothTransitions,
+        sizes,
      }) {
         this.data = data
 
@@ -44,6 +47,10 @@ export default class SeasonsSeries {
         this.gridSize = gridSize
         this.legendElementWidth = this.gridSize * 2
         this.buckets = 9
+
+        this.background
+            .attr("width", sizes.width * this.gridSize)
+            .attr("height", sizes.height * this.gridSize)
 
         this.eventHandlers = eventHandlers
 
@@ -118,12 +125,13 @@ export default class SeasonsSeries {
             .on("mouseover", d => {
                 this.eventHandlers.onMouseOver(d)
             })
-            .on("mouseout", d => {
-                this.eventHandlers.onMouseOut(d)
-            })
             .merge(this.cards)
             .attr("rx", 4)
             .attr("ry", 4)
+
+        this.background.on("mouseleave", d => {
+                this.eventHandlers.onMouseOut()
+            })
 
         this.enteredCards.transition('position:size').duration(300)
             .attr("x", d => d.x * this.gridSize + (d.state && d.state.active ? 5 : 0))

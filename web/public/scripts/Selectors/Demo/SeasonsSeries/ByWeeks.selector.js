@@ -66,37 +66,41 @@ const ByWeeks = createSelector(
 
 
         SeriesByWeeks = SeriesByWeeks.map(day => {
-            return day.get('byHour').map(hour => hour.getIn(['total', 'expenses']))
+            return day.get('byHour').map(hour => I.Map({
+                value: hour.getIn(['total', 'expenses']),
+                data: hour,
+            }))
         }).toJS()
 
         const SeriesByWeeksSumByOX = []
-        SeriesByWeeks.forEach((d, rowIndex) => d.forEach((hv, columnIndex) => {
+        SeriesByWeeks.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByWeeksSumByOX[columnIndex] = (SeriesByWeeksSumByOX[columnIndex] || {
                 value: 0,
                 x: columnIndex,
                 y: 0,
                 state: {},
             })
-            SeriesByWeeksSumByOX[columnIndex].value += hv
+            SeriesByWeeksSumByOX[columnIndex].value += point.value
         }))
 
         const SeriesByWeeksSumByOY = []
-        SeriesByWeeks.forEach((d, rowIndex) => d.forEach((hv, columnIndex) => {
+        SeriesByWeeks.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByWeeksSumByOY[rowIndex] = (SeriesByWeeksSumByOY[rowIndex] || {
                 value: 0,
                 x: 0,
                 y: rowIndex,
                 state: {},
             })
-            SeriesByWeeksSumByOY[rowIndex].value += hv
+            SeriesByWeeksSumByOY[rowIndex].value += point.value
         }))
 
         SeriesByWeeks = SeriesByWeeks.reduce((result, list, rowIndex) => result.concat(
-            list.map((value, columnIndex) => ({
-                value,
+            list.map((point, columnIndex) => ({
+                value: point.value,
                 x: columnIndex,
                 y: rowIndex,
                 state: {},
+                data: point.data,
             }))
         ), [])
         
