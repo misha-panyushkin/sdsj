@@ -73818,7 +73818,7 @@
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: this._b('TotalExpensesLabel') },
-	                        'TOTAL EXPENSES'
+	                        'TOTAL EXPENSE'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
@@ -73832,7 +73832,7 @@
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: this._b('TotalIncomesLabel') },
-	                        'TOTAL INCOMES'
+	                        'TOTAL INCOME'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
@@ -73846,7 +73846,7 @@
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: this._b('CountExpensesLabel') },
-	                        'EXPENSES TR. COUNT'
+	                        'EXPENSE TRANS. NUMBER'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
@@ -73860,7 +73860,7 @@
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: this._b('CountIncomesLabel') },
-	                        'INCOMES TR. COUNT'
+	                        'INCOME TRANS. NUMBER'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',

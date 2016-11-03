@@ -26,7 +26,7 @@ export default class AsideInfo extends Component {
                 
                 <div className={ this._b('TotalExpenses').mix('Item') }>
                     <span className={ this._b('TotalExpensesLabel') }>
-                        TOTAL EXPENSES
+                        TOTAL EXPENSE
                     </span>
                     <span className={ this._b('TotalExpensesNumber') }>
                         { this.__processNumberDimensions(info.total.expenses) }
@@ -35,7 +35,7 @@ export default class AsideInfo extends Component {
                 
                 <div className={ this._b('TotalIncomes').mix('Item') }>
                     <span className={ this._b('TotalIncomesLabel') }>
-                        TOTAL INCOMES
+                        TOTAL INCOME
                     </span>
                     <span className={ this._b('TotalIncomesNumber') }>
                         { this.__processNumberDimensions(info.total.incomes) }
@@ -44,7 +44,7 @@ export default class AsideInfo extends Component {
                 
                 <div className={ this._b('CountExpenses').mix('Item') }>
                     <span className={ this._b('CountExpensesLabel') }>
-                        EXPENSES TR. COUNT
+                        EXPENSE TRANS. NUMBER
                     </span>
                     <span className={ this._b('CountExpensesNumber') }>
                         { this.__processNumberDimensions(info.count.expenses) }
@@ -53,7 +53,7 @@ export default class AsideInfo extends Component {
                 
                 <div className={ this._b('CountIncomes').mix('Item') }>
                     <span className={ this._b('CountIncomesLabel') }>
-                        INCOMES TR. COUNT
+                        INCOME TRANS. NUMBER
                     </span>
                     <span className={ this._b('CountIncomesNumber') }>
                         { this.__processNumberDimensions(info.count.incomes) }
