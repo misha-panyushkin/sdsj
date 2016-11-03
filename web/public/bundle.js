@@ -53094,7 +53094,7 @@
 
 
 	// module
-	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 50px;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 50px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 50px;\n}\n", ""]);
+	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 30px 0 0 0;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 50px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 0px;\n}\n", ""]);
 
 	// exports
 
