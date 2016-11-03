@@ -4,6 +4,9 @@ import {
 } from 'reselect'
 import moment from 'moment'
 
+const getWeekByDataPoints = ({ state }) =>
+    state.DemoSeasonsSeriesByWeeks.getIn(['data', 'weekByDataPoints'], I.List())
+
 const getSort = ({ state }) =>
     state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'sort'], I.Map())
 
@@ -11,10 +14,20 @@ const getSeriesByWeeks = ({ state }) =>
     state.DemoSeasonsSeries.getIn(['data', 'series', 'byWeek'], I.List())
 
 const ByWeeks = createSelector(
-    [ getSeriesByWeeks, getSort ],
-    ( seriesByWeeks, sortData ) => {
+    [ getSeriesByWeeks, getSort, getWeekByDataPoints ],
+    ( seriesByWeeks, sortData, weekByDataPoints ) => {
 
         let SeriesByWeeks = seriesByWeeks
+
+        if (weekByDataPoints.size) {
+            
+            weekByDataPoints = weekByDataPoints.map(d => d ? d.setIn(['state', 'major'], true) : d)
+            SeriesByWeeks = SeriesByWeeks.map(d => d.setIn(['state', 'minor'], true))
+
+            SeriesByWeeks = SeriesByWeeks.mergeDeepWith((prev, next) => {
+                return next ? next : prev
+            }, weekByDataPoints)
+        }
 
         const xOrder = sortData.getIn(['x', 'order'])
         if (xOrder) {
@@ -68,7 +81,7 @@ const ByWeeks = createSelector(
         SeriesByWeeks = SeriesByWeeks.map(day => {
             return day.get('byHour').map(hour => I.Map({
                 value: hour.getIn(['total', 'expenses']),
-                data: hour,
+                data: hour.set('state', day.get('state')),
             }))
         }).toJS()
 
@@ -99,7 +112,10 @@ const ByWeeks = createSelector(
                 value: point.value,
                 x: columnIndex,
                 y: rowIndex,
-                state: {},
+                state: {
+                    major: point.data && point.data.state && point.data.state.major,
+                    minor: point.data && point.data.state && point.data.state.minor,
+                },
                 data: point.data,
             }))
         ), [])

@@ -49,6 +49,7 @@ export default class SeasonsSeries extends Component {
             
             onMouseOver,
             onMouseOut,
+            onClick,
 
             smoothTransitions,
             sizes,
@@ -57,6 +58,7 @@ export default class SeasonsSeries extends Component {
         const eventHandlers = {
             onMouseOver,
             onMouseOut,
+            onClick,
         }
         
         if (data && data.length) {
@@ -100,6 +102,7 @@ SeasonsSeries.defaultProps = {
     onMouseOver: () => {},
     onMouseOut: () => {},
     onMouseLeave: () => {},
+    onClick: () => {},
 
     smoothTransitions: true,
 }

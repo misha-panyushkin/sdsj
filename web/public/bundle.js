@@ -51889,6 +51889,7 @@
 	    var action = arguments[1];
 
 	    var nextState = state;
+	    var nextWeekByDataPoints = void 0;
 
 	    switch (action.type) {
 
@@ -51912,6 +51913,33 @@
 
 	            return nextState;
 
+	        case _ByWeeks.BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS:
+
+	            nextWeekByDataPoints = _immutable2.default.List();
+	            action.dataPoints.map(function (dataPoint) {
+	                var weekDay = dataPoint.info.weekday;
+	                var nextDay = _immutable2.default.fromJS(dataPoint);
+
+	                for (var i = 0; i < 24; i++) {
+	                    nextDay = nextDay.updateIn(['byHour', i], function (hour) {
+	                        return hour || _immutable2.default.fromJS({
+	                            total: {
+	                                expenses: 0,
+	                                incomes: 0
+	                            },
+	                            count: {
+	                                expenses: 0,
+	                                incomes: 0
+	                            }
+	                        });
+	                    });
+	                }
+
+	                nextWeekByDataPoints = nextWeekByDataPoints.set(weekDay, nextDay);
+	            });
+	            nextState = nextState.setIn(['data', 'weekByDataPoints'], nextWeekByDataPoints);
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -51928,8 +51956,10 @@
 	});
 	exports.setSort = setSort;
 	exports.setHoverCoordinates = setHoverCoordinates;
+	exports.setWeekDaysByDataPoints = setWeekDaysByDataPoints;
 	var BY_WEEKS_SORT = exports.BY_WEEKS_SORT = 'BY_WEEKS_SORT';
 	var BY_WEEKS_HOVER_COORDINATES = exports.BY_WEEKS_HOVER_COORDINATES = 'BY_WEEKS_HOVER_COORDINATES';
+	var BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS = exports.BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS = 'BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -51950,6 +51980,13 @@
 	        type: BY_WEEKS_HOVER_COORDINATES,
 	        x: x,
 	        y: y
+	    };
+	}
+
+	function setWeekDaysByDataPoints(dataPoints) {
+	    return {
+	        type: BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS,
+	        dataPoints: dataPoints
 	    };
 	}
 
@@ -52006,6 +52043,22 @@
 
 	            return nextState;
 
+	        case _ByMonths.BY_MONTHS_SELECTED_COORDINATES:
+
+	            if (!isNaN(action.x)) {
+	                nextState = nextState.setIn(['ui', 'selected', 'x'], action.x);
+	            } else {
+	                nextState = nextState.deleteIn(['ui', 'selected', 'x']);
+	            }
+
+	            if (!isNaN(action.y)) {
+	                nextState = nextState.setIn(['ui', 'selected', 'y'], action.y);
+	            } else {
+	                nextState = nextState.deleteIn(['ui', 'selected', 'y']);
+	            }
+
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -52022,8 +52075,10 @@
 	});
 	exports.setSort = setSort;
 	exports.setHoverCoordinates = setHoverCoordinates;
+	exports.setSelectedCoordinates = setSelectedCoordinates;
 	var BY_MONTHS_SORT = exports.BY_MONTHS_SORT = 'BY_MONTHS_SORT';
 	var BY_MONTHS_HOVER_COORDINATES = exports.BY_MONTHS_HOVER_COORDINATES = 'BY_MONTHS_HOVER_COORDINATES';
+	var BY_MONTHS_SELECTED_COORDINATES = exports.BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -52042,6 +52097,17 @@
 
 	    return {
 	        type: BY_MONTHS_HOVER_COORDINATES,
+	        x: x,
+	        y: y
+	    };
+	}
+
+	function setSelectedCoordinates(_ref3) {
+	    var x = _ref3.x;
+	    var y = _ref3.y;
+
+	    return {
+	        type: BY_MONTHS_SELECTED_COORDINATES,
 	        x: x,
 	        y: y
 	    };
@@ -55040,13 +55106,15 @@
 	            var gridSize = _props2.gridSize;
 	            var onMouseOver = _props2.onMouseOver;
 	            var onMouseOut = _props2.onMouseOut;
+	            var onClick = _props2.onClick;
 	            var smoothTransitions = _props2.smoothTransitions;
 	            var sizes = _props2.sizes;
 
 
 	            var eventHandlers = {
 	                onMouseOver: onMouseOver,
-	                onMouseOut: onMouseOut
+	                onMouseOut: onMouseOut,
+	                onClick: onClick
 	            };
 
 	            if (data && data.length) {
@@ -55096,6 +55164,7 @@
 	    onMouseOver: function onMouseOver() {},
 	    onMouseOut: function onMouseOut() {},
 	    onMouseLeave: function onMouseLeave() {},
+	    onClick: function onClick() {},
 
 	    smoothTransitions: true
 	};
@@ -55277,7 +55346,7 @@
 
 	            if (this.smoothTransitions) {
 	                this.cards.exit().transition('fill').duration(function (d, i) {
-	                    return 200 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
+	                    return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", '#fff').remove();
 	            } else {
 	                this.cards.exit().interrupt().remove();
@@ -55285,6 +55354,8 @@
 
 	            this.enteredCards = this.cards.enter().append("rect").style("fill", '#fff').style("stroke", '#fff').on("mouseover", function (d) {
 	                _this.eventHandlers.onMouseOver(d);
+	            }).on("click", function (d) {
+	                _this.eventHandlers.onClick(d);
 	            }).merge(this.cards).attr("rx", 4).attr("ry", 4);
 
 	            this.background.on("mouseleave", function (d) {
@@ -55292,25 +55363,65 @@
 	            });
 
 	            this.enteredCards.transition('position:size').duration(300).attr("x", function (d) {
-	                return d.x * _this.gridSize + (d.state && d.state.active ? 5 : 0);
+	                return getCoordinateByState(d.x, d, _this.gridSize);
 	            }).attr("y", function (d) {
-	                return d.y * _this.gridSize + (d.state && d.state.active ? 5 : 0);
+	                return getCoordinateByState(d.y, d, _this.gridSize);
 	            }).attr("width", function (d) {
-	                return _this.gridSize + (d.state && d.state.active ? -10 : 0);
+	                return getSizeByState(d, _this.gridSize);
 	            }).attr("height", function (d) {
-	                return _this.gridSize + (d.state && d.state.active ? -10 : 0);
+	                return getSizeByState(d, _this.gridSize);
 	            }).attr("class", "card bordered");
+
+	            function getCoordinateByState(coordinate, d, gridSize) {
+	                var extra = 0;
+	                if (d.state) {
+	                    if (d.state.active) {
+	                        extra = 5;
+	                    } else if (d.state.major) {
+	                        extra = 0;
+	                    } else if (d.state.minor) {
+	                        extra = 10;
+	                    }
+	                }
+	                return coordinate * gridSize + extra;
+	            }
+
+	            function getSizeByState(d, gridSize) {
+	                var extra = 0;
+	                if (d.state) {
+	                    if (d.state.active) {
+	                        extra = -10;
+	                    } else if (d.state.major) {
+	                        extra = 0;
+	                    } else if (d.state.minor) {
+	                        extra = -20;
+	                    }
+	                }
+	                return gridSize + extra;
+	            }
 
 	            if (this.smoothTransitions) {
 	                this.enteredCards.transition('fill').duration(function (d, i) {
-	                    return 500 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
+	                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", function (d) {
-	                    return _this.colors(d.value);
+	                    return getColorFillByState(d, _this.colors(d.value));
 	                });
 	            } else {
 	                this.enteredCards.interrupt('fill').style("fill", function (d) {
-	                    return _this.colors(d.value);
+	                    return getColorFillByState(d, _this.colors(d.value));
 	                });
+	            }
+
+	            function getColorFillByState(d, defaultColor) {
+	                var color = defaultColor;
+	                if (d.state) {
+	                    if (d.state.selected) {
+	                        color = '#00f';
+	                    } else if (d.state.major) {
+	                        color = '#00f';
+	                    }
+	                }
+	                return color;
 	            }
 
 	            // this.cards.select("title").text(d => d.value)
@@ -55706,19 +55817,38 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var getSort = function getSort(_ref) {
+	var getWeekByDataPoints = function getWeekByDataPoints(_ref) {
 	    var state = _ref.state;
+	    return state.DemoSeasonsSeriesByWeeks.getIn(['data', 'weekByDataPoints'], _immutable2.default.List());
+	};
+
+	var getSort = function getSort(_ref2) {
+	    var state = _ref2.state;
 	    return state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'sort'], _immutable2.default.Map());
 	};
 
-	var getSeriesByWeeks = function getSeriesByWeeks(_ref2) {
-	    var state = _ref2.state;
+	var getSeriesByWeeks = function getSeriesByWeeks(_ref3) {
+	    var state = _ref3.state;
 	    return state.DemoSeasonsSeries.getIn(['data', 'series', 'byWeek'], _immutable2.default.List());
 	};
 
-	var ByWeeks = (0, _reselect.createSelector)([getSeriesByWeeks, getSort], function (seriesByWeeks, sortData) {
+	var ByWeeks = (0, _reselect.createSelector)([getSeriesByWeeks, getSort, getWeekByDataPoints], function (seriesByWeeks, sortData, weekByDataPoints) {
 
 	    var SeriesByWeeks = seriesByWeeks;
+
+	    if (weekByDataPoints.size) {
+
+	        weekByDataPoints = weekByDataPoints.map(function (d) {
+	            return d ? d.setIn(['state', 'major'], true) : d;
+	        });
+	        SeriesByWeeks = SeriesByWeeks.map(function (d) {
+	            return d.setIn(['state', 'minor'], true);
+	        });
+
+	        SeriesByWeeks = SeriesByWeeks.mergeDeepWith(function (prev, next) {
+	            return next ? next : prev;
+	        }, weekByDataPoints);
+	    }
 
 	    var xOrder = sortData.getIn(['x', 'order']);
 	    if (xOrder) {
@@ -55773,7 +55903,7 @@
 	        return day.get('byHour').map(function (hour) {
 	            return _immutable2.default.Map({
 	                value: hour.getIn(['total', 'expenses']),
-	                data: hour
+	                data: hour.set('state', day.get('state'))
 	            });
 	        });
 	    }).toJS();
@@ -55810,7 +55940,10 @@
 	                value: point.value,
 	                x: columnIndex,
 	                y: rowIndex,
-	                state: {},
+	                state: {
+	                    major: point.data && point.data.state && point.data.state.major,
+	                    minor: point.data && point.data.state && point.data.state.minor
+	                },
 	                data: point.data
 	            };
 	        }));
@@ -70383,6 +70516,10 @@
 
 	var ByMonthsActions = _interopRequireWildcard(_ByMonths3);
 
+	var _ByWeeks = __webpack_require__(290);
+
+	var ByWeeksActions = _interopRequireWildcard(_ByWeeks);
+
 	var _AsideInfo = __webpack_require__(470);
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
@@ -70413,32 +70550,6 @@
 	    }
 
 	    _createClass(SeasonsSeriesByMonth, [{
-	        key: '__markHoverPoints',
-	        value: function __markHoverPoints(points, _ref) {
-	            var x = _ref.x;
-	            var y = _ref.y;
-
-	            points.forEach(function (point) {
-	                point.state.active = false;
-
-	                if (!isNaN(x) && !isNaN(y)) {
-	                    if (point.x == x && point.y == y) {
-	                        point.state.active = true;
-	                    }
-	                } else if (!isNaN(x)) {
-	                    if (point.x == x) {
-	                        point.state.active = true;
-	                    }
-	                    return;
-	                } else if (!isNaN(y)) {
-	                    if (point.y == y) {
-	                        point.state.active = true;
-	                    }
-	                    return;
-	                }
-	            });
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -70451,20 +70562,10 @@
 	            var rowsLabels = _props.rowsLabels;
 	            var columnsLabels = _props.columnsLabels;
 	            var hoverCoordinates = _props.hoverCoordinates;
+	            var selectedCoordinates = _props.selectedCoordinates;
 
 
 	            var hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y);
-
-	            this.__markHoverPoints(SeriesByMonths, {
-	                x: hoverCoordinates.x,
-	                y: hoverCoordinates.y
-	            });
-	            this.__markHoverPoints(SeriesByMonthsSumByOX, {
-	                x: hoverCoordinates.x
-	            });
-	            this.__markHoverPoints(SeriesByMonthsSumByOY, {
-	                y: hoverCoordinates.y
-	            });
 
 	            var activePoints = SeriesByMonths.filter(function (point) {
 	                return point.state.active;
@@ -70481,12 +70582,17 @@
 	                    rowsLabels: rowsLabels,
 	                    columnsLabels: columnsLabels,
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleMainMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleMainMouseOut.apply(_this2, arguments);
 	                    },
+	                    onClick: function onClick() {
+	                        return _this2.handleMainClick.apply(_this2, arguments);
+	                    },
+
 	                    smoothTransitions: !hasHoverCoordinates,
 	                    sizes: {
 	                        width: columnsLabels.length,
@@ -70538,6 +70644,31 @@
 	                    points: activePoints
 	                })
 	            );
+	        }
+	    }, {
+	        key: 'handleMainClick',
+	        value: function handleMainClick(point) {
+	            var _props2 = this.props;
+	            var ByMonthsActions = _props2.ByMonthsActions;
+	            var ByWeeksActions = _props2.ByWeeksActions;
+	            var selectedCoordinates = _props2.selectedCoordinates;
+	            var SeriesByMonths = _props2.SeriesByMonths;
+
+
+	            if (selectedCoordinates.x != point.x || selectedCoordinates.y != point.y) {
+	                ByMonthsActions.setSelectedCoordinates({
+	                    x: point.x,
+	                    y: point.y
+	                });
+	                ByWeeksActions.setWeekDaysByDataPoints(SeriesByMonths.filter(function (point) {
+	                    return point.state.selected;
+	                }).map(function (point) {
+	                    return point.data;
+	                }));
+	            } else {
+	                ByMonthsActions.setSelectedCoordinates({});
+	                ByWeeksActions.setWeekDaysByDataPoints([]);
+	            }
 	        }
 	    }, {
 	        key: 'handleMainMouseOver',
@@ -70637,13 +70768,91 @@
 	    return Object.assign({}, (0, _ByMonths2.default)({
 	        state: state
 	    }), {
-	        hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS()
+	        hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS(),
+	        selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], _immutable2.default.Map()).toJS()
 	    });
 	}, function (dispatch) {
 	    return {
-	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch)
+	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch),
+	        ByWeeksActions: (0, _redux.bindActionCreators)(ByWeeksActions, dispatch)
 	    };
+	}, function (stateProps, dispatchProps, ownProps) {
+
+	    __markHoverPoints(stateProps.SeriesByMonths, {
+	        x: stateProps.hoverCoordinates.x,
+	        y: stateProps.hoverCoordinates.y
+	    });
+	    __markHoverPoints(stateProps.SeriesByMonthsSumByOX, {
+	        x: stateProps.hoverCoordinates.x
+	    });
+	    __markHoverPoints(stateProps.SeriesByMonthsSumByOY, {
+	        y: stateProps.hoverCoordinates.y
+	    });
+
+	    __markSelectedPoints(stateProps.SeriesByMonths, {
+	        x: stateProps.selectedCoordinates.x,
+	        y: stateProps.selectedCoordinates.y
+	    });
+	    // this.__markSelectedPoints(SeriesByMonthsSumByOX, {
+	    //     x: selectedCoordinates.x,
+	    // })
+	    // this.__markSelectedPoints(SeriesByMonthsSumByOY, {
+	    //     y: selectedCoordinates.y,
+	    // })
+
+	    return Object.assign({}, ownProps, stateProps, dispatchProps);
 	})(SeasonsSeriesByMonth);
+
+
+	function __markHoverPoints(points, _ref) {
+	    var x = _ref.x;
+	    var y = _ref.y;
+
+	    points.forEach(function (point) {
+	        point.state.active = false;
+
+	        if (!isNaN(x) && !isNaN(y)) {
+	            if (point.x == x && point.y == y) {
+	                point.state.active = true;
+	            }
+	        } else if (!isNaN(x)) {
+	            if (point.x == x) {
+	                point.state.active = true;
+	            }
+	            return;
+	        } else if (!isNaN(y)) {
+	            if (point.y == y) {
+	                point.state.active = true;
+	            }
+	            return;
+	        }
+	    });
+	}
+
+	function __markSelectedPoints(points, _ref2) {
+	    var x = _ref2.x;
+	    var y = _ref2.y;
+
+	    points.forEach(function (point) {
+	        point.state.selected = false;
+
+	        if (!isNaN(x) && !isNaN(y)) {
+	            if (point.x == x && point.y == y) {
+	                point.state.selected = true;
+	            }
+	        } else if (!isNaN(x)) {
+	            if (point.x == x) {
+	                point.state.selected = true;
+	            }
+	            return;
+	        } else if (!isNaN(y)) {
+	            if (point.y == y) {
+	                point.state.selected = true;
+	            }
+	            return;
+	        }
+	    });
+	}
 
 /***/ },
 /* 447 */

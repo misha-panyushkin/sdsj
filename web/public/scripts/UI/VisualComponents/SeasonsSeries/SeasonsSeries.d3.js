@@ -113,7 +113,7 @@ export default class SeasonsSeries {
         
         if (this.smoothTransitions) {
             this.cards.exit().transition('fill').duration((d, i) => {
-                return 200 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+                return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
             }).style("fill", '#fff').remove()
         } else {
             this.cards.exit().interrupt().remove()
@@ -125,6 +125,9 @@ export default class SeasonsSeries {
             .on("mouseover", d => {
                 this.eventHandlers.onMouseOver(d)
             })
+            .on("click", d => {
+                this.eventHandlers.onClick(d)
+            })
             .merge(this.cards)
             .attr("rx", 4)
             .attr("ry", 4)
@@ -134,22 +137,67 @@ export default class SeasonsSeries {
             })
 
         this.enteredCards.transition('position:size').duration(300)
-            .attr("x", d => d.x * this.gridSize + (d.state && d.state.active ? 5 : 0))
-            .attr("y", d => d.y * this.gridSize + (d.state && d.state.active ? 5 : 0))
-            .attr("width", d => this.gridSize + (d.state && d.state.active ? -10 : 0))
-            .attr("height", d => this.gridSize + (d.state && d.state.active ? -10 : 0))
+            .attr("x", d => getCoordinateByState(d.x, d, this.gridSize))
+            .attr("y", d => getCoordinateByState(d.y, d, this.gridSize))
+            .attr("width", d => getSizeByState(d, this.gridSize))
+            .attr("height", d => getSizeByState(d, this.gridSize))
             .attr("class", "card bordered")
+
+        function getCoordinateByState (coordinate, d, gridSize) {
+            let extra = 0
+            if (d.state) {
+                if (d.state.active) {
+                    extra = 5
+                
+                } else if (d.state.major) {
+                    extra = 0
+                
+                } else if (d.state.minor) {
+                    extra = 10
+                }
+            }
+            return coordinate * gridSize + extra
+        }
+
+        function getSizeByState (d, gridSize) {
+            let extra = 0
+            if (d.state) {
+                if (d.state.active) {
+                    extra = -10
+                
+                } else if (d.state.major) {
+                    extra = 0
+                
+                } else if (d.state.minor) {
+                    extra = -20
+                }
+            }
+            return gridSize + extra
+        }
 
         if (this.smoothTransitions) {
             this.enteredCards
                 .transition('fill').duration((d, i) => {
-                    return 500 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
-                }).style("fill", d => this.colors(d.value))
+                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+                }).style("fill", d => getColorFillByState(d, this.colors(d.value)))
 
         } else {
             this.enteredCards
                 .interrupt('fill')
-                .style("fill", d => this.colors(d.value))
+                .style("fill", d => getColorFillByState(d, this.colors(d.value)))
+        }
+
+        function getColorFillByState (d, defaultColor) {
+            let color = defaultColor
+            if (d.state) {
+                if (d.state.selected) {
+                    color = '#00f'
+                
+                } else if (d.state.major) {
+                    color = '#00f'
+                }
+            }
+            return color
         }
 
         // this.cards.select("title").text(d => d.value)

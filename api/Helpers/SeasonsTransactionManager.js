@@ -48,6 +48,13 @@ module.exports = class SeasonsTransactionManager {
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'total'], total => this.__calculateTotal(total, nextAmount))
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'count'], count => this.__increaseCount(count, nextAmount))
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'info'], info => this.__setDateInfo(info, nextDate))
+
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour'], list => list || I.List())
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour', nextDate.hour()], map => map || I.Map())
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour', nextDate.hour(), 'total'], total => this.__calculateTotal(total, nextAmount))
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour', nextDate.hour(), 'count'], count => this.__increaseCount(count, nextAmount))
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour', nextDate.hour(), 'info'], info => this.__setDateInfo(info, nextDate))
+        
         // this.data = this.data.updateIn(['byWeek', nextDate.weekday(), 'byHour', nextDate.hour(), 'byMinute', nextDate.minute(), 'total'], total => this.__calculateTotal(total, nextAmount))
     }
 
@@ -78,6 +85,7 @@ module.exports = class SeasonsTransactionManager {
     __setDateInfo (info, nextDate) {
         return info || I.Map({
             date: nextDate.toDate(),
+            weekday: nextDate.weekday(),
         })
     }
 

@@ -8,6 +8,7 @@ import I from 'immutable'
 
 import ByMonthsSelector from 'Selectors/Demo/SeasonsSeries/ByMonths.selector'
 import * as ByMonthsActions from 'Actions/Demo/SeasonsSeries/ByMonths.actions'
+import * as ByWeeksActions from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
 import AsideInfo from './AsideInfo.react'
 import {
@@ -19,33 +20,6 @@ class SeasonsSeriesByMonth extends Component {
         super(props)
         this.boxClassName = 'ByMonths'
         this._b = _b(this.boxClassName)
-    }
-
-    __markHoverPoints (points, {
-        x,
-        y,
-    }) {
-        points.forEach(point => {
-            point.state.active = false
-            
-            if (!isNaN(x) && !isNaN(y)) {
-                if (point.x == x && point.y == y) {
-                    point.state.active = true
-                }
-            
-            } else if (!isNaN(x)) {
-                if (point.x == x) {
-                    point.state.active = true
-                }
-                return
-            
-            } else if (!isNaN(y)) {
-                if (point.y == y) {
-                    point.state.active = true
-                }
-                return
-            }
-        })
     }
 
     render () {
@@ -60,20 +34,10 @@ class SeasonsSeriesByMonth extends Component {
             columnsLabels,
 
             hoverCoordinates,
+            selectedCoordinates,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
-
-        this.__markHoverPoints(SeriesByMonths, {
-            x: hoverCoordinates.x, 
-            y: hoverCoordinates.y,
-        })
-        this.__markHoverPoints(SeriesByMonthsSumByOX, {
-            x: hoverCoordinates.x,
-        })
-        this.__markHoverPoints(SeriesByMonthsSumByOY, {
-            y: hoverCoordinates.y,
-        })
 
         const activePoints = SeriesByMonths.filter(point => point.state.active)
 
@@ -87,8 +51,11 @@ class SeasonsSeriesByMonth extends Component {
                     rowsLabels={ rowsLabels }
                     columnsLabels={ columnsLabels }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
+                    onClick={ (...args) => this.handleMainClick(...args) }
+                    
                     smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
@@ -137,6 +104,29 @@ class SeasonsSeriesByMonth extends Component {
 
             </article>
         )
+    }
+
+    handleMainClick (point) {
+        const {
+            ByMonthsActions,
+            ByWeeksActions,
+            selectedCoordinates,
+            SeriesByMonths,
+        } = this.props
+        
+        if (selectedCoordinates.x != point.x || selectedCoordinates.y != point.y) {
+            ByMonthsActions.setSelectedCoordinates({
+                x: point.x,
+                y: point.y,
+            })
+            ByWeeksActions.setWeekDaysByDataPoints(
+                SeriesByMonths.filter(point => point.state.selected).map(point => point.data)
+            )
+        
+        } else {
+            ByMonthsActions.setSelectedCoordinates({})
+            ByWeeksActions.setWeekDaysByDataPoints([])
+        }
     }
 
     handleMainMouseOver (point) {
@@ -229,9 +219,97 @@ export default connect(
         }),
         {
             hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], I.Map()).toJS(),
+            selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], I.Map()).toJS(),
         },
     ),
     dispatch => ({
         ByMonthsActions: bindActionCreators(ByMonthsActions, dispatch),
-    })
+        ByWeeksActions: bindActionCreators(ByWeeksActions, dispatch),
+    }),
+    (stateProps, dispatchProps, ownProps) => {
+
+        __markHoverPoints(stateProps.SeriesByMonths, {
+            x: stateProps.hoverCoordinates.x, 
+            y: stateProps.hoverCoordinates.y,
+        })
+        __markHoverPoints(stateProps.SeriesByMonthsSumByOX, {
+            x: stateProps.hoverCoordinates.x,
+        })
+        __markHoverPoints(stateProps.SeriesByMonthsSumByOY, {
+            y: stateProps.hoverCoordinates.y,
+        })
+
+
+        __markSelectedPoints(stateProps.SeriesByMonths, {
+            x: stateProps.selectedCoordinates.x, 
+            y: stateProps.selectedCoordinates.y,
+        })
+        // this.__markSelectedPoints(SeriesByMonthsSumByOX, {
+        //     x: selectedCoordinates.x,
+        // })
+        // this.__markSelectedPoints(SeriesByMonthsSumByOY, {
+        //     y: selectedCoordinates.y,
+        // })
+
+        return Object.assign(
+            {},
+            ownProps,
+            stateProps,
+            dispatchProps,
+        )
+    }
 )(SeasonsSeriesByMonth)
+
+function __markHoverPoints (points, {
+    x,
+    y,
+}) {
+    points.forEach(point => {
+        point.state.active = false
+        
+        if (!isNaN(x) && !isNaN(y)) {
+            if (point.x == x && point.y == y) {
+                point.state.active = true
+            }
+        
+        } else if (!isNaN(x)) {
+            if (point.x == x) {
+                point.state.active = true
+            }
+            return
+        
+        } else if (!isNaN(y)) {
+            if (point.y == y) {
+                point.state.active = true
+            }
+            return
+        }
+    })
+}
+
+function __markSelectedPoints (points, {
+    x,
+    y,
+}) {
+    points.forEach(point => {
+        point.state.selected = false
+        
+        if (!isNaN(x) && !isNaN(y)) {
+            if (point.x == x && point.y == y) {
+                point.state.selected = true
+            }
+        
+        } else if (!isNaN(x)) {
+            if (point.x == x) {
+                point.state.selected = true
+            }
+            return
+        
+        } else if (!isNaN(y)) {
+            if (point.y == y) {
+                point.state.selected = true
+            }
+            return
+        }
+    })
+}
