@@ -7,6 +7,7 @@ import {
     BY_MONTHS_SELECTED_COORDINATES,
 
     BY_MONTHS_MODE_WEATHER,
+    BY_MONTHS_MODE_DATA_TYPE,
 } from 'Actions/Demo/SeasonsSeries/ByMonths.actions'
 
 const DEFAULT_STATE = APP_MOCKS.getIn(['DEMO', 'SEASONS_SERIES_BY_MONTHS'])
@@ -60,6 +61,9 @@ export default function ByMonthsUI (state = DEFAULT_STATE, action) {
             nextState = nextState.updateIn(['ui', 'mode', 'weather', 'active'], active => action.isActive || !active)
             return nextState
 
+        case BY_MONTHS_MODE_DATA_TYPE:
+            nextState = nextState.updateIn(['ui', 'mode', 'datatype'], () => action.dataType)
+            return nextState
 
         default:
             return nextState

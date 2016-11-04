@@ -88,15 +88,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _App = __webpack_require__(453);
+	var _App = __webpack_require__(457);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Index = __webpack_require__(456);
+	var _Index = __webpack_require__(460);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _reduxThunk = __webpack_require__(469);
+	var _reduxThunk = __webpack_require__(472);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -104,13 +104,13 @@
 
 	var _API2 = _interopRequireDefault(_API);
 
-	__webpack_require__(470);
+	__webpack_require__(473);
 
 	var _bemCn = __webpack_require__(299);
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
-	var _es6Promise = __webpack_require__(471);
+	var _es6Promise = __webpack_require__(474);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
@@ -33944,7 +33944,10 @@
 
 	        SEASONS_SERIES_BY_MONTHS: {
 	            ui: {
-	                sort: {}
+	                sort: {},
+	                mode: {
+	                    datatype: 'expenses'
+	                }
 	            }
 	        }
 	    }
@@ -52065,6 +52068,12 @@
 	            });
 	            return nextState;
 
+	        case _ByMonths.BY_MONTHS_MODE_DATA_TYPE:
+	            nextState = nextState.updateIn(['ui', 'mode', 'datatype'], function () {
+	                return action.dataType;
+	            });
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -52083,11 +52092,13 @@
 	exports.setHoverCoordinates = setHoverCoordinates;
 	exports.setSelectedCoordinates = setSelectedCoordinates;
 	exports.switchModeWeather = switchModeWeather;
+	exports.switchModeDataType = switchModeDataType;
 	var BY_MONTHS_SORT = exports.BY_MONTHS_SORT = 'BY_MONTHS_SORT';
 	var BY_MONTHS_HOVER_COORDINATES = exports.BY_MONTHS_HOVER_COORDINATES = 'BY_MONTHS_HOVER_COORDINATES';
 	var BY_MONTHS_SELECTED_COORDINATES = exports.BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES';
 
 	var BY_MONTHS_MODE_WEATHER = exports.BY_MONTHS_MODE_WEATHER = 'BY_MONTHS_MODE_WEATHER';
+	var BY_MONTHS_MODE_DATA_TYPE = exports.BY_MONTHS_MODE_DATA_TYPE = 'BY_MONTHS_MODE_DATA_TYPE';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -52126,6 +52137,13 @@
 	    return {
 	        type: BY_MONTHS_MODE_WEATHER,
 	        isActive: isActive
+	    };
+	}
+
+	function switchModeDataType(dataType) {
+	    return {
+	        type: BY_MONTHS_MODE_DATA_TYPE,
+	        dataType: dataType
 	    };
 	}
 
@@ -70840,7 +70858,7 @@
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
-	var _ByMonthsControls = __webpack_require__(474);
+	var _ByMonthsControls = __webpack_require__(453);
 
 	var _ByMonthsControls2 = _interopRequireDefault(_ByMonthsControls);
 
@@ -71298,17 +71316,22 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var getSort = function getSort(_ref) {
+	var getDataType = function getDataType(_ref) {
 	    var state = _ref.state;
+	    return state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype']);
+	};
+
+	var getSort = function getSort(_ref2) {
+	    var state = _ref2.state;
 	    return state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort'], _immutable2.default.Map());
 	};
 
-	var getSeriesByMonths = function getSeriesByMonths(_ref2) {
-	    var state = _ref2.state;
+	var getSeriesByMonths = function getSeriesByMonths(_ref3) {
+	    var state = _ref3.state;
 	    return state.DemoSeasonsSeries.getIn(['data', 'series', 'byMonth'], _immutable2.default.List());
 	};
 
-	var ByMonths = (0, _reselect.createSelector)([getSeriesByMonths, getSort], function (seriesByMonths, sortData) {
+	var ByMonths = (0, _reselect.createSelector)([getSeriesByMonths, getSort, getDataType], function (seriesByMonths, sortData, dataType) {
 
 	    var SeriesByMonths = seriesByMonths;
 
@@ -71316,8 +71339,8 @@
 	    if (xOrder) {
 	        SeriesByMonths = SeriesByMonths.map(function (day) {
 	            var sorted = day.get('byDay').sort(function (a, b) {
-	                var aAbs = Math.abs(a.getIn(['total', 'expenses']));
-	                var bAbs = Math.abs(b.getIn(['total', 'expenses']));
+	                var aAbs = Math.abs(a.getIn(['total', dataType]));
+	                var bAbs = Math.abs(b.getIn(['total', dataType]));
 	                if (aAbs < bAbs) {
 	                    return xOrder == 'asc' ? -1 : 1;
 	                } else if (aAbs > bAbs) {
@@ -71335,10 +71358,10 @@
 	    if (yOrder) {
 	        SeriesByMonths = SeriesByMonths.sort(function (a, b) {
 	            var aSumm = a.get('byDay').reduce(function (s, v) {
-	                return v.getIn(['total', 'expenses']) + s;
+	                return v.getIn(['total', dataType]) + s;
 	            }, 0);
 	            var bSumm = b.get('byDay').reduce(function (s, v) {
-	                return v.getIn(['total', 'expenses']) + s;
+	                return v.getIn(['total', dataType]) + s;
 	            }, 0);
 
 	            if (aSumm < bSumm) {
@@ -71364,7 +71387,7 @@
 	    SeriesByMonths = SeriesByMonths.map(function (month) {
 	        return month.get('byDay').map(function (day) {
 	            return _immutable2.default.Map({
-	                value: day.getIn(['total', 'expenses']),
+	                value: day.getIn(['total', dataType]),
 	                data: day
 	            });
 	        });
@@ -71450,6 +71473,418 @@
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
+	var _reactFontawesome = __webpack_require__(456);
+
+	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
+	var _ByMonths = __webpack_require__(292);
+
+	var ByMonthsActions = _interopRequireWildcard(_ByMonths);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ByMonthsControls = function (_Component) {
+	    _inherits(ByMonthsControls, _Component);
+
+	    function ByMonthsControls(props) {
+	        _classCallCheck(this, ByMonthsControls);
+
+	        var _this = _possibleConstructorReturn(this, (ByMonthsControls.__proto__ || Object.getPrototypeOf(ByMonthsControls)).call(this, props));
+
+	        _this.boxClassName = 'ByMonthsControls';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(ByMonthsControls, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var _props = this.props;
+	            var className = _props.className;
+	            var monthsSortCurrent = _props.monthsSortCurrent;
+	            var daysSortCurrent = _props.daysSortCurrent;
+	            var isActiveModeWeather = _props.isActiveModeWeather;
+	            var dataType = _props.dataType;
+
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b.mix(className) },
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('DaysSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortDefault').mix(['Item', !daysSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortDefaultClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortAsc').mix(['Item', daysSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortAscClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortDesc').mix(['Item', daysSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortDescClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('MonthsSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortAsc').mix(['Item', monthsSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortAscClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortDesc').mix(['Item', monthsSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortDescClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortDefault').mix(['Item', !monthsSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortDefaultClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('Modes')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeWeather').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString(),
+	                        name: 'cloud',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeWeatherClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeIncome').mix(['Item', dataType == 'incomes' ? 'Active' : '']).toString(),
+	                        name: 'plus',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeIncomeClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeExpense').mix(['Item', dataType == 'expenses' ? 'Active' : '']).toString(),
+	                        name: 'minus',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeExpenseClick();
+	                        }
+	                    })
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'handleMonthsSortDefaultClick',
+	        value: function handleMonthsSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleMonthsSortAscClick',
+	        value: function handleMonthsSortAscClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleMonthsSortDescClick',
+	        value: function handleMonthsSortDescClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortDefaultClick',
+	        value: function handleDaysSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortAscClick',
+	        value: function handleDaysSortAscClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortDescClick',
+	        value: function handleDaysSortDescClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleSort',
+	        value: function handleSort() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.setSort.apply(ByMonthsActions, arguments);
+	        }
+	    }, {
+	        key: 'handleModeWeatherClick',
+	        value: function handleModeWeatherClick() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeWeather();
+	        }
+	    }, {
+	        key: 'handleModeIncomeClick',
+	        value: function handleModeIncomeClick() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeDataType('incomes');
+	        }
+	    }, {
+	        key: 'handleModeExpenseClick',
+	        value: function handleModeExpenseClick() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeDataType('expenses');
+	        }
+	    }]);
+
+	    return ByMonthsControls;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        daysSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'x', 'order']),
+	        monthsSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'y', 'order']),
+	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
+	        dataType: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype'])
+	    };
+	}, function (dispatch) {
+	    return {
+	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch)
+	    };
+	})(ByMonthsControls);
+
+/***/ },
+/* 454 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(455);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 455 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 33px;\n  left: 91px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByMonthsControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	/**
+	 * A React component for the font-awesome icon library.
+	 *
+	 *
+	 * @param {Boolean} [border=false] Whether or not to show a border radius
+	 * @param {String} [className] An extra set of CSS classes to add to the component
+	 * @param {Object} [cssModule] Option to pass FontAwesome CSS as a module
+	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
+	 * @param {String} [flip=false] Flip the icon's orientation.
+	 * @param {Boolean} [inverse=false]Inverse the icon's color
+	 * @param {String} name Name of the icon to use
+	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
+	 * @param {Number} [rotate] The degress to rotate the icon by
+	 * @param {String} [size] The icon scaling size
+	 * @param {Boolean} [spin=false] Spin the icon
+	 * @param {String} [stack] Stack an icon on top of another
+	 * @module FontAwesome
+	 * @type {ReactClass}
+	 */
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'FontAwesome',
+
+	  propTypes: {
+	    border: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    cssModule: _react2.default.PropTypes.object,
+	    fixedWidth: _react2.default.PropTypes.bool,
+	    flip: _react2.default.PropTypes.oneOf(['horizontal', 'vertical']),
+	    inverse: _react2.default.PropTypes.bool,
+	    name: _react2.default.PropTypes.string.isRequired,
+	    pulse: _react2.default.PropTypes.bool,
+	    rotate: _react2.default.PropTypes.oneOf([90, 180, 270]),
+	    size: _react2.default.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
+	    spin: _react2.default.PropTypes.bool,
+	    stack: _react2.default.PropTypes.oneOf(['1x', '2x'])
+	  },
+
+	  render: function render() {
+	    var _props = this.props;
+	    var border = _props.border;
+	    var cssModule = _props.cssModule;
+	    var className = _props.className;
+	    var fixedWidth = _props.fixedWidth;
+	    var flip = _props.flip;
+	    var inverse = _props.inverse;
+	    var name = _props.name;
+	    var pulse = _props.pulse;
+	    var rotate = _props.rotate;
+	    var size = _props.size;
+	    var spin = _props.spin;
+	    var stack = _props.stack;
+
+	    var props = _objectWithoutProperties(_props, ['border', 'cssModule', 'className', 'fixedWidth', 'flip', 'inverse', 'name', 'pulse', 'rotate', 'size', 'spin', 'stack']);
+
+	    var classNames = [];
+
+	    if (cssModule) {
+	      classNames.push(cssModule['fa']);
+	      classNames.push(cssModule['fa-' + name]);
+	      size && classNames.push(cssModule['fa-' + size]);
+	      spin && classNames.push(cssModule['fa-spin']);
+	      pulse && classNames.push(cssModule['fa-pulse']);
+	      border && classNames.push(cssModule['fa-border']);
+	      fixedWidth && classNames.push(cssModule['fa-fw']);
+	      inverse && classNames.push(cssModule['fa-inverse']);
+	      flip && classNames.push(cssModule['fa-flip-' + flip]);
+	      rotate && classNames.push(cssModule['fa-rotate-' + rotate]);
+	      stack && classNames.push(cssModule['fa-stack-' + stack]);
+	    } else {
+	      classNames.push('fa');
+	      classNames.push('fa-' + name);
+	      size && classNames.push('fa-' + size);
+	      spin && classNames.push('fa-spin');
+	      pulse && classNames.push('fa-pulse');
+	      border && classNames.push('fa-border');
+	      fixedWidth && classNames.push('fa-fw');
+	      inverse && classNames.push('fa-inverse');
+	      flip && classNames.push('fa-flip-' + flip);
+	      rotate && classNames.push('fa-rotate-' + rotate);
+	      stack && classNames.push('fa-stack-' + stack);
+	    }
+
+	    // Add any custom class names at the end.
+	    className && classNames.push(className);
+
+	    return _react2.default.createElement('span', _extends({}, props, {
+	      className: classNames.join(' ')
+	    }));
+	  }
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(458);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -71493,13 +71928,13 @@
 	})(App);
 
 /***/ },
-/* 454 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(455);
+	var content = __webpack_require__(459);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71519,7 +71954,7 @@
 	}
 
 /***/ },
-/* 455 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71533,7 +71968,7 @@
 
 
 /***/ },
-/* 456 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71544,7 +71979,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(457);
+	__webpack_require__(461);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71574,19 +72009,19 @@
 
 	var MccCodesActions = _interopRequireWildcard(_MccCodes);
 
-	var _Visualisation = __webpack_require__(459);
+	var _Visualisation = __webpack_require__(463);
 
 	var _Visualisation2 = _interopRequireDefault(_Visualisation);
 
-	var _Settings = __webpack_require__(462);
+	var _Settings = __webpack_require__(466);
 
 	var _Settings2 = _interopRequireDefault(_Settings);
 
-	var _Header = __webpack_require__(466);
+	var _Header = __webpack_require__(469);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _reactFontawesome = __webpack_require__(465);
+	var _reactFontawesome = __webpack_require__(456);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -71658,13 +72093,13 @@
 	})(Index);
 
 /***/ },
-/* 457 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(458);
+	var content = __webpack_require__(462);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71684,7 +72119,7 @@
 	}
 
 /***/ },
-/* 458 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71698,7 +72133,7 @@
 
 
 /***/ },
-/* 459 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71711,7 +72146,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(460);
+	__webpack_require__(464);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71830,13 +72265,13 @@
 	})(Visualisation);
 
 /***/ },
-/* 460 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(461);
+	var content = __webpack_require__(465);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71856,7 +72291,7 @@
 	}
 
 /***/ },
-/* 461 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71870,7 +72305,7 @@
 
 
 /***/ },
-/* 462 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71881,7 +72316,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(463);
+	__webpack_require__(467);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71907,7 +72342,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(465);
+	var _reactFontawesome = __webpack_require__(456);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72351,13 +72786,13 @@
 	}(_react.Component);
 
 /***/ },
-/* 463 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(464);
+	var content = __webpack_require__(468);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72377,7 +72812,7 @@
 	}
 
 /***/ },
-/* 464 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72391,120 +72826,7 @@
 
 
 /***/ },
-/* 465 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	/**
-	 * A React component for the font-awesome icon library.
-	 *
-	 *
-	 * @param {Boolean} [border=false] Whether or not to show a border radius
-	 * @param {String} [className] An extra set of CSS classes to add to the component
-	 * @param {Object} [cssModule] Option to pass FontAwesome CSS as a module
-	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
-	 * @param {String} [flip=false] Flip the icon's orientation.
-	 * @param {Boolean} [inverse=false]Inverse the icon's color
-	 * @param {String} name Name of the icon to use
-	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
-	 * @param {Number} [rotate] The degress to rotate the icon by
-	 * @param {String} [size] The icon scaling size
-	 * @param {Boolean} [spin=false] Spin the icon
-	 * @param {String} [stack] Stack an icon on top of another
-	 * @module FontAwesome
-	 * @type {ReactClass}
-	 */
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'FontAwesome',
-
-	  propTypes: {
-	    border: _react2.default.PropTypes.bool,
-	    className: _react2.default.PropTypes.string,
-	    cssModule: _react2.default.PropTypes.object,
-	    fixedWidth: _react2.default.PropTypes.bool,
-	    flip: _react2.default.PropTypes.oneOf(['horizontal', 'vertical']),
-	    inverse: _react2.default.PropTypes.bool,
-	    name: _react2.default.PropTypes.string.isRequired,
-	    pulse: _react2.default.PropTypes.bool,
-	    rotate: _react2.default.PropTypes.oneOf([90, 180, 270]),
-	    size: _react2.default.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
-	    spin: _react2.default.PropTypes.bool,
-	    stack: _react2.default.PropTypes.oneOf(['1x', '2x'])
-	  },
-
-	  render: function render() {
-	    var _props = this.props;
-	    var border = _props.border;
-	    var cssModule = _props.cssModule;
-	    var className = _props.className;
-	    var fixedWidth = _props.fixedWidth;
-	    var flip = _props.flip;
-	    var inverse = _props.inverse;
-	    var name = _props.name;
-	    var pulse = _props.pulse;
-	    var rotate = _props.rotate;
-	    var size = _props.size;
-	    var spin = _props.spin;
-	    var stack = _props.stack;
-
-	    var props = _objectWithoutProperties(_props, ['border', 'cssModule', 'className', 'fixedWidth', 'flip', 'inverse', 'name', 'pulse', 'rotate', 'size', 'spin', 'stack']);
-
-	    var classNames = [];
-
-	    if (cssModule) {
-	      classNames.push(cssModule['fa']);
-	      classNames.push(cssModule['fa-' + name]);
-	      size && classNames.push(cssModule['fa-' + size]);
-	      spin && classNames.push(cssModule['fa-spin']);
-	      pulse && classNames.push(cssModule['fa-pulse']);
-	      border && classNames.push(cssModule['fa-border']);
-	      fixedWidth && classNames.push(cssModule['fa-fw']);
-	      inverse && classNames.push(cssModule['fa-inverse']);
-	      flip && classNames.push(cssModule['fa-flip-' + flip]);
-	      rotate && classNames.push(cssModule['fa-rotate-' + rotate]);
-	      stack && classNames.push(cssModule['fa-stack-' + stack]);
-	    } else {
-	      classNames.push('fa');
-	      classNames.push('fa-' + name);
-	      size && classNames.push('fa-' + size);
-	      spin && classNames.push('fa-spin');
-	      pulse && classNames.push('fa-pulse');
-	      border && classNames.push('fa-border');
-	      fixedWidth && classNames.push('fa-fw');
-	      inverse && classNames.push('fa-inverse');
-	      flip && classNames.push('fa-flip-' + flip);
-	      rotate && classNames.push('fa-rotate-' + rotate);
-	      stack && classNames.push('fa-stack-' + stack);
-	    }
-
-	    // Add any custom class names at the end.
-	    className && classNames.push(className);
-
-	    return _react2.default.createElement('span', _extends({}, props, {
-	      className: classNames.join(' ')
-	    }));
-	  }
-	});
-	module.exports = exports['default'];
-
-/***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72515,7 +72837,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(467);
+	__webpack_require__(470);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72537,7 +72859,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(465);
+	var _reactFontawesome = __webpack_require__(456);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72616,13 +72938,13 @@
 	})(Header);
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(468);
+	var content = __webpack_require__(471);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72642,7 +72964,7 @@
 	}
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72656,7 +72978,7 @@
 
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72684,7 +73006,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! Moment Duration Format v1.3.0
@@ -73172,7 +73494,7 @@
 
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -73307,7 +73629,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(472);
+	    var vertx = __webpack_require__(475);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -74332,278 +74654,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 472 */
+/* 475 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
-
-/***/ },
-/* 473 */,
-/* 474 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(475);
-
-	var _classnames = __webpack_require__(298);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(256);
-
-	var _redux = __webpack_require__(173);
-
-	var _bemCn = __webpack_require__(299);
-
-	var _bemCn2 = _interopRequireDefault(_bemCn);
-
-	var _reactFontawesome = __webpack_require__(465);
-
-	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
-
-	var _ByMonths = __webpack_require__(292);
-
-	var ByMonthsActions = _interopRequireWildcard(_ByMonths);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ByMonthsControls = function (_Component) {
-	    _inherits(ByMonthsControls, _Component);
-
-	    function ByMonthsControls(props) {
-	        _classCallCheck(this, ByMonthsControls);
-
-	        var _this = _possibleConstructorReturn(this, (ByMonthsControls.__proto__ || Object.getPrototypeOf(ByMonthsControls)).call(this, props));
-
-	        _this.boxClassName = 'ByMonthsControls';
-	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
-	        return _this;
-	    }
-
-	    _createClass(ByMonthsControls, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            var _props = this.props;
-	            var className = _props.className;
-	            var monthsSortCurrent = _props.monthsSortCurrent;
-	            var daysSortCurrent = _props.daysSortCurrent;
-	            var isActiveModeWeather = _props.isActiveModeWeather;
-
-
-	            return _react2.default.createElement(
-	                'section',
-	                {
-	                    className: this._b.mix(className) },
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        className: this._b('DaysSort')
-	                    },
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('DaysSortDefault').mix(['Item', !daysSortCurrent ? 'Active' : '']).toString(),
-	                        name: 'bars',
-	                        onClick: function onClick() {
-	                            return _this2.handleDaysSortDefaultClick();
-	                        }
-	                    }),
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('DaysSortAsc').mix(['Item', daysSortCurrent == 'asc' ? 'Active' : '']).toString(),
-	                        name: 'sort-amount-asc',
-	                        onClick: function onClick() {
-	                            return _this2.handleDaysSortAscClick();
-	                        }
-	                    }),
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('DaysSortDesc').mix(['Item', daysSortCurrent == 'desc' ? 'Active' : '']).toString(),
-	                        name: 'sort-amount-desc',
-	                        onClick: function onClick() {
-	                            return _this2.handleDaysSortDescClick();
-	                        }
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        className: this._b('MonthsSort')
-	                    },
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('MonthsSortDesc').mix(['Item', monthsSortCurrent == 'desc' ? 'Active' : '']).toString(),
-	                        name: 'sort-amount-asc',
-	                        onClick: function onClick() {
-	                            return _this2.handleMonthsSortDescClick();
-	                        }
-	                    }),
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('MonthsSortDefault').mix(['Item', !monthsSortCurrent ? 'Active' : '']).toString(),
-	                        name: 'bars',
-	                        onClick: function onClick() {
-	                            return _this2.handleMonthsSortDefaultClick();
-	                        }
-	                    }),
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('MonthsSortAsc').mix(['Item', monthsSortCurrent == 'asc' ? 'Active' : '']).toString(),
-	                        name: 'sort-amount-desc',
-	                        onClick: function onClick() {
-	                            return _this2.handleMonthsSortAscClick();
-	                        }
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        className: this._b('Modes')
-	                    },
-	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        className: this._b('WeatherMode').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString(),
-	                        name: 'cloud',
-	                        onClick: function onClick() {
-	                            return _this2.handleWeatherModeClick();
-	                        }
-	                    })
-	                )
-	            );
-	        }
-	    }, {
-	        key: 'handleMonthsSortDefaultClick',
-	        value: function handleMonthsSortDefaultClick() {
-	            this.handleSort({
-	                axis: 'y',
-	                order: null
-	            });
-	        }
-	    }, {
-	        key: 'handleMonthsSortAscClick',
-	        value: function handleMonthsSortAscClick() {
-	            this.handleSort({
-	                axis: 'y',
-	                order: 'asc'
-	            });
-	        }
-	    }, {
-	        key: 'handleMonthsSortDescClick',
-	        value: function handleMonthsSortDescClick() {
-	            this.handleSort({
-	                axis: 'y',
-	                order: 'desc'
-	            });
-	        }
-	    }, {
-	        key: 'handleDaysSortDefaultClick',
-	        value: function handleDaysSortDefaultClick() {
-	            this.handleSort({
-	                axis: 'x',
-	                order: null
-	            });
-	        }
-	    }, {
-	        key: 'handleDaysSortAscClick',
-	        value: function handleDaysSortAscClick() {
-	            this.handleSort({
-	                axis: 'x',
-	                order: 'asc'
-	            });
-	        }
-	    }, {
-	        key: 'handleDaysSortDescClick',
-	        value: function handleDaysSortDescClick() {
-	            this.handleSort({
-	                axis: 'x',
-	                order: 'desc'
-	            });
-	        }
-	    }, {
-	        key: 'handleWeatherModeClick',
-	        value: function handleWeatherModeClick() {
-	            var ByMonthsActions = this.props.ByMonthsActions;
-
-
-	            ByMonthsActions.switchModeWeather();
-	        }
-	    }, {
-	        key: 'handleSort',
-	        value: function handleSort() {
-	            var ByMonthsActions = this.props.ByMonthsActions;
-
-
-	            ByMonthsActions.setSort.apply(ByMonthsActions, arguments);
-	        }
-	    }]);
-
-	    return ByMonthsControls;
-	}(_react.Component);
-
-	exports.default = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        daysSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'x', 'order']),
-	        monthsSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'y', 'order']),
-	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false)
-	    };
-	}, function (dispatch) {
-	    return {
-	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch)
-	    };
-	})(ByMonthsControls);
-
-/***/ },
-/* 475 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(476);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less", function() {
-				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 476 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(296)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 33px;\n  left: 91px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 50%;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #6caae1;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__WeatherMode {\n  color: #6caae1;\n}\n.ByMonthsControls__WeatherMode:after {\n  content: 'WEATHER';\n  position: absolute;\n  top: 4px;\n  right: -74px;\n  font-size: 13px;\n  color: #666;\n}\n", ""]);
-
-	// exports
-
 
 /***/ }
 /******/ ]);

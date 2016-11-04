@@ -4,6 +4,9 @@ import {
 } from 'reselect'
 import moment from 'moment'
 
+const getDataType = ({ state }) =>
+    state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype'])
+
 const getSort = ({ state }) =>
     state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort'], I.Map())
 
@@ -11,8 +14,8 @@ const getSeriesByMonths = ({ state }) =>
     state.DemoSeasonsSeries.getIn(['data', 'series', 'byMonth'], I.List())
 
 const ByMonths = createSelector(
-    [ getSeriesByMonths, getSort ],
-    ( seriesByMonths, sortData ) => {
+    [ getSeriesByMonths, getSort, getDataType ],
+    ( seriesByMonths, sortData, dataType ) => {
 
         let SeriesByMonths = seriesByMonths
 
@@ -20,8 +23,8 @@ const ByMonths = createSelector(
         if (xOrder) {
             SeriesByMonths = SeriesByMonths.map(day => {
                 const sorted = day.get('byDay').sort((a,b) => {
-                    const aAbs = Math.abs(a.getIn(['total', 'expenses']))
-                    const bAbs = Math.abs(b.getIn(['total', 'expenses']))
+                    const aAbs = Math.abs(a.getIn(['total', dataType]))
+                    const bAbs = Math.abs(b.getIn(['total', dataType]))
                     if (aAbs < bAbs) {
                         return xOrder == 'asc' ? -1 : 1
                     } else if (aAbs > bAbs) {
@@ -38,8 +41,8 @@ const ByMonths = createSelector(
         const yOrder = sortData.getIn(['y', 'order'])
         if (yOrder) {
             SeriesByMonths = SeriesByMonths.sort((a, b) => {
-                const aSumm = a.get('byDay').reduce((s, v) => v.getIn(['total', 'expenses']) + s, 0)
-                const bSumm = b.get('byDay').reduce((s, v) => v.getIn(['total', 'expenses']) + s, 0)
+                const aSumm = a.get('byDay').reduce((s, v) => v.getIn(['total', dataType]) + s, 0)
+                const bSumm = b.get('byDay').reduce((s, v) => v.getIn(['total', dataType]) + s, 0)
                 
                 if (aSumm < bSumm) {
                     return yOrder == 'asc' ? -1 : 1
@@ -67,7 +70,7 @@ const ByMonths = createSelector(
 
         SeriesByMonths = SeriesByMonths.map(month => {
             return month.get('byDay').map(day => I.Map({
-                value: day.getIn(['total', 'expenses']),
+                value: day.getIn(['total', dataType]),
                 data: day,
             }))
         }).toJS()

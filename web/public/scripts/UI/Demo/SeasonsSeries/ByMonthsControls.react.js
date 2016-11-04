@@ -23,6 +23,7 @@ class ByMonthsControls extends Component {
             monthsSortCurrent,
             daysSortCurrent,
             isActiveModeWeather,
+            dataType,
         } = this.props
 
         return (
@@ -53,6 +54,11 @@ class ByMonthsControls extends Component {
                     className={ this._b('MonthsSort') }
                     >
                     <FA 
+                        className={ this._b('MonthsSortAsc').mix(['Item', monthsSortCurrent == 'asc' ? 'Active' : '']).toString() }
+                        name="sort-amount-desc"
+                        onClick={ () => this.handleMonthsSortAscClick() }
+                        />
+                    <FA 
                         className={ this._b('MonthsSortDesc').mix(['Item', monthsSortCurrent == 'desc' ? 'Active' : '']).toString() }
                         name="sort-amount-asc"
                         onClick={ () => this.handleMonthsSortDescClick() }
@@ -62,20 +68,25 @@ class ByMonthsControls extends Component {
                         name="bars"
                         onClick={ () => this.handleMonthsSortDefaultClick() }
                         />
-                    <FA 
-                        className={ this._b('MonthsSortAsc').mix(['Item', monthsSortCurrent == 'asc' ? 'Active' : '']).toString() }
-                        name="sort-amount-desc"
-                        onClick={ () => this.handleMonthsSortAscClick() }
-                        />
                 </div>
 
                 <div 
                     className={ this._b('Modes') }
                     >
                     <FA 
-                        className={ this._b('WeatherMode').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString() }
+                        className={ this._b('ModeWeather').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString() }
                         name="cloud"
-                        onClick={ () => this.handleWeatherModeClick() }
+                        onClick={ () => this.handleModeWeatherClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeIncome').mix(['Item', dataType == 'incomes' ? 'Active' : '']).toString() }
+                        name="plus"
+                        onClick={ () => this.handleModeIncomeClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeExpense').mix(['Item', dataType == 'expenses' ? 'Active' : '']).toString() }
+                        name="minus"
+                        onClick={ () => this.handleModeExpenseClick() }
                         />
                 </div>
 
@@ -121,7 +132,15 @@ class ByMonthsControls extends Component {
         })
     }
 
-    handleWeatherModeClick () {
+    handleSort (...args) {
+        const {
+            ByMonthsActions,
+        } = this.props
+        
+        ByMonthsActions.setSort(...args)
+    }
+
+    handleModeWeatherClick () {
         const {
             ByMonthsActions,
         } = this.props
@@ -129,12 +148,20 @@ class ByMonthsControls extends Component {
         ByMonthsActions.switchModeWeather()
     }
 
-    handleSort (...args) {
+    handleModeIncomeClick () {
         const {
             ByMonthsActions,
         } = this.props
         
-        ByMonthsActions.setSort(...args)
+        ByMonthsActions.switchModeDataType('incomes')
+    }
+
+    handleModeExpenseClick () {
+        const {
+            ByMonthsActions,
+        } = this.props
+        
+        ByMonthsActions.switchModeDataType('expenses')
     }
 }
 
@@ -143,6 +170,7 @@ export default connect(
         daysSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'x', 'order']),
         monthsSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'y', 'order']),
         isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
+        dataType: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype']),
     }), 
     dispatch => ({
         ByMonthsActions: bindActionCreators(ByMonthsActions, dispatch),

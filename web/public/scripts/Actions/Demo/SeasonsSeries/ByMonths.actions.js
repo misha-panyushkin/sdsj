@@ -3,6 +3,7 @@ export const BY_MONTHS_HOVER_COORDINATES = 'BY_MONTHS_HOVER_COORDINATES'
 export const BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES'
 
 export const BY_MONTHS_MODE_WEATHER = 'BY_MONTHS_MODE_WEATHER'
+export const BY_MONTHS_MODE_DATA_TYPE = 'BY_MONTHS_MODE_DATA_TYPE'
 
 export function setSort ({ 
     axis,
@@ -42,5 +43,12 @@ export function switchModeWeather (isActive) {
     return {
         type: BY_MONTHS_MODE_WEATHER,
         isActive,
+    }
+}
+
+export function switchModeDataType (dataType) {
+    return {
+        type: BY_MONTHS_MODE_DATA_TYPE,
+        dataType,
     }
 }

@@ -108,26 +108,38 @@
 
         .Item {
             font-size: 12px;
-            padding: 4px;
+            padding: 4px 4px 3px 4px;
             cursor: pointer;
             font-weight: 100;
-            border-radius: 50%;
+            border-radius: 2px;
+            margin-right: 5px;
+            color: #919191;
+            border: 1px solid #c4c4c4;
         }
         .Item.Active {
-            background-color: #6caae1;
-            cursor: default;
-            color: #fff;
+            background-color: #dfdfdf;
+            color: #575757;
         }
     }
-    &__WeatherMode {
-        color: #6caae1;
-    }
-    &__WeatherMode:after {
+    &__ModeWeather {}
+    &__ModeWeather.Active {}
+    &__ModeWeather:after {
         content: 'WEATHER';
-        position: absolute;
-        top: 4px;
-        right: -74px;
         font-size: 13px;
-        color: #666;
+        padding-left: 4px;
+    }
+    &__ModeIncome {}
+    &__ModeIncome.Active {}
+    &__ModeIncome:after {
+        content: 'INCOME';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+    &__ModeExpense {}
+    &__ModeExpense.Active {}
+    &__ModeExpense:after {
+        content: 'EXPENSE';
+        font-size: 13px;
+        padding-left: 4px;
     }
 }

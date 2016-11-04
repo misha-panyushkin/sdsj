@@ -77,6 +77,9 @@ export default I.fromJS({
                 sort: {
                     
                 },
+                mode: {
+                    datatype: 'expenses',
+                },
             },
         },
     }
