@@ -55419,39 +55419,49 @@
 	            }).attr("class", "card bordered");
 
 	            function getCoordinateByState(coordinate, d) {
-	                if (this.weatherMode) {
-	                    return coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2;
-	                } else {
+	                var nextCoordinate = coordinate * this.gridSize;
+
+	                if (d.state) {
 	                    var extra = 0;
-	                    if (d.state) {
-	                        if (d.state.active) {
-	                            extra = 5;
-	                        } else if (d.state.major) {
-	                            extra = 0;
-	                        } else if (d.state.minor) {
-	                            extra = 10;
-	                        }
+
+	                    if (this.weatherMode) nextCoordinate = coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2;
+
+	                    if (d.state.active) {
+	                        extra = 5;
+	                        nextCoordinate = coordinate * this.gridSize + extra;
+	                    } else if (d.state.major) {
+	                        extra = 0;
+	                        nextCoordinate = coordinate * this.gridSize + extra;
+	                    } else if (d.state.minor) {
+	                        extra = 10;
+	                        nextCoordinate = coordinate * this.gridSize + extra;
 	                    }
-	                    return coordinate * this.gridSize + extra;
 	                }
+
+	                return nextCoordinate;
 	            }
 
 	            function getSizeByState(d) {
-	                if (this.weatherMode) {
-	                    return this.gridSize - this.valueBasedGridSizeExtra(d.value);
-	                } else {
+	                var size = this.gridSize;
+
+	                if (d.state) {
 	                    var extra = 0;
-	                    if (d.state) {
-	                        if (d.state.active) {
-	                            extra = -10;
-	                        } else if (d.state.major) {
-	                            extra = 0;
-	                        } else if (d.state.minor) {
-	                            extra = -20;
-	                        }
+
+	                    if (this.weatherMode) size = this.gridSize - this.valueBasedGridSizeExtra(d.value);
+
+	                    if (d.state.active) {
+	                        extra = -10;
+	                        size = this.gridSize + extra;
+	                    } else if (d.state.major) {
+	                        extra = 0;
+	                        size = this.gridSize + extra;
+	                    } else if (d.state.minor) {
+	                        extra = -20;
+	                        size = this.gridSize + extra;
 	                    }
-	                    return this.gridSize + extra;
 	                }
+
+	                return size;
 	            }
 
 	            if (this.smoothTransitions) {
