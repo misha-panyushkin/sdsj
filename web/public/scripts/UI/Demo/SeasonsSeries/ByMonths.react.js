@@ -44,7 +44,7 @@ class SeasonsSeriesByMonth extends Component {
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
 
         const activePoints = SeriesByMonths.filter(point => point.state.active)
-
+        
         return (
             <article className={ this._b.mix( className ) }>
 
@@ -55,7 +55,7 @@ class SeasonsSeriesByMonth extends Component {
                 <VisualSeasonsSeries 
                     className={ this._b('Main') }
                     width={ 30 * columnsLabels.length }
-                    height={ 30 * rowsLabels.length }
+                    height={ 28 * rowsLabels.length }
                     data={ SeriesByMonths } 
                     rowsLabels={ rowsLabels }
                     columnsLabels={ columnsLabels }

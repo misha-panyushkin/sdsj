@@ -88,15 +88,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _App = __webpack_require__(457);
+	var _App = __webpack_require__(460);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Index = __webpack_require__(460);
+	var _Index = __webpack_require__(463);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _reduxThunk = __webpack_require__(472);
+	var _reduxThunk = __webpack_require__(475);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -104,13 +104,13 @@
 
 	var _API2 = _interopRequireDefault(_API);
 
-	__webpack_require__(473);
+	__webpack_require__(476);
 
 	var _bemCn = __webpack_require__(299);
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
-	var _es6Promise = __webpack_require__(474);
+	var _es6Promise = __webpack_require__(477);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
@@ -33938,7 +33938,13 @@
 
 	        SEASONS_SERIES_BY_WEEKS: {
 	            ui: {
-	                sort: {}
+	                sort: {},
+	                mode: {
+	                    datatype: 'expenses',
+	                    gridsize: {
+	                        active: false
+	                    }
+	                }
 	            }
 	        },
 
@@ -51949,6 +51955,18 @@
 	            nextState = nextState.setIn(['data', 'weekByDataPoints'], nextWeekByDataPoints);
 	            return nextState;
 
+	        case _ByWeeks.BY_WEEKS_MODE_DATA_TYPE:
+	            nextState = nextState.updateIn(['ui', 'mode', 'datatype'], function () {
+	                return action.dataType;
+	            });
+	            return nextState;
+
+	        case _ByWeeks.BY_WEEKS_MODE_GRIDSIZE:
+	            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], function (active) {
+	                return action.isActive || !active;
+	            });
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -51966,9 +51984,14 @@
 	exports.setSort = setSort;
 	exports.setHoverCoordinates = setHoverCoordinates;
 	exports.setWeekDaysByDataPoints = setWeekDaysByDataPoints;
+	exports.switchModeDataType = switchModeDataType;
+	exports.switchModeGridSize = switchModeGridSize;
 	var BY_WEEKS_SORT = exports.BY_WEEKS_SORT = 'BY_WEEKS_SORT';
 	var BY_WEEKS_HOVER_COORDINATES = exports.BY_WEEKS_HOVER_COORDINATES = 'BY_WEEKS_HOVER_COORDINATES';
 	var BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS = exports.BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS = 'BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS';
+
+	var BY_WEEKS_MODE_DATA_TYPE = exports.BY_WEEKS_MODE_DATA_TYPE = 'BY_WEEKS_MODE_DATA_TYPE';
+	var BY_WEEKS_MODE_GRIDSIZE = exports.BY_WEEKS_MODE_GRIDSIZE = 'BY_WEEKS_MODE_GRIDSIZE';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -51996,6 +52019,20 @@
 	    return {
 	        type: BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS,
 	        dataPoints: dataPoints
+	    };
+	}
+
+	function switchModeDataType(dataType) {
+	    return {
+	        type: BY_WEEKS_MODE_DATA_TYPE,
+	        dataType: dataType
+	    };
+	}
+
+	function switchModeGridSize(isActive) {
+	    return {
+	        type: BY_WEEKS_MODE_GRIDSIZE,
+	        isActive: isActive
 	    };
 	}
 
@@ -53055,7 +53092,7 @@
 
 	var _ByWeeks2 = _interopRequireDefault(_ByWeeks);
 
-	var _ByMonths = __webpack_require__(449);
+	var _ByMonths = __webpack_require__(453);
 
 	var _ByMonths2 = _interopRequireDefault(_ByMonths);
 
@@ -53149,7 +53186,7 @@
 
 
 	// module
-	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 30px 0 0 0;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 50px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 0px;\n}\n", ""]);
+	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 30px 0 0 0;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 90px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 0px;\n}\n", ""]);
 
 	// exports
 
@@ -55442,6 +55479,7 @@
 	                    return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", '#fff').remove();
 	            } else {
+	                console.log('no color transition exit');
 	                this.cards.exit().interrupt().remove();
 	            }
 
@@ -55471,9 +55509,9 @@
 	                if (d.state) {
 	                    var extra = 0;
 
-	                    if (this.gridSizeMode) nextCoordinate = coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2;
-
-	                    if (d.state.active) {
+	                    if (this.gridSizeMode) {
+	                        nextCoordinate = coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2;
+	                    } else if (d.state.active) {
 	                        extra = 5;
 	                        nextCoordinate = coordinate * this.gridSize + extra;
 	                    } else if (d.state.major) {
@@ -55494,9 +55532,9 @@
 	                if (d.state) {
 	                    var extra = 0;
 
-	                    if (this.gridSizeMode) size = this.gridSize - this.valueBasedGridSizeExtra(d.value);
-
-	                    if (d.state.active) {
+	                    if (this.gridSizeMode) {
+	                        size = this.gridSize - this.valueBasedGridSizeExtra(d.value);
+	                    } else if (d.state.active) {
 	                        extra = -10;
 	                        size = this.gridSize + extra;
 	                    } else if (d.state.major) {
@@ -55518,6 +55556,7 @@
 	                    return getColorFill.call(_this, d);
 	                });
 	            } else {
+	                console.log('no color transition enter');
 	                this.enteredCards.interrupt('fill').style("fill", function (d) {
 	                    return getColorFill.call(_this, d);
 	                });
@@ -55623,6 +55662,10 @@
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
+	var _ByWeeksControls = __webpack_require__(449);
+
+	var _ByWeeksControls2 = _interopRequireDefault(_ByWeeksControls);
+
 	var _VisualComponents = __webpack_require__(306);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -55649,32 +55692,6 @@
 	    }
 
 	    _createClass(SeasonsSeriesByWeeks, [{
-	        key: '__markHoverPoints',
-	        value: function __markHoverPoints(points, _ref) {
-	            var x = _ref.x;
-	            var y = _ref.y;
-
-	            points.forEach(function (point) {
-	                point.state.active = false;
-
-	                if (!isNaN(x) && !isNaN(y)) {
-	                    if (point.x == x && point.y == y) {
-	                        point.state.active = true;
-	                    }
-	                } else if (!isNaN(x)) {
-	                    if (point.x == x) {
-	                        point.state.active = true;
-	                    }
-	                    return;
-	                } else if (!isNaN(y)) {
-	                    if (point.y == y) {
-	                        point.state.active = true;
-	                    }
-	                    return;
-	                }
-	            });
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -55687,21 +55704,10 @@
 	            var rowsLabels = _props.rowsLabels;
 	            var columnsLabels = _props.columnsLabels;
 	            var hoverCoordinates = _props.hoverCoordinates;
+	            var isActiveModeGridSize = _props.isActiveModeGridSize;
 
 
 	            var hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y);
-
-	            this.__markHoverPoints(SeriesByWeeks, {
-	                x: hoverCoordinates.x,
-	                y: hoverCoordinates.y
-	            });
-	            this.__markHoverPoints(SeriesByWeeksSumByOX, {
-	                x: hoverCoordinates.x
-	            });
-	            this.__markHoverPoints(SeriesByWeeksSumByOY, {
-	                y: hoverCoordinates.y
-	            });
-
 	            var activePoints = SeriesByWeeks.filter(function (point) {
 	                return point.state.active;
 	            });
@@ -55709,6 +55715,9 @@
 	            return _react2.default.createElement(
 	                'article',
 	                { className: this._b.mix(className) },
+	                _react2.default.createElement(_ByWeeksControls2.default, {
+	                    className: this._b('Controls').toString()
+	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('Main'),
 	                    width: 30 * columnsLabels.length,
@@ -55729,7 +55738,16 @@
 	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: rowsLabels.length
-	                    }
+	                    },
+
+	                    margins: {
+	                        top: 50,
+	                        right: 0,
+	                        bottom: 50,
+	                        left: 60
+	                    },
+
+	                    gridSizeMode: isActiveModeGridSize
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
@@ -55890,13 +55908,54 @@
 	    return Object.assign({}, (0, _ByWeeks2.default)({
 	        state: state
 	    }), {
-	        hoverCoordinates: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS()
+	        hoverCoordinates: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS(),
+	        isActiveModeGridSize: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'gridsize', 'active'], false)
 	    });
 	}, function (dispatch) {
 	    return {
 	        ByWeeksActions: (0, _redux.bindActionCreators)(ByWeeksActions, dispatch)
 	    };
+	}, function (stateProps, dispatchProps, ownProps) {
+
+	    __markHoverPoints(stateProps.SeriesByWeeks, {
+	        x: stateProps.hoverCoordinates.x,
+	        y: stateProps.hoverCoordinates.y
+	    });
+	    __markHoverPoints(stateProps.SeriesByWeeksSumByOX, {
+	        x: stateProps.hoverCoordinates.x
+	    });
+	    __markHoverPoints(stateProps.SeriesByWeeksSumByOY, {
+	        y: stateProps.hoverCoordinates.y
+	    });
+
+	    return Object.assign({}, ownProps, stateProps, dispatchProps);
 	})(SeasonsSeriesByWeeks);
+
+
+	function __markHoverPoints(points, _ref) {
+	    var x = _ref.x;
+	    var y = _ref.y;
+
+	    points.forEach(function (point) {
+	        point.state.active = false;
+
+	        if (!isNaN(x) && !isNaN(y)) {
+	            if (point.x == x && point.y == y) {
+	                point.state.active = true;
+	            }
+	        } else if (!isNaN(x)) {
+	            if (point.x == x) {
+	                point.state.active = true;
+	            }
+	            return;
+	        } else if (!isNaN(y)) {
+	            if (point.y == y) {
+	                point.state.active = true;
+	            }
+	            return;
+	        }
+	    });
+	}
 
 /***/ },
 /* 336 */
@@ -55960,22 +56019,27 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var getWeekByDataPoints = function getWeekByDataPoints(_ref) {
+	var getDataType = function getDataType(_ref) {
 	    var state = _ref.state;
+	    return state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'datatype']);
+	};
+
+	var getWeekByDataPoints = function getWeekByDataPoints(_ref2) {
+	    var state = _ref2.state;
 	    return state.DemoSeasonsSeriesByWeeks.getIn(['data', 'weekByDataPoints'], _immutable2.default.List());
 	};
 
-	var getSort = function getSort(_ref2) {
-	    var state = _ref2.state;
+	var getSort = function getSort(_ref3) {
+	    var state = _ref3.state;
 	    return state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'sort'], _immutable2.default.Map());
 	};
 
-	var getSeriesByWeeks = function getSeriesByWeeks(_ref3) {
-	    var state = _ref3.state;
+	var getSeriesByWeeks = function getSeriesByWeeks(_ref4) {
+	    var state = _ref4.state;
 	    return state.DemoSeasonsSeries.getIn(['data', 'series', 'byWeek'], _immutable2.default.List());
 	};
 
-	var ByWeeks = (0, _reselect.createSelector)([getSeriesByWeeks, getSort, getWeekByDataPoints], function (seriesByWeeks, sortData, weekByDataPoints) {
+	var ByWeeks = (0, _reselect.createSelector)([getSeriesByWeeks, getSort, getWeekByDataPoints, getDataType], function (seriesByWeeks, sortData, weekByDataPoints, dataType) {
 
 	    var SeriesByWeeks = seriesByWeeks;
 
@@ -55997,8 +56061,8 @@
 	    if (xOrder) {
 	        SeriesByWeeks = SeriesByWeeks.map(function (day) {
 	            var sorted = day.get('byHour').sort(function (a, b) {
-	                var aAbs = Math.abs(a.getIn(['total', 'expenses']));
-	                var bAbs = Math.abs(b.getIn(['total', 'expenses']));
+	                var aAbs = Math.abs(a.getIn(['total', dataType]));
+	                var bAbs = Math.abs(b.getIn(['total', dataType]));
 	                if (aAbs < bAbs) {
 	                    return xOrder == 'asc' ? -1 : 1;
 	                } else if (aAbs > bAbs) {
@@ -56016,10 +56080,10 @@
 	    if (yOrder) {
 	        SeriesByWeeks = SeriesByWeeks.sort(function (a, b) {
 	            var aSumm = a.get('byHour').reduce(function (s, v) {
-	                return v.getIn(['total', 'expenses']) + s;
+	                return v.getIn(['total', dataType]) + s;
 	            }, 0);
 	            var bSumm = b.get('byHour').reduce(function (s, v) {
-	                return v.getIn(['total', 'expenses']) + s;
+	                return v.getIn(['total', dataType]) + s;
 	            }, 0);
 
 	            if (aSumm < bSumm) {
@@ -56045,7 +56109,7 @@
 	    SeriesByWeeks = SeriesByWeeks.map(function (day) {
 	        return day.get('byHour').map(function (hour) {
 	            return _immutable2.default.Map({
-	                value: hour.getIn(['total', 'expenses']),
+	                value: hour.getIn(['total', dataType]),
 	                data: hour.set('state', day.get('state'))
 	            });
 	        });
@@ -70864,11 +70928,424 @@
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
+	var _reactFontawesome = __webpack_require__(452);
+
+	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
+	var _ByWeeks = __webpack_require__(290);
+
+	var ByWeeksActions = _interopRequireWildcard(_ByWeeks);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ByWeeksControls = function (_Component) {
+	    _inherits(ByWeeksControls, _Component);
+
+	    function ByWeeksControls(props) {
+	        _classCallCheck(this, ByWeeksControls);
+
+	        var _this = _possibleConstructorReturn(this, (ByWeeksControls.__proto__ || Object.getPrototypeOf(ByWeeksControls)).call(this, props));
+
+	        _this.boxClassName = 'ByWeeksControls';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(ByWeeksControls, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var _props = this.props;
+	            var className = _props.className;
+	            var weekDaysSortCurrent = _props.weekDaysSortCurrent;
+	            var dayHoursSortCurrent = _props.dayHoursSortCurrent;
+	            var dataType = _props.dataType;
+	            var isActiveModeGridSize = _props.isActiveModeGridSize;
+
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b.mix(className) },
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('DayHoursSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DayHoursSortDefault').mix(['Item', !dayHoursSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleDayHoursSortDefaultClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DayHoursSortAsc').mix(['Item', dayHoursSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDayHoursSortAscClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DayHoursSortDesc').mix(['Item', dayHoursSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDayHoursSortDescClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('WeekDaysSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('WeekDaysSortAsc').mix(['Item', weekDaysSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleWeekDaysSortAscClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('WeekDaysSortDesc').mix(['Item', weekDaysSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleWeekDaysSortDescClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('WeekDaysSortDefault').mix(['Item', !weekDaysSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleWeekDaysSortDefaultClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('Modes')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeIncome').mix(['Item', dataType == 'incomes' ? 'Active' : '']).toString(),
+	                        name: 'plus',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeIncomeClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeExpense').mix(['Item', dataType == 'expenses' ? 'Active' : '']).toString(),
+	                        name: 'minus',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeExpenseClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeGridSize').mix(['Item', isActiveModeGridSize ? 'Active' : '']).toString(),
+	                        name: 'circle',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeGridSizeClick();
+	                        }
+	                    })
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'handleWeekDaysSortDefaultClick',
+	        value: function handleWeekDaysSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleWeekDaysSortAscClick',
+	        value: function handleWeekDaysSortAscClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleWeekDaysSortDescClick',
+	        value: function handleWeekDaysSortDescClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDayHoursSortDefaultClick',
+	        value: function handleDayHoursSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleDayHoursSortAscClick',
+	        value: function handleDayHoursSortAscClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDayHoursSortDescClick',
+	        value: function handleDayHoursSortDescClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleSort',
+	        value: function handleSort() {
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.setSort.apply(ByWeeksActions, arguments);
+	        }
+	    }, {
+	        key: 'handleModeIncomeClick',
+	        value: function handleModeIncomeClick() {
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeDataType('incomes');
+	        }
+	    }, {
+	        key: 'handleModeExpenseClick',
+	        value: function handleModeExpenseClick() {
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeDataType('expenses');
+	        }
+	    }, {
+	        key: 'handleModeGridSizeClick',
+	        value: function handleModeGridSizeClick() {
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeGridSize();
+	        }
+	    }]);
+
+	    return ByWeeksControls;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        dayHoursSortCurrent: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'sort', 'x', 'order']),
+	        weekDaysSortCurrent: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'sort', 'y', 'order']),
+
+	        dataType: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'datatype']),
+	        isActiveModeGridSize: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'gridsize', 'active'], false)
+	    };
+	}, function (dispatch) {
+	    return {
+	        ByWeeksActions: (0, _redux.bindActionCreators)(ByWeeksActions, dispatch)
+	    };
+	})(ByWeeksControls);
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(451);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByWeeksControls.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByWeeksControls.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".ByWeeksControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByWeeksControls__WeekDaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 173px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByWeeksControls__WeekDaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByWeeksControls__WeekDaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByWeeksControls__WeekDaysSort:after {\n  content: 'WEEK DAYS';\n  position: absolute;\n  top: 1px;\n  left: 99px;\n  width: 84px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByWeeksControls__DayHoursSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -67px;\n  left: 119px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByWeeksControls__DayHoursSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByWeeksControls__DayHoursSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByWeeksControls__DayHoursSort:after {\n  content: 'HOURS';\n  position: absolute;\n  top: 24px;\n  left: -56px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByWeeksControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 19px;\n  left: 60px;\n}\n.ByWeeksControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByWeeksControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByWeeksControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByWeeksControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByWeeksControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByWeeksControls__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	/**
+	 * A React component for the font-awesome icon library.
+	 *
+	 *
+	 * @param {Boolean} [border=false] Whether or not to show a border radius
+	 * @param {String} [className] An extra set of CSS classes to add to the component
+	 * @param {Object} [cssModule] Option to pass FontAwesome CSS as a module
+	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
+	 * @param {String} [flip=false] Flip the icon's orientation.
+	 * @param {Boolean} [inverse=false]Inverse the icon's color
+	 * @param {String} name Name of the icon to use
+	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
+	 * @param {Number} [rotate] The degress to rotate the icon by
+	 * @param {String} [size] The icon scaling size
+	 * @param {Boolean} [spin=false] Spin the icon
+	 * @param {String} [stack] Stack an icon on top of another
+	 * @module FontAwesome
+	 * @type {ReactClass}
+	 */
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'FontAwesome',
+
+	  propTypes: {
+	    border: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    cssModule: _react2.default.PropTypes.object,
+	    fixedWidth: _react2.default.PropTypes.bool,
+	    flip: _react2.default.PropTypes.oneOf(['horizontal', 'vertical']),
+	    inverse: _react2.default.PropTypes.bool,
+	    name: _react2.default.PropTypes.string.isRequired,
+	    pulse: _react2.default.PropTypes.bool,
+	    rotate: _react2.default.PropTypes.oneOf([90, 180, 270]),
+	    size: _react2.default.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
+	    spin: _react2.default.PropTypes.bool,
+	    stack: _react2.default.PropTypes.oneOf(['1x', '2x'])
+	  },
+
+	  render: function render() {
+	    var _props = this.props;
+	    var border = _props.border;
+	    var cssModule = _props.cssModule;
+	    var className = _props.className;
+	    var fixedWidth = _props.fixedWidth;
+	    var flip = _props.flip;
+	    var inverse = _props.inverse;
+	    var name = _props.name;
+	    var pulse = _props.pulse;
+	    var rotate = _props.rotate;
+	    var size = _props.size;
+	    var spin = _props.spin;
+	    var stack = _props.stack;
+
+	    var props = _objectWithoutProperties(_props, ['border', 'cssModule', 'className', 'fixedWidth', 'flip', 'inverse', 'name', 'pulse', 'rotate', 'size', 'spin', 'stack']);
+
+	    var classNames = [];
+
+	    if (cssModule) {
+	      classNames.push(cssModule['fa']);
+	      classNames.push(cssModule['fa-' + name]);
+	      size && classNames.push(cssModule['fa-' + size]);
+	      spin && classNames.push(cssModule['fa-spin']);
+	      pulse && classNames.push(cssModule['fa-pulse']);
+	      border && classNames.push(cssModule['fa-border']);
+	      fixedWidth && classNames.push(cssModule['fa-fw']);
+	      inverse && classNames.push(cssModule['fa-inverse']);
+	      flip && classNames.push(cssModule['fa-flip-' + flip]);
+	      rotate && classNames.push(cssModule['fa-rotate-' + rotate]);
+	      stack && classNames.push(cssModule['fa-stack-' + stack]);
+	    } else {
+	      classNames.push('fa');
+	      classNames.push('fa-' + name);
+	      size && classNames.push('fa-' + size);
+	      spin && classNames.push('fa-spin');
+	      pulse && classNames.push('fa-pulse');
+	      border && classNames.push('fa-border');
+	      fixedWidth && classNames.push('fa-fw');
+	      inverse && classNames.push('fa-inverse');
+	      flip && classNames.push('fa-flip-' + flip);
+	      rotate && classNames.push('fa-rotate-' + rotate);
+	      stack && classNames.push('fa-stack-' + stack);
+	    }
+
+	    // Add any custom class names at the end.
+	    className && classNames.push(className);
+
+	    return _react2.default.createElement('span', _extends({}, props, {
+	      className: classNames.join(' ')
+	    }));
+	  }
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(454);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
 	var _immutable = __webpack_require__(265);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _ByMonths = __webpack_require__(452);
+	var _ByMonths = __webpack_require__(456);
 
 	var _ByMonths2 = _interopRequireDefault(_ByMonths);
 
@@ -70884,7 +71361,7 @@
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
-	var _ByMonthsControls = __webpack_require__(453);
+	var _ByMonthsControls = __webpack_require__(457);
 
 	var _ByMonthsControls2 = _interopRequireDefault(_ByMonthsControls);
 
@@ -70946,7 +71423,7 @@
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('Main'),
 	                    width: 30 * columnsLabels.length,
-	                    height: 30 * rowsLabels.length,
+	                    height: 28 * rowsLabels.length,
 	                    data: SeriesByMonths,
 	                    rowsLabels: rowsLabels,
 	                    columnsLabels: columnsLabels,
@@ -71284,13 +71761,13 @@
 	}
 
 /***/ },
-/* 450 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(451);
+	var content = __webpack_require__(455);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71310,7 +71787,7 @@
 	}
 
 /***/ },
-/* 451 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71324,7 +71801,7 @@
 
 
 /***/ },
-/* 452 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71473,7 +71950,7 @@
 	exports.default = ByMonths;
 
 /***/ },
-/* 453 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71484,7 +71961,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(454);
+	__webpack_require__(458);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71502,7 +71979,7 @@
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
-	var _reactFontawesome = __webpack_require__(456);
+	var _reactFontawesome = __webpack_require__(452);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -71750,13 +72227,13 @@
 	})(ByMonthsControls);
 
 /***/ },
-/* 454 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(455);
+	var content = __webpack_require__(459);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71776,7 +72253,7 @@
 	}
 
 /***/ },
-/* 455 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71784,126 +72261,13 @@
 
 
 	// module
-	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 33px;\n  left: 91px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByMonthsControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
+	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 19px;\n  left: 86px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByMonthsControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 456 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	/**
-	 * A React component for the font-awesome icon library.
-	 *
-	 *
-	 * @param {Boolean} [border=false] Whether or not to show a border radius
-	 * @param {String} [className] An extra set of CSS classes to add to the component
-	 * @param {Object} [cssModule] Option to pass FontAwesome CSS as a module
-	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
-	 * @param {String} [flip=false] Flip the icon's orientation.
-	 * @param {Boolean} [inverse=false]Inverse the icon's color
-	 * @param {String} name Name of the icon to use
-	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
-	 * @param {Number} [rotate] The degress to rotate the icon by
-	 * @param {String} [size] The icon scaling size
-	 * @param {Boolean} [spin=false] Spin the icon
-	 * @param {String} [stack] Stack an icon on top of another
-	 * @module FontAwesome
-	 * @type {ReactClass}
-	 */
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'FontAwesome',
-
-	  propTypes: {
-	    border: _react2.default.PropTypes.bool,
-	    className: _react2.default.PropTypes.string,
-	    cssModule: _react2.default.PropTypes.object,
-	    fixedWidth: _react2.default.PropTypes.bool,
-	    flip: _react2.default.PropTypes.oneOf(['horizontal', 'vertical']),
-	    inverse: _react2.default.PropTypes.bool,
-	    name: _react2.default.PropTypes.string.isRequired,
-	    pulse: _react2.default.PropTypes.bool,
-	    rotate: _react2.default.PropTypes.oneOf([90, 180, 270]),
-	    size: _react2.default.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
-	    spin: _react2.default.PropTypes.bool,
-	    stack: _react2.default.PropTypes.oneOf(['1x', '2x'])
-	  },
-
-	  render: function render() {
-	    var _props = this.props;
-	    var border = _props.border;
-	    var cssModule = _props.cssModule;
-	    var className = _props.className;
-	    var fixedWidth = _props.fixedWidth;
-	    var flip = _props.flip;
-	    var inverse = _props.inverse;
-	    var name = _props.name;
-	    var pulse = _props.pulse;
-	    var rotate = _props.rotate;
-	    var size = _props.size;
-	    var spin = _props.spin;
-	    var stack = _props.stack;
-
-	    var props = _objectWithoutProperties(_props, ['border', 'cssModule', 'className', 'fixedWidth', 'flip', 'inverse', 'name', 'pulse', 'rotate', 'size', 'spin', 'stack']);
-
-	    var classNames = [];
-
-	    if (cssModule) {
-	      classNames.push(cssModule['fa']);
-	      classNames.push(cssModule['fa-' + name]);
-	      size && classNames.push(cssModule['fa-' + size]);
-	      spin && classNames.push(cssModule['fa-spin']);
-	      pulse && classNames.push(cssModule['fa-pulse']);
-	      border && classNames.push(cssModule['fa-border']);
-	      fixedWidth && classNames.push(cssModule['fa-fw']);
-	      inverse && classNames.push(cssModule['fa-inverse']);
-	      flip && classNames.push(cssModule['fa-flip-' + flip]);
-	      rotate && classNames.push(cssModule['fa-rotate-' + rotate]);
-	      stack && classNames.push(cssModule['fa-stack-' + stack]);
-	    } else {
-	      classNames.push('fa');
-	      classNames.push('fa-' + name);
-	      size && classNames.push('fa-' + size);
-	      spin && classNames.push('fa-spin');
-	      pulse && classNames.push('fa-pulse');
-	      border && classNames.push('fa-border');
-	      fixedWidth && classNames.push('fa-fw');
-	      inverse && classNames.push('fa-inverse');
-	      flip && classNames.push('fa-flip-' + flip);
-	      rotate && classNames.push('fa-rotate-' + rotate);
-	      stack && classNames.push('fa-stack-' + stack);
-	    }
-
-	    // Add any custom class names at the end.
-	    className && classNames.push(className);
-
-	    return _react2.default.createElement('span', _extends({}, props, {
-	      className: classNames.join(' ')
-	    }));
-	  }
-	});
-	module.exports = exports['default'];
-
-/***/ },
-/* 457 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71914,7 +72278,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(458);
+	__webpack_require__(461);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71975,13 +72339,13 @@
 	})(App);
 
 /***/ },
-/* 458 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(459);
+	var content = __webpack_require__(462);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72001,7 +72365,7 @@
 	}
 
 /***/ },
-/* 459 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72015,7 +72379,7 @@
 
 
 /***/ },
-/* 460 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72026,7 +72390,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(461);
+	__webpack_require__(464);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72056,19 +72420,19 @@
 
 	var MccCodesActions = _interopRequireWildcard(_MccCodes);
 
-	var _Visualisation = __webpack_require__(463);
+	var _Visualisation = __webpack_require__(466);
 
 	var _Visualisation2 = _interopRequireDefault(_Visualisation);
 
-	var _Settings = __webpack_require__(466);
+	var _Settings = __webpack_require__(469);
 
 	var _Settings2 = _interopRequireDefault(_Settings);
 
-	var _Header = __webpack_require__(469);
+	var _Header = __webpack_require__(472);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _reactFontawesome = __webpack_require__(456);
+	var _reactFontawesome = __webpack_require__(452);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72140,13 +72504,13 @@
 	})(Index);
 
 /***/ },
-/* 461 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(462);
+	var content = __webpack_require__(465);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72166,7 +72530,7 @@
 	}
 
 /***/ },
-/* 462 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72180,7 +72544,7 @@
 
 
 /***/ },
-/* 463 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72193,7 +72557,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(464);
+	__webpack_require__(467);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72312,13 +72676,13 @@
 	})(Visualisation);
 
 /***/ },
-/* 464 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(465);
+	var content = __webpack_require__(468);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72338,7 +72702,7 @@
 	}
 
 /***/ },
-/* 465 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72352,7 +72716,7 @@
 
 
 /***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72363,7 +72727,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(467);
+	__webpack_require__(470);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72389,7 +72753,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(456);
+	var _reactFontawesome = __webpack_require__(452);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72833,13 +73197,13 @@
 	}(_react.Component);
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(468);
+	var content = __webpack_require__(471);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72859,7 +73223,7 @@
 	}
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72873,7 +73237,7 @@
 
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72884,7 +73248,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(470);
+	__webpack_require__(473);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72906,7 +73270,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(456);
+	var _reactFontawesome = __webpack_require__(452);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72985,13 +73349,13 @@
 	})(Header);
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(471);
+	var content = __webpack_require__(474);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -73011,7 +73375,7 @@
 	}
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -73025,7 +73389,7 @@
 
 
 /***/ },
-/* 472 */
+/* 475 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -73053,7 +73417,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 473 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! Moment Duration Format v1.3.0
@@ -73541,7 +73905,7 @@
 
 
 /***/ },
-/* 474 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -73676,7 +74040,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(475);
+	    var vertx = __webpack_require__(478);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -74701,7 +75065,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 475 */
+/* 478 */
 /***/ function(module, exports) {
 
 	/* (ignored) */

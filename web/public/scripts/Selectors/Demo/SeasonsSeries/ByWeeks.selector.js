@@ -4,6 +4,9 @@ import {
 } from 'reselect'
 import moment from 'moment'
 
+const getDataType = ({ state }) =>
+    state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'datatype'])
+
 const getWeekByDataPoints = ({ state }) =>
     state.DemoSeasonsSeriesByWeeks.getIn(['data', 'weekByDataPoints'], I.List())
 
@@ -14,8 +17,8 @@ const getSeriesByWeeks = ({ state }) =>
     state.DemoSeasonsSeries.getIn(['data', 'series', 'byWeek'], I.List())
 
 const ByWeeks = createSelector(
-    [ getSeriesByWeeks, getSort, getWeekByDataPoints ],
-    ( seriesByWeeks, sortData, weekByDataPoints ) => {
+    [ getSeriesByWeeks, getSort, getWeekByDataPoints, getDataType ],
+    ( seriesByWeeks, sortData, weekByDataPoints, dataType ) => {
 
         let SeriesByWeeks = seriesByWeeks
 
@@ -33,8 +36,8 @@ const ByWeeks = createSelector(
         if (xOrder) {
             SeriesByWeeks = SeriesByWeeks.map(day => {
                 const sorted = day.get('byHour').sort((a,b) => {
-                    const aAbs = Math.abs(a.getIn(['total', 'expenses']))
-                    const bAbs = Math.abs(b.getIn(['total', 'expenses']))
+                    const aAbs = Math.abs(a.getIn(['total', dataType]))
+                    const bAbs = Math.abs(b.getIn(['total', dataType]))
                     if (aAbs < bAbs) {
                         return xOrder == 'asc' ? -1 : 1
                     } else if (aAbs > bAbs) {
@@ -51,8 +54,8 @@ const ByWeeks = createSelector(
         const yOrder = sortData.getIn(['y', 'order'])
         if (yOrder) {
             SeriesByWeeks = SeriesByWeeks.sort((a, b) => {
-                const aSumm = a.get('byHour').reduce((s, v) => v.getIn(['total', 'expenses']) + s, 0)
-                const bSumm = b.get('byHour').reduce((s, v) => v.getIn(['total', 'expenses']) + s, 0)
+                const aSumm = a.get('byHour').reduce((s, v) => v.getIn(['total', dataType]) + s, 0)
+                const bSumm = b.get('byHour').reduce((s, v) => v.getIn(['total', dataType]) + s, 0)
                 
                 if (aSumm < bSumm) {
                     return yOrder == 'asc' ? -1 : 1
@@ -80,7 +83,7 @@ const ByWeeks = createSelector(
 
         SeriesByWeeks = SeriesByWeeks.map(day => {
             return day.get('byHour').map(hour => I.Map({
-                value: hour.getIn(['total', 'expenses']),
+                value: hour.getIn(['total', dataType]),
                 data: hour.set('state', day.get('state')),
             }))
         }).toJS()

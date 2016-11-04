@@ -10,6 +10,7 @@ import ByWeeksSelector from 'Selectors/Demo/SeasonsSeries/ByWeeks.selector'
 import * as ByWeeksActions from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
 import AsideInfo from './AsideInfo.react'
+import ByWeeksControls from './ByWeeksControls.react'
 import {
     SeasonsSeries as VisualSeasonsSeries,
 } from 'UI/VisualComponents'
@@ -19,33 +20,6 @@ class SeasonsSeriesByWeeks extends Component {
         super(props)
         this.boxClassName = 'ByWeeks'
         this._b = _b(this.boxClassName)
-    }
-
-    __markHoverPoints (points, {
-        x,
-        y,
-    }) {
-        points.forEach(point => {
-            point.state.active = false
-            
-            if (!isNaN(x) && !isNaN(y)) {
-                if (point.x == x && point.y == y) {
-                    point.state.active = true
-                }
-            
-            } else if (!isNaN(x)) {
-                if (point.x == x) {
-                    point.state.active = true
-                }
-                return
-            
-            } else if (!isNaN(y)) {
-                if (point.y == y) {
-                    point.state.active = true
-                }
-                return
-            }
-        })
     }
 
     render () {
@@ -60,25 +34,20 @@ class SeasonsSeriesByWeeks extends Component {
             columnsLabels,
 
             hoverCoordinates,
+
+            isActiveModeGridSize,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
-
-        this.__markHoverPoints(SeriesByWeeks, {
-            x: hoverCoordinates.x, 
-            y: hoverCoordinates.y,
-        })
-        this.__markHoverPoints(SeriesByWeeksSumByOX, {
-            x: hoverCoordinates.x,
-        })
-        this.__markHoverPoints(SeriesByWeeksSumByOY, {
-            y: hoverCoordinates.y,
-        })
-
         const activePoints = SeriesByWeeks.filter(point => point.state.active)
 
         return (
             <article className={ this._b.mix( className ) }>
+
+                <ByWeeksControls 
+                    className={ this._b('Controls').toString() }
+                    />
+
                 <VisualSeasonsSeries 
                     className={ this._b('Main') }
                     width={ 30 * columnsLabels.length }
@@ -96,6 +65,15 @@ class SeasonsSeriesByWeeks extends Component {
                         width: columnsLabels.length,
                         height: rowsLabels.length,
                     } }
+
+                    margins={ {
+                        top: 50, 
+                        right: 0, 
+                        bottom: 50,
+                        left: 60,
+                    } }
+
+                    gridSizeMode={ isActiveModeGridSize }
                     />
 
                 <VisualSeasonsSeries 
@@ -248,9 +226,57 @@ export default connect(
         }),
         {
             hoverCoordinates: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'hover'], I.Map()).toJS(),
+            isActiveModeGridSize: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'gridsize', 'active'], false),
         },
     ),
     dispatch => ({
         ByWeeksActions: bindActionCreators(ByWeeksActions, dispatch),
-    })
+    }),
+    (stateProps, dispatchProps, ownProps) => {
+
+        __markHoverPoints(stateProps.SeriesByWeeks, {
+            x: stateProps.hoverCoordinates.x, 
+            y: stateProps.hoverCoordinates.y,
+        })
+        __markHoverPoints(stateProps.SeriesByWeeksSumByOX, {
+            x: stateProps.hoverCoordinates.x,
+        })
+        __markHoverPoints(stateProps.SeriesByWeeksSumByOY, {
+            y: stateProps.hoverCoordinates.y,
+        })
+
+        return Object.assign(
+            {},
+            ownProps,
+            stateProps,
+            dispatchProps,
+        )
+    }
 )(SeasonsSeriesByWeeks)
+
+function __markHoverPoints (points, {
+    x,
+    y,
+}) {
+    points.forEach(point => {
+        point.state.active = false
+        
+        if (!isNaN(x) && !isNaN(y)) {
+            if (point.x == x && point.y == y) {
+                point.state.active = true
+            }
+        
+        } else if (!isNaN(x)) {
+            if (point.x == x) {
+                point.state.active = true
+            }
+            return
+        
+        } else if (!isNaN(y)) {
+            if (point.y == y) {
+                point.state.active = true
+            }
+            return
+        }
+    })
+}

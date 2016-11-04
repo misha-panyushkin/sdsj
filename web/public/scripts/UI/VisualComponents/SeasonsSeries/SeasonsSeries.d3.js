@@ -153,6 +153,7 @@ export default class SeasonsSeries {
                 return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
             }).style("fill", '#fff').remove()
         } else {
+            console.log('no color transition exit')
             this.cards.exit().interrupt().remove()
         }
 
@@ -185,14 +186,14 @@ export default class SeasonsSeries {
 
             if (d.state) {
                 let extra = 0
-
-                if (this.gridSizeMode)
+                
+                if (this.gridSizeMode) {
                     nextCoordinate = coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2
 
-                if (d.state.active) {
+                } else if (d.state.active) {
                     extra = 5
                     nextCoordinate = coordinate * this.gridSize + extra
-                
+
                 } else if (d.state.major) {
                     extra = 0
                     nextCoordinate = coordinate * this.gridSize + extra
@@ -212,10 +213,10 @@ export default class SeasonsSeries {
             if (d.state) {
                 let extra = 0
 
-                if (this.gridSizeMode)
+                if (this.gridSizeMode) {
                     size = this.gridSize - this.valueBasedGridSizeExtra(d.value)
 
-                if (d.state.active) {
+                } else if (d.state.active) {
                     extra = -10
                     size = this.gridSize + extra
                 
@@ -239,6 +240,7 @@ export default class SeasonsSeries {
                 }).style("fill", d => getColorFill.call(this, d))
 
         } else {
+            console.log('no color transition enter')
             this.enteredCards
                 .interrupt('fill')
                 .style("fill", d => getColorFill.call(this, d))

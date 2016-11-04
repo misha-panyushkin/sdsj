@@ -5,6 +5,9 @@ import {
     BY_WEEKS_SORT,
     BY_WEEKS_HOVER_COORDINATES,
     BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS,
+
+    BY_WEEKS_MODE_DATA_TYPE,
+    BY_WEEKS_MODE_GRIDSIZE,
 } from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
 const DEFAULT_STATE = APP_MOCKS.getIn(['DEMO', 'SEASONS_SERIES_BY_WEEKS'])
@@ -63,6 +66,14 @@ export default function ByWeeksUI (state = DEFAULT_STATE, action) {
             nextState = nextState.setIn(['data', 'weekByDataPoints'], nextWeekByDataPoints)
             return nextState
 
+
+        case BY_WEEKS_MODE_DATA_TYPE:
+            nextState = nextState.updateIn(['ui', 'mode', 'datatype'], () => action.dataType)
+            return nextState
+
+        case BY_WEEKS_MODE_GRIDSIZE:
+            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => action.isActive || !active)
+            return nextState
 
         default:
             return nextState

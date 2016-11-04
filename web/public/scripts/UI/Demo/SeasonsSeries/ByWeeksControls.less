@@ -1,4 +1,4 @@
-.ByMonthsControls {
+.ByWeeksControls {
     position: absolute;
     left: 0;
     top: 0;
@@ -8,13 +8,13 @@
 
     padding-bottom: 50px;
 
-    &__MonthsSort {
+    &__WeekDaysSort {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-around;
         
         position: absolute;
-        top: 154px;
+        top: 173px;
         left: -57px;
         width: 90px;
         transform: rotate(-90deg);
@@ -34,11 +34,12 @@
             color: #fff;
         }
     }
-    &__MonthsSort:after {
-        content: 'MONTHS';
+    &__WeekDaysSort:after {
+        content: 'WEEK DAYS';
         position: absolute;
-        top: 0px;
+        top: 1px;
         left: 99px;
+        width: 84px;
         font-size: 13px;
         color: #666;
         text-align: center;
@@ -46,12 +47,12 @@
         padding-bottom: 4px;
 
     }
-    &__MonthsSortDefault {}
-    &__MonthsSortAsc {}
-    &__MonthsSortDesc {}
+    &__WeekDaysSortDefault {}
+    &__WeekDaysSortAsc {}
+    &__WeekDaysSortDesc {}
 
 
-    &__DaysSort {
+    &__DayHoursSort {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-around;
@@ -59,8 +60,8 @@
         padding-top: 22px;
         margin-top: 16px;
         position: absolute;
-        top: -69px;
-        left: 139px;
+        top: -67px;
+        left: 119px;
         width: 91px;
         border-bottom: 1px dashed #ccc;
         padding-bottom: 4px;
@@ -78,11 +79,11 @@
             color: #fff;
         }
     }
-    &__DaysSort:after {
-        content: 'DAYS';
+    &__DayHoursSort:after {
+        content: 'HOURS';
         position: absolute;
         top: 24px;
-        left: -51px;
+        left: -56px;
         font-size: 13px;
         color: #666;
         border-bottom: 1px dashed #ccc;
@@ -90,9 +91,9 @@
         text-align: center;
         padding-bottom: 4px;
     }
-    &__DaysSortDefault {}
-    &__DaysSortAsc {}
-    &__DaysSortDesc {}
+    &__DayHoursSortDefault {}
+    &__DayHoursSortAsc {}
+    &__DayHoursSortDesc {}
 
 
 
@@ -103,7 +104,7 @@
 
         position: absolute;
         bottom: 19px;
-        left: 86px;
+        left: 60px;
 
 
         .Item {
