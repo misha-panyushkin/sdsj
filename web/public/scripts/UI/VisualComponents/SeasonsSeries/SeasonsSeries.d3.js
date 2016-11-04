@@ -23,6 +23,14 @@ export default class SeasonsSeries {
             .range(["#d1d4ff", "#363da3"])
             .interpolate(d3.interpolateHcl)
 
+        this.weatherModeColors = d3.scaleLinear()
+            .range(["#283593", "#283593", "#1565C0", "#42A5F5", "#E3F2FD", "#B3E5FC", "#CDDC39", "#FFEB3B", "#FF9800", "#FF5722",  "#E53935",  "#B71C1C"])
+            .domain([-20,       -15,       -10,       -5,        0,         5,         10,        15,       20,        25,         30,         35])
+            // .interpolate(d3.interpolateHcl)
+
+        this.weatherModeColorOpacity = d3.scaleLinear()
+            .range([.6, 1])
+
         // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]
 
         this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
@@ -39,6 +47,7 @@ export default class SeasonsSeries {
         eventHandlers,
         smoothTransitions,
         sizes,
+        weatherMode,
      }) {
         this.data = data
 
@@ -60,6 +69,13 @@ export default class SeasonsSeries {
 
         this.smoothTransitions = smoothTransitions
 
+        this.weatherMode = weatherMode
+
+        if (this.weatherMode) {
+            this.valueBasedGridSizeExtra = d3.scaleLinear()
+                .range([this.gridSize - 5, 0])
+        }
+
         this.updateWithData()
     }
 
@@ -67,12 +83,14 @@ export default class SeasonsSeries {
 
         const min = d3.min(this.data, d => d.value)
         const max = d3.max(this.data, d => d.value)
+        
         if (min < 0 || max == 0) {
             this.colors.domain([
                 d3.max(this.data, d => d.value),
                 d3.min(this.data, d => d.value),
             ])
             this.selectedColors.domain(this.colors.domain())
+            this.weatherModeColorOpacity.domain(this.colors.domain())
             
         } else if (max > 0 || min == 0) {
             this.colors.domain([
@@ -80,6 +98,15 @@ export default class SeasonsSeries {
                 d3.max(this.data, d => d.value),
             ])
             this.selectedColors.domain(this.colors.domain())
+            this.weatherModeColorOpacity.domain(this.colors.domain())
+        }
+
+        if (this.weatherMode) {
+            this.valueBasedGridSizeExtra.domain(this.colors.domain())
+        //     this.weatherModeColors.domain([
+        //         d3.min(this.data, d => d.data.extra.weather.data.temperature),
+        //         d3.max(this.data, d => d.data.extra.weather.data.temperature),
+        //     ])
         }
 
         // this.focus.selectAll(".yLabel").text(d => d)
@@ -144,67 +171,90 @@ export default class SeasonsSeries {
             })
 
         this.enteredCards.transition('position:size').duration(300)
-            .attr("x", d => getCoordinateByState(d.x, d, this.gridSize))
-            .attr("y", d => getCoordinateByState(d.y, d, this.gridSize))
-            .attr("width", d => getSizeByState(d, this.gridSize))
-            .attr("height", d => getSizeByState(d, this.gridSize))
+            .attr("x", d => getCoordinateByState.call(this, d.x, d))
+            .attr("y", d => getCoordinateByState.call(this, d.y, d))
+            .attr("width", d => getSizeByState.call(this, d))
+            .attr("height", d => getSizeByState.call(this, d))
             .attr("class", "card bordered")
 
-        function getCoordinateByState (coordinate, d, gridSize) {
-            let extra = 0
-            if (d.state) {
-                if (d.state.active) {
-                    extra = 5
-                
-                } else if (d.state.major) {
-                    extra = 0
-                
-                } else if (d.state.minor) {
-                    extra = 10
+        function getCoordinateByState (coordinate, d) {
+            if (this.weatherMode) {
+                return coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2
+
+            } else {
+                let extra = 0
+                if (d.state) {
+                    if (d.state.active) {
+                        extra = 5
+                    
+                    } else if (d.state.major) {
+                        extra = 0
+                    
+                    } else if (d.state.minor) {
+                        extra = 10
+                    }
                 }
+                return coordinate * this.gridSize + extra
             }
-            return coordinate * gridSize + extra
         }
 
-        function getSizeByState (d, gridSize) {
-            let extra = 0
-            if (d.state) {
-                if (d.state.active) {
-                    extra = -10
-                
-                } else if (d.state.major) {
-                    extra = 0
-                
-                } else if (d.state.minor) {
-                    extra = -20
+        function getSizeByState (d) {
+            if (this.weatherMode) {
+                return this.gridSize - this.valueBasedGridSizeExtra(d.value) 
+
+            } else {
+                let extra = 0
+                if (d.state) {
+                    if (d.state.active) {
+                        extra = -10
+                    
+                    } else if (d.state.major) {
+                        extra = 0
+                    
+                    } else if (d.state.minor) {
+                        extra = -20
+                    }
                 }
+                return this.gridSize + extra
             }
-            return gridSize + extra
         }
 
         if (this.smoothTransitions) {
             this.enteredCards
                 .transition('fill').duration((d, i) => {
                     return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
-                }).style("fill", d => getColorFillByState(d, this.colors(d.value), this.selectedColors(d.value)))
+                }).style("fill", d => getColorFill.call(this, d))
 
         } else {
             this.enteredCards
                 .interrupt('fill')
-                .style("fill", d => getColorFillByState(d, this.colors(d.value), this.selectedColors(d.value)))
+                .style("fill", d => getColorFill.call(this, d))
         }
 
-        function getColorFillByState (d, defaultColor, selectedColor) {
-            let color = defaultColor
-            if (d.state) {
-                if (d.state.selected) {
-                    color = selectedColor
-                
-                } else if (d.state.major) {
-                    color = selectedColor
+        function getColorFill (d) {
+            
+            if (this.weatherMode) {
+                const weatherColor = this.weatherModeColors(d.data.extra.weather.data.temperature)
+                const weatherColorOpacity = this.weatherModeColorOpacity(d.value)
+                const color = d3.color(weatherColor)
+                color.opacity = weatherColorOpacity
+                return color.toString()
+            
+            } else {
+                const defaultColor = this.colors(d.value)
+                const selectedColor = this.selectedColors(d.value)
+
+                let color = defaultColor
+                if (d.state) {
+                    if (d.state.selected) {
+                        color = selectedColor
+                    
+                    } else if (d.state.major) {
+                        color = selectedColor
+                    }
                 }
+                return color
             }
-            return color
         }
 
         // this.cards.select("title").text(d => d.value)

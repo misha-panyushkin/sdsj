@@ -88,15 +88,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _App = __webpack_require__(450);
+	var _App = __webpack_require__(453);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Index = __webpack_require__(453);
+	var _Index = __webpack_require__(456);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _reduxThunk = __webpack_require__(466);
+	var _reduxThunk = __webpack_require__(469);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -104,13 +104,13 @@
 
 	var _API2 = _interopRequireDefault(_API);
 
-	__webpack_require__(467);
+	__webpack_require__(470);
 
 	var _bemCn = __webpack_require__(299);
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
-	var _es6Promise = __webpack_require__(468);
+	var _es6Promise = __webpack_require__(471);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
@@ -52059,6 +52059,12 @@
 
 	            return nextState;
 
+	        case _ByMonths.BY_MONTHS_MODE_WEATHER:
+	            nextState = nextState.updateIn(['ui', 'mode', 'weather', 'active'], function (active) {
+	                return action.isActive || !active;
+	            });
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -52076,9 +52082,12 @@
 	exports.setSort = setSort;
 	exports.setHoverCoordinates = setHoverCoordinates;
 	exports.setSelectedCoordinates = setSelectedCoordinates;
+	exports.switchModeWeather = switchModeWeather;
 	var BY_MONTHS_SORT = exports.BY_MONTHS_SORT = 'BY_MONTHS_SORT';
 	var BY_MONTHS_HOVER_COORDINATES = exports.BY_MONTHS_HOVER_COORDINATES = 'BY_MONTHS_HOVER_COORDINATES';
 	var BY_MONTHS_SELECTED_COORDINATES = exports.BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES';
+
+	var BY_MONTHS_MODE_WEATHER = exports.BY_MONTHS_MODE_WEATHER = 'BY_MONTHS_MODE_WEATHER';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -52110,6 +52119,13 @@
 	        type: BY_MONTHS_SELECTED_COORDINATES,
 	        x: x,
 	        y: y
+	    };
+	}
+
+	function switchModeWeather(isActive) {
+	    return {
+	        type: BY_MONTHS_MODE_WEATHER,
+	        isActive: isActive
 	    };
 	}
 
@@ -53000,7 +53016,7 @@
 
 	var _ByWeeks2 = _interopRequireDefault(_ByWeeks);
 
-	var _ByMonths = __webpack_require__(446);
+	var _ByMonths = __webpack_require__(449);
 
 	var _ByMonths2 = _interopRequireDefault(_ByMonths);
 
@@ -55109,6 +55125,7 @@
 	            var onClick = _props2.onClick;
 	            var smoothTransitions = _props2.smoothTransitions;
 	            var sizes = _props2.sizes;
+	            var weatherMode = _props2.weatherMode;
 
 
 	            var eventHandlers = {
@@ -55127,7 +55144,8 @@
 	                        gridSize: gridSize,
 	                        eventHandlers: eventHandlers,
 	                        smoothTransitions: smoothTransitions,
-	                        sizes: sizes
+	                        sizes: sizes,
+	                        weatherMode: weatherMode
 	                    });
 	                } else {
 	                    this._d3Layer = new _SeasonsSeries2.default({
@@ -55144,7 +55162,8 @@
 	                        gridSize: gridSize,
 	                        eventHandlers: eventHandlers,
 	                        smoothTransitions: smoothTransitions,
-	                        sizes: sizes
+	                        sizes: sizes,
+	                        weatherMode: weatherMode
 	                    });
 	                }
 	            }
@@ -55251,6 +55270,11 @@
 
 	        this.selectedColors = d3.scaleLinear().range(["#d1d4ff", "#363da3"]).interpolate(d3.interpolateHcl);
 
+	        this.weatherModeColors = d3.scaleLinear().range(["#283593", "#283593", "#1565C0", "#42A5F5", "#E3F2FD", "#B3E5FC", "#CDDC39", "#FFEB3B", "#FF9800", "#FF5722", "#E53935", "#B71C1C"]).domain([-20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35]);
+	        // .interpolate(d3.interpolateHcl)
+
+	        this.weatherModeColorOpacity = d3.scaleLinear().range([.6, 1]);
+
 	        // this.colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"] // alternatively colorbrewer.YlGnBu[9]
 
 	        this.focus = this.svg.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
@@ -55268,6 +55292,7 @@
 	            var eventHandlers = _ref2.eventHandlers;
 	            var smoothTransitions = _ref2.smoothTransitions;
 	            var sizes = _ref2.sizes;
+	            var weatherMode = _ref2.weatherMode;
 
 	            this.data = data;
 
@@ -55287,6 +55312,12 @@
 
 	            this.smoothTransitions = smoothTransitions;
 
+	            this.weatherMode = weatherMode;
+
+	            if (this.weatherMode) {
+	                this.valueBasedGridSizeExtra = d3.scaleLinear().range([this.gridSize - 5, 0]);
+	            }
+
 	            this.updateWithData();
 	        }
 	    }, {
@@ -55300,6 +55331,7 @@
 	            var max = d3.max(this.data, function (d) {
 	                return d.value;
 	            });
+
 	            if (min < 0 || max == 0) {
 	                this.colors.domain([d3.max(this.data, function (d) {
 	                    return d.value;
@@ -55307,6 +55339,7 @@
 	                    return d.value;
 	                })]);
 	                this.selectedColors.domain(this.colors.domain());
+	                this.weatherModeColorOpacity.domain(this.colors.domain());
 	            } else if (max > 0 || min == 0) {
 	                this.colors.domain([d3.min(this.data, function (d) {
 	                    return d.value;
@@ -55314,6 +55347,15 @@
 	                    return d.value;
 	                })]);
 	                this.selectedColors.domain(this.colors.domain());
+	                this.weatherModeColorOpacity.domain(this.colors.domain());
+	            }
+
+	            if (this.weatherMode) {
+	                this.valueBasedGridSizeExtra.domain(this.colors.domain());
+	                //     this.weatherModeColors.domain([
+	                //         d3.min(this.data, d => d.data.extra.weather.data.temperature),
+	                //         d3.max(this.data, d => d.data.extra.weather.data.temperature),
+	                //     ])
 	            }
 
 	            // this.focus.selectAll(".yLabel").text(d => d)
@@ -55367,65 +55409,85 @@
 	            });
 
 	            this.enteredCards.transition('position:size').duration(300).attr("x", function (d) {
-	                return getCoordinateByState(d.x, d, _this.gridSize);
+	                return getCoordinateByState.call(_this, d.x, d);
 	            }).attr("y", function (d) {
-	                return getCoordinateByState(d.y, d, _this.gridSize);
+	                return getCoordinateByState.call(_this, d.y, d);
 	            }).attr("width", function (d) {
-	                return getSizeByState(d, _this.gridSize);
+	                return getSizeByState.call(_this, d);
 	            }).attr("height", function (d) {
-	                return getSizeByState(d, _this.gridSize);
+	                return getSizeByState.call(_this, d);
 	            }).attr("class", "card bordered");
 
-	            function getCoordinateByState(coordinate, d, gridSize) {
-	                var extra = 0;
-	                if (d.state) {
-	                    if (d.state.active) {
-	                        extra = 5;
-	                    } else if (d.state.major) {
-	                        extra = 0;
-	                    } else if (d.state.minor) {
-	                        extra = 10;
+	            function getCoordinateByState(coordinate, d) {
+	                if (this.weatherMode) {
+	                    return coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2;
+	                } else {
+	                    var extra = 0;
+	                    if (d.state) {
+	                        if (d.state.active) {
+	                            extra = 5;
+	                        } else if (d.state.major) {
+	                            extra = 0;
+	                        } else if (d.state.minor) {
+	                            extra = 10;
+	                        }
 	                    }
+	                    return coordinate * this.gridSize + extra;
 	                }
-	                return coordinate * gridSize + extra;
 	            }
 
-	            function getSizeByState(d, gridSize) {
-	                var extra = 0;
-	                if (d.state) {
-	                    if (d.state.active) {
-	                        extra = -10;
-	                    } else if (d.state.major) {
-	                        extra = 0;
-	                    } else if (d.state.minor) {
-	                        extra = -20;
+	            function getSizeByState(d) {
+	                if (this.weatherMode) {
+	                    return this.gridSize - this.valueBasedGridSizeExtra(d.value);
+	                } else {
+	                    var extra = 0;
+	                    if (d.state) {
+	                        if (d.state.active) {
+	                            extra = -10;
+	                        } else if (d.state.major) {
+	                            extra = 0;
+	                        } else if (d.state.minor) {
+	                            extra = -20;
+	                        }
 	                    }
+	                    return this.gridSize + extra;
 	                }
-	                return gridSize + extra;
 	            }
 
 	            if (this.smoothTransitions) {
 	                this.enteredCards.transition('fill').duration(function (d, i) {
 	                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", function (d) {
-	                    return getColorFillByState(d, _this.colors(d.value), _this.selectedColors(d.value));
+	                    return getColorFill.call(_this, d);
 	                });
 	            } else {
 	                this.enteredCards.interrupt('fill').style("fill", function (d) {
-	                    return getColorFillByState(d, _this.colors(d.value), _this.selectedColors(d.value));
+	                    return getColorFill.call(_this, d);
 	                });
 	            }
 
-	            function getColorFillByState(d, defaultColor, selectedColor) {
-	                var color = defaultColor;
-	                if (d.state) {
-	                    if (d.state.selected) {
-	                        color = selectedColor;
-	                    } else if (d.state.major) {
-	                        color = selectedColor;
+	            function getColorFill(d) {
+
+	                if (this.weatherMode) {
+	                    var weatherColor = this.weatherModeColors(d.data.extra.weather.data.temperature);
+	                    var weatherColorOpacity = this.weatherModeColorOpacity(d.value);
+	                    var color = d3.color(weatherColor);
+	                    color.opacity = weatherColorOpacity;
+	                    return color.toString();
+	                } else {
+	                    var defaultColor = this.colors(d.value);
+	                    var selectedColor = this.selectedColors(d.value);
+
+	                    var _color = defaultColor;
+	                    if (d.state) {
+	                        if (d.state.selected) {
+	                            _color = selectedColor;
+	                        } else if (d.state.major) {
+	                            _color = selectedColor;
+	                        }
 	                    }
+	                    return _color;
 	                }
-	                return color;
 	            }
 
 	            // this.cards.select("title").text(d => d.value)
@@ -55500,7 +55562,7 @@
 
 	var ByWeeksActions = _interopRequireWildcard(_ByWeeks3);
 
-	var _AsideInfo = __webpack_require__(470);
+	var _AsideInfo = __webpack_require__(446);
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
@@ -55603,9 +55665,9 @@
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleMainMouseOut.apply(_this2, arguments);
-	                    },
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    }
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: rowsLabels.length
 	                    }
@@ -55623,9 +55685,9 @@
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
-	                    },
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    }
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: 1
 	                    }
@@ -55643,9 +55705,9 @@
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOYMouseOut.apply(_this2, arguments);
-	                    },
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    }
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: 1,
 	                        height: rowsLabels.length
 	                    }
@@ -70487,6 +70549,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -70508,11 +70571,227 @@
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AsideInfo = function (_Component) {
+	    _inherits(AsideInfo, _Component);
+
+	    function AsideInfo(props) {
+	        _classCallCheck(this, AsideInfo);
+
+	        var _this = _possibleConstructorReturn(this, (AsideInfo.__proto__ || Object.getPrototypeOf(AsideInfo)).call(this, props));
+
+	        _this.boxClassName = 'AsideInfo';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(AsideInfo, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var points = _props.points;
+	            var className = _props.className;
+
+
+	            var info = this.__processPoints(points);
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b.mix(className) },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('TotalExpenses').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalExpensesLabel') },
+	                        'TOTAL EXPENSE'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalExpensesNumber') },
+	                        this.__processNumberDimensions(info.total.expenses)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('TotalIncomes').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalIncomesLabel') },
+	                        'TOTAL INCOME'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('TotalIncomesNumber') },
+	                        this.__processNumberDimensions(info.total.incomes)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('CountExpenses').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountExpensesLabel') },
+	                        'EXPENSE TRANS. NUMBER'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountExpensesNumber') },
+	                        this.__processNumberDimensions(info.count.expenses)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: this._b('CountIncomes').mix('Item') },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountIncomesLabel') },
+	                        'INCOME TRANS. NUMBER'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this._b('CountIncomesNumber') },
+	                        this.__processNumberDimensions(info.count.incomes)
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: '__processPoints',
+	        value: function __processPoints(points) {
+	            return points.reduce(function (result, point) {
+	                var data = point.data;
+
+	                result.total.expenses += Math.abs(data.total.expenses);
+	                result.total.incomes += data.total.incomes;
+
+	                result.count.expenses += data.count.expenses;
+	                result.count.incomes += data.count.incomes;
+
+	                return result;
+	            }, {
+	                total: {
+	                    expenses: 0,
+	                    incomes: 0
+	                },
+	                count: {
+	                    expenses: 0,
+	                    incomes: 0
+	                }
+	            });
+	        }
+	    }, {
+	        key: '__processNumberDimensions',
+	        value: function __processNumberDimensions(number) {
+	            var rounded = Math.round(number);
+	            var stringified = rounded.toString();
+	            var length = stringified.length;
+
+	            var result = stringified;
+	            var postfix = '';
+	            if (length > 9) {
+	                result = result.slice(0, -9);
+	                postfix = 'B';
+	            } else if (length > 6) {
+	                result = result.slice(0, -6);
+	                postfix = 'M';
+	            } else if (length > 3) {
+	                result = result.slice(0, -3);
+	                postfix = 'K';
+	            }
+
+	            return result + postfix;
+	        }
+	    }]);
+
+	    return AsideInfo;
+	}(_react.Component);
+
+	exports.default = AsideInfo;
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(448);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 448 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".AsideInfo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  width: 500px;\n}\n.AsideInfo .Item {\n  margin: 10px;\n  width: 200px;\n  overflow: hidden;\n}\n.AsideInfo__TotalExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #be0000;\n}\n.AsideInfo__TotalIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #00be09;\n}\n.AsideInfo__CountExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n.AsideInfo__CountIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 449 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(450);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
 	var _immutable = __webpack_require__(265);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _ByMonths = __webpack_require__(449);
+	var _ByMonths = __webpack_require__(452);
 
 	var _ByMonths2 = _interopRequireDefault(_ByMonths);
 
@@ -70524,7 +70803,7 @@
 
 	var ByWeeksActions = _interopRequireWildcard(_ByWeeks);
 
-	var _AsideInfo = __webpack_require__(470);
+	var _AsideInfo = __webpack_require__(446);
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
@@ -70567,6 +70846,7 @@
 	            var columnsLabels = _props.columnsLabels;
 	            var hoverCoordinates = _props.hoverCoordinates;
 	            var selectedCoordinates = _props.selectedCoordinates;
+	            var isActiveModeWeather = _props.isActiveModeWeather;
 
 
 	            var hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y);
@@ -70595,13 +70875,15 @@
 	                    },
 	                    onClick: function onClick() {
 	                        return _this2.handleMainClick.apply(_this2, arguments);
-	                    },
+	                    }
 
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: rowsLabels.length
-	                    }
+	                    },
+
+	                    weatherMode: isActiveModeWeather
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
@@ -70617,10 +70899,10 @@
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
-	                    },
+	                    }
 
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: 1
 	                    }
@@ -70642,10 +70924,10 @@
 	                    },
 	                    onClick: function onClick() {
 	                        return _this2.handleOYClick.apply(_this2, arguments);
-	                    },
+	                    }
 
-	                    smoothTransitions: !hasHoverCoordinates,
-	                    sizes: {
+	                    // smoothTransitions={ !hasHoverCoordinates }
+	                    , sizes: {
 	                        width: 1,
 	                        height: rowsLabels.length
 	                    }
@@ -70751,9 +71033,12 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            // const {
-	            //     ByMonthsActions,
-	            // } = this.props
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeWeather();
+	            }, 2000);
 
 	            // setTimeout(() => {
 	            //     ByMonthsActions.setSort({
@@ -70804,7 +71089,8 @@
 	        state: state
 	    }), {
 	        hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS(),
-	        selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], _immutable2.default.Map()).toJS()
+	        selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], _immutable2.default.Map()).toJS(),
+	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false)
 	    });
 	}, function (dispatch) {
 	    return {
@@ -70890,13 +71176,13 @@
 	}
 
 /***/ },
-/* 447 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(448);
+	var content = __webpack_require__(451);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -70916,7 +71202,7 @@
 	}
 
 /***/ },
-/* 448 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -70930,7 +71216,7 @@
 
 
 /***/ },
-/* 449 */
+/* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71074,7 +71360,7 @@
 	exports.default = ByMonths;
 
 /***/ },
-/* 450 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71085,7 +71371,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(451);
+	__webpack_require__(454);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71146,13 +71432,13 @@
 	})(App);
 
 /***/ },
-/* 451 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(452);
+	var content = __webpack_require__(455);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71172,7 +71458,7 @@
 	}
 
 /***/ },
-/* 452 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71186,7 +71472,7 @@
 
 
 /***/ },
-/* 453 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71197,7 +71483,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(454);
+	__webpack_require__(457);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71227,19 +71513,19 @@
 
 	var MccCodesActions = _interopRequireWildcard(_MccCodes);
 
-	var _Visualisation = __webpack_require__(456);
+	var _Visualisation = __webpack_require__(459);
 
 	var _Visualisation2 = _interopRequireDefault(_Visualisation);
 
-	var _Settings = __webpack_require__(459);
+	var _Settings = __webpack_require__(462);
 
 	var _Settings2 = _interopRequireDefault(_Settings);
 
-	var _Header = __webpack_require__(463);
+	var _Header = __webpack_require__(466);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _reactFontawesome = __webpack_require__(462);
+	var _reactFontawesome = __webpack_require__(465);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -71311,13 +71597,13 @@
 	})(Index);
 
 /***/ },
-/* 454 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(455);
+	var content = __webpack_require__(458);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71337,7 +71623,7 @@
 	}
 
 /***/ },
-/* 455 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71351,7 +71637,7 @@
 
 
 /***/ },
-/* 456 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71364,7 +71650,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(457);
+	__webpack_require__(460);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71483,13 +71769,13 @@
 	})(Visualisation);
 
 /***/ },
-/* 457 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(458);
+	var content = __webpack_require__(461);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -71509,7 +71795,7 @@
 	}
 
 /***/ },
-/* 458 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -71523,7 +71809,7 @@
 
 
 /***/ },
-/* 459 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71534,7 +71820,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(460);
+	__webpack_require__(463);
 
 	var _classnames = __webpack_require__(298);
 
@@ -71560,7 +71846,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(462);
+	var _reactFontawesome = __webpack_require__(465);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72004,13 +72290,13 @@
 	}(_react.Component);
 
 /***/ },
-/* 460 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(461);
+	var content = __webpack_require__(464);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72030,7 +72316,7 @@
 	}
 
 /***/ },
-/* 461 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72044,7 +72330,7 @@
 
 
 /***/ },
-/* 462 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72157,7 +72443,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 463 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -72168,7 +72454,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(464);
+	__webpack_require__(467);
 
 	var _classnames = __webpack_require__(298);
 
@@ -72190,7 +72476,7 @@
 
 	var UIActions = _interopRequireWildcard(_UI);
 
-	var _reactFontawesome = __webpack_require__(462);
+	var _reactFontawesome = __webpack_require__(465);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 
@@ -72269,13 +72555,13 @@
 	})(Header);
 
 /***/ },
-/* 464 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(465);
+	var content = __webpack_require__(468);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -72295,7 +72581,7 @@
 	}
 
 /***/ },
-/* 465 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -72309,7 +72595,7 @@
 
 
 /***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -72337,7 +72623,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! Moment Duration Format v1.3.0
@@ -72825,7 +73111,7 @@
 
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -72960,7 +73246,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(469);
+	    var vertx = __webpack_require__(472);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -73985,227 +74271,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
-
-/***/ },
-/* 470 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(471);
-
-	var _classnames = __webpack_require__(298);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(256);
-
-	var _redux = __webpack_require__(173);
-
-	var _bemCn = __webpack_require__(299);
-
-	var _bemCn2 = _interopRequireDefault(_bemCn);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AsideInfo = function (_Component) {
-	    _inherits(AsideInfo, _Component);
-
-	    function AsideInfo(props) {
-	        _classCallCheck(this, AsideInfo);
-
-	        var _this = _possibleConstructorReturn(this, (AsideInfo.__proto__ || Object.getPrototypeOf(AsideInfo)).call(this, props));
-
-	        _this.boxClassName = 'AsideInfo';
-	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
-	        return _this;
-	    }
-
-	    _createClass(AsideInfo, [{
-	        key: 'render',
-	        value: function render() {
-	            var _props = this.props;
-	            var points = _props.points;
-	            var className = _props.className;
-
-
-	            var info = this.__processPoints(points);
-
-	            return _react2.default.createElement(
-	                'section',
-	                {
-	                    className: this._b.mix(className) },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: this._b('TotalExpenses').mix('Item') },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('TotalExpensesLabel') },
-	                        'TOTAL EXPENSE'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('TotalExpensesNumber') },
-	                        this.__processNumberDimensions(info.total.expenses)
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: this._b('TotalIncomes').mix('Item') },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('TotalIncomesLabel') },
-	                        'TOTAL INCOME'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('TotalIncomesNumber') },
-	                        this.__processNumberDimensions(info.total.incomes)
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: this._b('CountExpenses').mix('Item') },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('CountExpensesLabel') },
-	                        'EXPENSE TRANS. NUMBER'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('CountExpensesNumber') },
-	                        this.__processNumberDimensions(info.count.expenses)
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: this._b('CountIncomes').mix('Item') },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('CountIncomesLabel') },
-	                        'INCOME TRANS. NUMBER'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this._b('CountIncomesNumber') },
-	                        this.__processNumberDimensions(info.count.incomes)
-	                    )
-	                )
-	            );
-	        }
-	    }, {
-	        key: '__processPoints',
-	        value: function __processPoints(points) {
-	            return points.reduce(function (result, point) {
-	                var data = point.data;
-
-	                result.total.expenses += Math.abs(data.total.expenses);
-	                result.total.incomes += data.total.incomes;
-
-	                result.count.expenses += data.count.expenses;
-	                result.count.incomes += data.count.incomes;
-
-	                return result;
-	            }, {
-	                total: {
-	                    expenses: 0,
-	                    incomes: 0
-	                },
-	                count: {
-	                    expenses: 0,
-	                    incomes: 0
-	                }
-	            });
-	        }
-	    }, {
-	        key: '__processNumberDimensions',
-	        value: function __processNumberDimensions(number) {
-	            var rounded = Math.round(number);
-	            var stringified = rounded.toString();
-	            var length = stringified.length;
-
-	            var result = stringified;
-	            var postfix = '';
-	            if (length > 9) {
-	                result = result.slice(0, -9);
-	                postfix = 'B';
-	            } else if (length > 6) {
-	                result = result.slice(0, -6);
-	                postfix = 'M';
-	            } else if (length > 3) {
-	                result = result.slice(0, -3);
-	                postfix = 'K';
-	            }
-
-	            return result + postfix;
-	        }
-	    }]);
-
-	    return AsideInfo;
-	}(_react.Component);
-
-	exports.default = AsideInfo;
-
-/***/ },
-/* 471 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(472);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less", function() {
-				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./AsideInfo.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 472 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(296)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".AsideInfo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row wrap;\n      flex-flow: row wrap;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  width: 500px;\n}\n.AsideInfo .Item {\n  margin: 10px;\n  width: 200px;\n  overflow: hidden;\n}\n.AsideInfo__TotalExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #be0000;\n}\n.AsideInfo__TotalIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__TotalIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__TotalIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #00be09;\n}\n.AsideInfo__CountExpenses {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountExpensesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountExpensesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n.AsideInfo__CountIncomes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n}\n.AsideInfo__CountIncomesLabel {\n  font-size: 20px;\n  color: #8a8a8a;\n}\n.AsideInfo__CountIncomesNumber {\n  font-size: 45px;\n  line-height: 40px;\n  color: #494949;\n}\n", ""]);
-
-	// exports
-
 
 /***/ }
 /******/ ]);

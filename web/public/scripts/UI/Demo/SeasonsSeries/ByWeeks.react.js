@@ -89,7 +89,7 @@ class SeasonsSeriesByWeeks extends Component {
                     gridSize={ 25 }
                     onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
                         height: rowsLabels.length,
@@ -106,7 +106,7 @@ class SeasonsSeriesByWeeks extends Component {
                     gridSize={ 25 }
                     onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
                         height: 1,
@@ -123,7 +123,7 @@ class SeasonsSeriesByWeeks extends Component {
                     gridSize={ 25 }
                     onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: 1,
                         height: rowsLabels.length,

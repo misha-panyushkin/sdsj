@@ -53,6 +53,8 @@ export default class SeasonsSeries extends Component {
 
             smoothTransitions,
             sizes,
+
+            weatherMode,
         } = this.props
 
         const eventHandlers = {
@@ -72,6 +74,7 @@ export default class SeasonsSeries extends Component {
                     eventHandlers,
                     smoothTransitions,
                     sizes,
+                    weatherMode,
                 })
             } else {
                 this._d3Layer = new D3SeasonsSeries({
@@ -89,6 +92,7 @@ export default class SeasonsSeries extends Component {
                     eventHandlers,
                     smoothTransitions,
                     sizes,
+                    weatherMode,
                 })
             }
         }

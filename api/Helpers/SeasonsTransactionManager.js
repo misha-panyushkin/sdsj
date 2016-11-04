@@ -2,9 +2,10 @@ const I = require('immutable')
 const moment = require('moment')
 
 module.exports = class SeasonsTransactionManager {
-    constructor () {
+    constructor ( WeatherStore ) {
         this.startingPoint = moment('02-08-2014', ["DD-MM-YYYY"]).locale('en')
         this.data = I.Map()
+        this.WeatherStore = WeatherStore
     }
 
     addTransaction (data) {
@@ -20,7 +21,8 @@ module.exports = class SeasonsTransactionManager {
             })
 
         const nextAmount = data.get('amount')
-        
+
+        const weatherData = this.WeatherStore.getIn([ nextDate.year(), nextDate.month() + 1, nextDate.date() ])
 
         this.data = this.data.updateIn(['byWeek'], list => list || I.List())
         this.data = this.data.updateIn(['byWeek', nextDate.weekday()], map => map || I.Map())
@@ -48,6 +50,7 @@ module.exports = class SeasonsTransactionManager {
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'total'], total => this.__calculateTotal(total, nextAmount))
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'count'], count => this.__increaseCount(count, nextAmount))
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'info'], info => this.__setDateInfo(info, nextDate))
+        this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'extra'], extra => this.__setExtraData(extra, weatherData))
 
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour'], list => list || I.List())
         this.data = this.data.updateIn(['byMonth', monthsDiff, 'byDay', nextDate.date() - 1, 'byHour', nextDate.hour()], map => map || I.Map())
@@ -86,6 +89,12 @@ module.exports = class SeasonsTransactionManager {
         return info || I.Map({
             date: nextDate.toDate(),
             weekday: nextDate.weekday(),
+        })
+    }
+
+    __setExtraData (extra, weatherData) {
+        return extra || I.Map({
+            weather: weatherData,
         })
     }
 

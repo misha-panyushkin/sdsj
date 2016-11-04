@@ -35,6 +35,8 @@ class SeasonsSeriesByMonth extends Component {
 
             hoverCoordinates,
             selectedCoordinates,
+
+            isActiveModeWeather,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
@@ -56,11 +58,13 @@ class SeasonsSeriesByMonth extends Component {
                     onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
                     onClick={ (...args) => this.handleMainClick(...args) }
                     
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
                         height: rowsLabels.length,
                     } }
+
+                    weatherMode={ isActiveModeWeather }
                     />
 
                 <VisualSeasonsSeries 
@@ -75,7 +79,7 @@ class SeasonsSeriesByMonth extends Component {
                     onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
                     
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
                         height: 1,
@@ -95,7 +99,7 @@ class SeasonsSeriesByMonth extends Component {
                     onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
                     onClick={ (...args) => this.handleOYClick(...args) }
 
-                    smoothTransitions={ !hasHoverCoordinates }
+                    // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: 1,
                         height: rowsLabels.length,
@@ -193,9 +197,13 @@ class SeasonsSeriesByMonth extends Component {
     //     onChange={ (order) => ByMonthsActions.setSort('y', order) }/>
 
     componentDidMount () {
-        // const {
-        //     ByMonthsActions,
-        // } = this.props
+        const {
+            ByMonthsActions,
+        } = this.props
+
+        setTimeout(() => {
+            ByMonthsActions.switchModeWeather()
+        }, 2000)
 
         // setTimeout(() => {
         //     ByMonthsActions.setSort({
@@ -247,6 +255,7 @@ export default connect(
         {
             hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], I.Map()).toJS(),
             selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], I.Map()).toJS(),
+            isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
         },
     ),
     dispatch => ({

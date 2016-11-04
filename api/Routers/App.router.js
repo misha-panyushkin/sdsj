@@ -1,15 +1,17 @@
-var _ = require('lodash');
-var express = require('express');
-var router = express.Router();
+const _ = require('lodash');
+const express = require('express');
+const router = express.Router();
 
-var d3 = require('d3');
+const d3 = require('d3');
 
-var fs = require('fs');
-var parse = require('csv-parse');
+const fs = require('fs');
+const parse = require('csv-parse');
 
-var LocalStorage = require('../Storage/local')
-var WeekDaysTransactionCalculator = require('../Helpers/WeekDaysTransactionCalculator')
-var SeasonsTransactionManager = require('../Helpers/SeasonsTransactionManager')
+const LocalStorage = require('../Storage/local')
+const WeekDaysTransactionCalculator = require('../Helpers/WeekDaysTransactionCalculator')
+const SeasonsTransactionManager = require('../Helpers/SeasonsTransactionManager')
+
+const WeatherStore = require('../data/js/weather')
 
 router.get('/init', function (req, res, next) {
     // req.body.
@@ -43,19 +45,19 @@ function setUpTransactions (nextTransactions) {
         
     LocalStorage.setTransactions(nextTransactions)
     nextTransactions = LocalStorage.getStore().get('transactions')
-    const WDTC = new WeekDaysTransactionCalculator(4)
-    const STM = new SeasonsTransactionManager()
+    // const WDTC = new WeekDaysTransactionCalculator(4)
+    const STM = new SeasonsTransactionManager( WeatherStore )
 
     nextTransactions.forEach(d => {
-        WDTC.addTransaction(d)
+        // WDTC.addTransaction(d)
         STM.addTransaction(d)
     })
 
-    LocalStorage.setDayTimeSeries(
-        WDTC.getRowData({
-            dataType: 'expenses',
-        })
-    )
+    // LocalStorage.setDayTimeSeries(
+    //     WDTC.getRowData({
+    //         dataType: 'expenses',
+    //     })
+    // )
 
     LocalStorage.setSeasonsSeries(
         STM.getRowData()
