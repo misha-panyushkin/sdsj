@@ -55,6 +55,7 @@ export default class SeasonsSeries extends Component {
             sizes,
 
             weatherMode,
+            margins,
         } = this.props
 
         const eventHandlers = {
@@ -83,6 +84,7 @@ export default class SeasonsSeries extends Component {
                     rowsLabels,
                     columnsLabels,
                     gridSize,
+                    margins,
                 })
                 this._d3Layer.update({
                     data,

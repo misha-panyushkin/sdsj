@@ -11,6 +11,7 @@ import * as ByMonthsActions from 'Actions/Demo/SeasonsSeries/ByMonths.actions'
 import * as ByWeeksActions from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
 import AsideInfo from './AsideInfo.react'
+import ByMonthsControls from './ByMonthsControls.react'
 import {
     SeasonsSeries as VisualSeasonsSeries,
 } from 'UI/VisualComponents'
@@ -45,6 +46,11 @@ class SeasonsSeriesByMonth extends Component {
 
         return (
             <article className={ this._b.mix( className ) }>
+
+                <ByMonthsControls 
+                    className={ this._b('Controls').toString() }
+                    />
+                    
                 <VisualSeasonsSeries 
                     className={ this._b('Main') }
                     width={ 30 * columnsLabels.length }
@@ -64,13 +70,20 @@ class SeasonsSeriesByMonth extends Component {
                         height: rowsLabels.length,
                     } }
 
+                    margins={ {
+                        top: 50, 
+                        right: 0, 
+                        bottom: 50,
+                        left: 86,
+                    } }
+
                     weatherMode={ isActiveModeWeather }
                     />
 
                 <VisualSeasonsSeries 
                     className={ this._b('OX') }
-                    width={ 30 * columnsLabels.length }
-                    height={ 80 }
+                    width={ 25 * columnsLabels.length }
+                    height={ 25 }
                     data={ SeriesByMonthsSumByOX } 
                     rowsLabels={ [] }
                     columnsLabels={ [] }
@@ -84,12 +97,19 @@ class SeasonsSeriesByMonth extends Component {
                         width: columnsLabels.length,
                         height: 1,
                     } }
+
+                    margins={ {
+                        top: 0, 
+                        right: 0, 
+                        bottom: 0,
+                        left: 0,
+                    } }
                     />
 
                 <VisualSeasonsSeries 
                     className={ this._b('OY') }
-                    width={ 88 }
-                    height={ 30 * rowsLabels.length }
+                    width={ 25 }
+                    height={ 25 * rowsLabels.length }
                     data={ SeriesByMonthsSumByOY } 
                     rowsLabels={ [] }
                     columnsLabels={ [] }
@@ -103,6 +123,13 @@ class SeasonsSeriesByMonth extends Component {
                     sizes={ {
                         width: 1,
                         height: rowsLabels.length,
+                    } }
+
+                    margins={ {
+                        top: 0, 
+                        right: 0, 
+                        bottom: 0,
+                        left: 0,
                     } }
                     />
 

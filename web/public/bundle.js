@@ -55126,6 +55126,7 @@
 	            var smoothTransitions = _props2.smoothTransitions;
 	            var sizes = _props2.sizes;
 	            var weatherMode = _props2.weatherMode;
+	            var margins = _props2.margins;
 
 
 	            var eventHandlers = {
@@ -55153,7 +55154,8 @@
 	                        hub: D3DataHub,
 	                        rowsLabels: rowsLabels,
 	                        columnsLabels: columnsLabels,
-	                        gridSize: gridSize
+	                        gridSize: gridSize,
+	                        margins: margins
 	                    });
 	                    this._d3Layer.update({
 	                        data: data,
@@ -55255,13 +55257,14 @@
 	        var hub = _ref.hub;
 	        var rowsLabels = _ref.rowsLabels;
 	        var columnsLabels = _ref.columnsLabels;
+	        var margins = _ref.margins;
 
 	        _classCallCheck(this, SeasonsSeries);
 
 	        this.svg = d3.select(root);
 	        this.hub = hub;
 
-	        this.margin = { top: 50, right: 0, bottom: 50, left: 60 };
+	        this.margin = margins || { top: 50, right: 0, bottom: 50, left: 60 };
 
 	        this.rowsLabels = rowsLabels || [];
 	        this.columnsLabels = columnsLabels || [];
@@ -55670,12 +55673,14 @@
 	                    rowsLabels: rowsLabels,
 	                    columnsLabels: columnsLabels,
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleMainMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleMainMouseOut.apply(_this2, arguments);
 	                    }
+
 	                    // smoothTransitions={ !hasHoverCoordinates }
 	                    , sizes: {
 	                        width: columnsLabels.length,
@@ -55684,42 +55689,60 @@
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
-	                    width: 30 * columnsLabels.length,
-	                    height: 80,
+	                    width: 25 * columnsLabels.length,
+	                    height: 25,
 	                    data: SeriesByWeeksSumByOX,
 	                    rowsLabels: [],
 	                    columnsLabels: [],
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleOXMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOXMouseOut.apply(_this2, arguments);
 	                    }
+
 	                    // smoothTransitions={ !hasHoverCoordinates }
 	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: 1
+	                    },
+
+	                    margins: {
+	                        top: 0,
+	                        right: 0,
+	                        bottom: 0,
+	                        left: 0
 	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OY'),
-	                    width: 87,
-	                    height: 32 * rowsLabels.length,
+	                    width: 25,
+	                    height: 25 * rowsLabels.length,
 	                    data: SeriesByWeeksSumByOY,
 	                    rowsLabels: [],
 	                    columnsLabels: [],
 	                    gridSize: 25,
+
 	                    onMouseOver: function onMouseOver() {
 	                        return _this2.handleOYMouseOver.apply(_this2, arguments);
 	                    },
 	                    onMouseOut: function onMouseOut() {
 	                        return _this2.handleOYMouseOut.apply(_this2, arguments);
 	                    }
+
 	                    // smoothTransitions={ !hasHoverCoordinates }
 	                    , sizes: {
 	                        width: 1,
 	                        height: rowsLabels.length
+	                    },
+
+	                    margins: {
+	                        top: 0,
+	                        right: 0,
+	                        bottom: 0,
+	                        left: 0
 	                    }
 	                }),
 	                _react2.default.createElement(_AsideInfo2.default, {
@@ -55866,7 +55889,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByWeeks {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: -50px;\n  top: 0;\n}\n", ""]);
+	exports.push([module.id, ".ByWeeks {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 60px;\n  top: 0;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: 6px;\n  top: 50px;\n}\n", ""]);
 
 	// exports
 
@@ -70817,6 +70840,10 @@
 
 	var _AsideInfo2 = _interopRequireDefault(_AsideInfo);
 
+	var _ByMonthsControls = __webpack_require__(474);
+
+	var _ByMonthsControls2 = _interopRequireDefault(_ByMonthsControls);
+
 	var _VisualComponents = __webpack_require__(306);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -70868,6 +70895,9 @@
 	            return _react2.default.createElement(
 	                'article',
 	                { className: this._b.mix(className) },
+	                _react2.default.createElement(_ByMonthsControls2.default, {
+	                    className: this._b('Controls').toString()
+	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('Main'),
 	                    width: 30 * columnsLabels.length,
@@ -70893,12 +70923,19 @@
 	                        height: rowsLabels.length
 	                    },
 
+	                    margins: {
+	                        top: 50,
+	                        right: 0,
+	                        bottom: 50,
+	                        left: 86
+	                    },
+
 	                    weatherMode: isActiveModeWeather
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
-	                    width: 30 * columnsLabels.length,
-	                    height: 80,
+	                    width: 25 * columnsLabels.length,
+	                    height: 25,
 	                    data: SeriesByMonthsSumByOX,
 	                    rowsLabels: [],
 	                    columnsLabels: [],
@@ -70915,12 +70952,19 @@
 	                    , sizes: {
 	                        width: columnsLabels.length,
 	                        height: 1
+	                    },
+
+	                    margins: {
+	                        top: 0,
+	                        right: 0,
+	                        bottom: 0,
+	                        left: 0
 	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OY'),
-	                    width: 88,
-	                    height: 30 * rowsLabels.length,
+	                    width: 25,
+	                    height: 25 * rowsLabels.length,
 	                    data: SeriesByMonthsSumByOY,
 	                    rowsLabels: [],
 	                    columnsLabels: [],
@@ -70940,6 +70984,13 @@
 	                    , sizes: {
 	                        width: 1,
 	                        height: rowsLabels.length
+	                    },
+
+	                    margins: {
+	                        top: 0,
+	                        right: 0,
+	                        bottom: 0,
+	                        left: 0
 	                    }
 	                }),
 	                _react2.default.createElement(_AsideInfo2.default, {
@@ -71220,7 +71271,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByMonths {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 0;\n  top: -50px;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: -85px;\n  top: 0;\n}\n.ByMonths__Aside {\n  width: 292px;\n}\n", ""]);
+	exports.push([module.id, ".ByMonths {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 86px;\n  top: 0;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: 9px;\n  top: 50px;\n}\n.ByMonths__Aside {\n  width: 292px;\n}\n", ""]);
 
 	// exports
 
@@ -74285,6 +74336,274 @@
 /***/ function(module, exports) {
 
 	/* (ignored) */
+
+/***/ },
+/* 473 */,
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(475);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
+	var _reactFontawesome = __webpack_require__(465);
+
+	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
+	var _ByMonths = __webpack_require__(292);
+
+	var ByMonthsActions = _interopRequireWildcard(_ByMonths);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ByMonthsControls = function (_Component) {
+	    _inherits(ByMonthsControls, _Component);
+
+	    function ByMonthsControls(props) {
+	        _classCallCheck(this, ByMonthsControls);
+
+	        var _this = _possibleConstructorReturn(this, (ByMonthsControls.__proto__ || Object.getPrototypeOf(ByMonthsControls)).call(this, props));
+
+	        _this.boxClassName = 'ByMonthsControls';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(ByMonthsControls, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var _props = this.props;
+	            var className = _props.className;
+	            var monthsSortCurrent = _props.monthsSortCurrent;
+	            var daysSortCurrent = _props.daysSortCurrent;
+	            var isActiveModeWeather = _props.isActiveModeWeather;
+
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b.mix(className) },
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('DaysSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortDefault').mix(['Item', !daysSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortDefaultClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortAsc').mix(['Item', daysSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortAscClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('DaysSortDesc').mix(['Item', daysSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleDaysSortDescClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('MonthsSort')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortDesc').mix(['Item', monthsSortCurrent == 'desc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-asc',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortDescClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortDefault').mix(['Item', !monthsSortCurrent ? 'Active' : '']).toString(),
+	                        name: 'bars',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortDefaultClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('MonthsSortAsc').mix(['Item', monthsSortCurrent == 'asc' ? 'Active' : '']).toString(),
+	                        name: 'sort-amount-desc',
+	                        onClick: function onClick() {
+	                            return _this2.handleMonthsSortAscClick();
+	                        }
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: this._b('Modes')
+	                    },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('WeatherMode').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString(),
+	                        name: 'cloud',
+	                        onClick: function onClick() {
+	                            return _this2.handleWeatherModeClick();
+	                        }
+	                    })
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'handleMonthsSortDefaultClick',
+	        value: function handleMonthsSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleMonthsSortAscClick',
+	        value: function handleMonthsSortAscClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleMonthsSortDescClick',
+	        value: function handleMonthsSortDescClick() {
+	            this.handleSort({
+	                axis: 'y',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortDefaultClick',
+	        value: function handleDaysSortDefaultClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: null
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortAscClick',
+	        value: function handleDaysSortAscClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'asc'
+	            });
+	        }
+	    }, {
+	        key: 'handleDaysSortDescClick',
+	        value: function handleDaysSortDescClick() {
+	            this.handleSort({
+	                axis: 'x',
+	                order: 'desc'
+	            });
+	        }
+	    }, {
+	        key: 'handleWeatherModeClick',
+	        value: function handleWeatherModeClick() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeWeather();
+	        }
+	    }, {
+	        key: 'handleSort',
+	        value: function handleSort() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.setSort.apply(ByMonthsActions, arguments);
+	        }
+	    }]);
+
+	    return ByMonthsControls;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        daysSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'x', 'order']),
+	        monthsSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'y', 'order']),
+	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false)
+	    };
+	}, function (dispatch) {
+	    return {
+	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch)
+	    };
+	})(ByMonthsControls);
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(476);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./ByMonthsControls.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 476 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 33px;\n  left: 91px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 50%;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #6caae1;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__WeatherMode {\n  color: #6caae1;\n}\n.ByMonthsControls__WeatherMode:after {\n  content: 'WEATHER';\n  position: absolute;\n  top: 4px;\n  right: -74px;\n  font-size: 13px;\n  color: #666;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

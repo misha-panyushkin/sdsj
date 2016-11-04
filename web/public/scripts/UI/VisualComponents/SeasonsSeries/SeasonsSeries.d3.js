@@ -6,11 +6,12 @@ export default class SeasonsSeries {
         hub,
         rowsLabels,
         columnsLabels,
+        margins,
     }) {
         this.svg = d3.select(root)
         this.hub = hub
 
-        this.margin = { top: 50, right: 0, bottom: 50, left: 60 }
+        this.margin = margins || { top: 50, right: 0, bottom: 50, left: 60 }
         
         this.rowsLabels = rowsLabels || []
         this.columnsLabels = columnsLabels || []

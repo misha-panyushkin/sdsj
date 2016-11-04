@@ -87,8 +87,10 @@ class SeasonsSeriesByWeeks extends Component {
                     rowsLabels={ rowsLabels }
                     columnsLabels={ columnsLabels }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleMainMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleMainMouseOut(...args) }
+                    
                     // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
@@ -98,35 +100,53 @@ class SeasonsSeriesByWeeks extends Component {
 
                 <VisualSeasonsSeries 
                     className={ this._b('OX') }
-                    width={ 30 * columnsLabels.length }
-                    height={ 80 }
+                    width={ 25 * columnsLabels.length }
+                    height={ 25 }
                     data={ SeriesByWeeksSumByOX } 
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleOXMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOXMouseOut(...args) }
+                    
                     // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: columnsLabels.length,
                         height: 1,
                     } }
+
+                    margins={ {
+                        top: 0, 
+                        right: 0, 
+                        bottom: 0,
+                        left: 0,
+                    } }
                     />
 
                 <VisualSeasonsSeries 
                     className={ this._b('OY') }
-                    width={ 87 }
-                    height={ 32 * rowsLabels.length }
+                    width={ 25 }
+                    height={ 25 * rowsLabels.length }
                     data={ SeriesByWeeksSumByOY } 
                     rowsLabels={ [] }
                     columnsLabels={ [] }
                     gridSize={ 25 }
+                    
                     onMouseOver={ (...args) => this.handleOYMouseOver(...args) }
                     onMouseOut={ (...args) => this.handleOYMouseOut(...args) }
+                    
                     // smoothTransitions={ !hasHoverCoordinates }
                     sizes={ {
                         width: 1,
                         height: rowsLabels.length,
+                    } }
+
+                    margins={ {
+                        top: 0, 
+                        right: 0, 
+                        bottom: 0,
+                        left: 0,
                     } }
                     />
 
