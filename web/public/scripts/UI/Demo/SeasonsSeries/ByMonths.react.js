@@ -38,6 +38,7 @@ class SeasonsSeriesByMonth extends Component {
             selectedCoordinates,
 
             isActiveModeWeather,
+            isActiveModeGridSize,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
@@ -78,6 +79,7 @@ class SeasonsSeriesByMonth extends Component {
                     } }
 
                     weatherMode={ isActiveModeWeather }
+                    gridSizeMode={ isActiveModeGridSize }
                     />
 
                 <VisualSeasonsSeries 
@@ -283,6 +285,7 @@ export default connect(
             hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], I.Map()).toJS(),
             selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], I.Map()).toJS(),
             isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
+            isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
         },
     ),
     dispatch => ({

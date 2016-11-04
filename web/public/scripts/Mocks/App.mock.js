@@ -79,6 +79,12 @@ export default I.fromJS({
                 },
                 mode: {
                     datatype: 'expenses',
+                    weather: {
+                        active: false,
+                    },
+                    gridsize: {
+                        active: false,
+                    },
                 },
             },
         },

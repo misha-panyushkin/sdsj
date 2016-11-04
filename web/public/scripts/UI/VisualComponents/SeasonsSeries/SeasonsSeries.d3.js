@@ -49,6 +49,7 @@ export default class SeasonsSeries {
         smoothTransitions,
         sizes,
         weatherMode,
+        gridSizeMode,
      }) {
         this.data = data
 
@@ -71,8 +72,9 @@ export default class SeasonsSeries {
         this.smoothTransitions = smoothTransitions
 
         this.weatherMode = weatherMode
+        this.gridSizeMode = gridSizeMode
 
-        if (this.weatherMode) {
+        if (this.gridSizeMode) {
             this.valueBasedGridSizeExtra = d3.scaleLinear()
                 .range([this.gridSize - 5, 0])
         }
@@ -102,7 +104,7 @@ export default class SeasonsSeries {
             this.weatherModeColorOpacity.domain(this.colors.domain())
         }
 
-        if (this.weatherMode) {
+        if (this.gridSizeMode) {
             this.valueBasedGridSizeExtra.domain(this.colors.domain())
         //     this.weatherModeColors.domain([
         //         d3.min(this.data, d => d.data.extra.weather.data.temperature),
@@ -184,7 +186,7 @@ export default class SeasonsSeries {
             if (d.state) {
                 let extra = 0
 
-                if (this.weatherMode)
+                if (this.gridSizeMode)
                     nextCoordinate = coordinate * this.gridSize + this.valueBasedGridSizeExtra(d.value) / 2
 
                 if (d.state.active) {
@@ -210,7 +212,7 @@ export default class SeasonsSeries {
             if (d.state) {
                 let extra = 0
 
-                if (this.weatherMode)
+                if (this.gridSizeMode)
                     size = this.gridSize - this.valueBasedGridSizeExtra(d.value)
 
                 if (d.state.active) {

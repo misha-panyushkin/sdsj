@@ -22,8 +22,10 @@ class ByMonthsControls extends Component {
 
             monthsSortCurrent,
             daysSortCurrent,
-            isActiveModeWeather,
+
             dataType,
+            isActiveModeWeather,
+            isActiveModeGridSize,
         } = this.props
 
         return (
@@ -74,11 +76,6 @@ class ByMonthsControls extends Component {
                     className={ this._b('Modes') }
                     >
                     <FA 
-                        className={ this._b('ModeWeather').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString() }
-                        name="cloud"
-                        onClick={ () => this.handleModeWeatherClick() }
-                        />
-                    <FA 
                         className={ this._b('ModeIncome').mix(['Item', dataType == 'incomes' ? 'Active' : '']).toString() }
                         name="plus"
                         onClick={ () => this.handleModeIncomeClick() }
@@ -87,6 +84,16 @@ class ByMonthsControls extends Component {
                         className={ this._b('ModeExpense').mix(['Item', dataType == 'expenses' ? 'Active' : '']).toString() }
                         name="minus"
                         onClick={ () => this.handleModeExpenseClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeWeather').mix(['Item', isActiveModeWeather ? 'Active' : '']).toString() }
+                        name="cloud"
+                        onClick={ () => this.handleModeWeatherClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeGridSize').mix(['Item', isActiveModeGridSize ? 'Active' : '']).toString() }
+                        name="circle"
+                        onClick={ () => this.handleModeGridSizeClick() }
                         />
                 </div>
 
@@ -140,13 +147,7 @@ class ByMonthsControls extends Component {
         ByMonthsActions.setSort(...args)
     }
 
-    handleModeWeatherClick () {
-        const {
-            ByMonthsActions,
-        } = this.props
-        
-        ByMonthsActions.switchModeWeather()
-    }
+
 
     handleModeIncomeClick () {
         const {
@@ -163,14 +164,33 @@ class ByMonthsControls extends Component {
         
         ByMonthsActions.switchModeDataType('expenses')
     }
+
+
+    handleModeWeatherClick () {
+        const {
+            ByMonthsActions,
+        } = this.props
+        
+        ByMonthsActions.switchModeWeather()
+    }
+
+    handleModeGridSizeClick () {
+        const {
+            ByMonthsActions,
+        } = this.props
+        
+        ByMonthsActions.switchModeGridSize()
+    }
 }
 
 export default connect(
     state => ({
         daysSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'x', 'order']),
         monthsSortCurrent: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'sort', 'y', 'order']),
-        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
+        
         dataType: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype']),
+        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
+        isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
     }), 
     dispatch => ({
         ByMonthsActions: bindActionCreators(ByMonthsActions, dispatch),
