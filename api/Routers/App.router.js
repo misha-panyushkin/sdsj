@@ -103,7 +103,7 @@ router.get('/dayTimeSeries', function (req, res, next) {
 
 router.get('/seasonsSeries', function (req, res, next) {
     // req.body.
-    fs.readFile(__dirname + '/../data/seasons/series.json', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/../data/seasons/series.prod.json', 'utf8', function (err, data) {
         res.status(200).json({
             data: {
                 series: JSON.parse(data),
