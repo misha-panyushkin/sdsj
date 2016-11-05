@@ -169,8 +169,28 @@ export default class SeasonsSeries {
                 .attr("class", "star")
                 .style("fill", "none")
                 .style("opacity", 0)
-                .attr("d", d3.symbol().type(d3.symbolStar).size(this.gridSize * 2))
+                .merge(this.stars)
+                .attr("d", d3.symbol().type(d3.symbolStar).size(d => getSize4StarByState.call(this, d)))
                 .attr("transform", d => "translate(" + ( d.x * this.gridSize + this.gridSize / 2 ) + ", " + ( d.y * this.gridSize + this.gridSize / 2 ) + ")")
+                .on("mouseover", d => {
+                    this.eventHandlers.onMouseOver(d)
+                })
+                .on("click", d => {
+                    this.eventHandlers.onClick(d)
+                })
+
+            function getSize4StarByState (d) {
+                let size = this.gridSize * 2
+
+                if (d.state) {
+
+                    if (d.state.active) {
+                        size += -this.gridSize
+                    }
+                }
+
+                return size
+            }
         
         } else {
             this.matrix.selectAll(".star")
@@ -273,6 +293,7 @@ export default class SeasonsSeries {
                 })
                 .style("opacity", 1)
                 .style("fill", d => getColorFill.call(this, d))
+                .style("stroke", d => d3.color(getColorFill.call(this, d)).darker(5).toString() )
         }
 
         function getColorFill (d) {

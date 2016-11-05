@@ -55313,7 +55313,7 @@
 
 
 	// module
-	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG .star {\n  stroke: #5d5d5d;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
 
 	// exports
 
@@ -55498,15 +55498,36 @@
 	            }
 
 	            if (this.holidaysMode) {
-	                this.stars = this.matrix.selectAll(".star").data(this.data.filter(function (d) {
-	                    return d.data.extra.holiday;
-	                }), function (d) {
-	                    return d.x + ':' + d.y;
-	                });
-	                this.stars.exit().transition('opacity').duration(500).style("opacity", 0).remove();
-	                this.enteredStars = this.stars.enter().append('path').attr("class", "star").style("fill", "none").style("opacity", 0).attr("d", d3.symbol().type(d3.symbolStar).size(this.gridSize * 2)).attr("transform", function (d) {
-	                    return "translate(" + (d.x * _this.gridSize + _this.gridSize / 2) + ", " + (d.y * _this.gridSize + _this.gridSize / 2) + ")";
-	                });
+	                (function () {
+	                    var getSize4StarByState = function getSize4StarByState(d) {
+	                        var size = this.gridSize * 2;
+
+	                        if (d.state) {
+
+	                            if (d.state.active) {
+	                                size += -this.gridSize;
+	                            }
+	                        }
+
+	                        return size;
+	                    };
+
+	                    _this.stars = _this.matrix.selectAll(".star").data(_this.data.filter(function (d) {
+	                        return d.data.extra.holiday;
+	                    }), function (d) {
+	                        return d.x + ':' + d.y;
+	                    });
+	                    _this.stars.exit().transition('opacity').duration(500).style("opacity", 0).remove();
+	                    _this.enteredStars = _this.stars.enter().append('path').attr("class", "star").style("fill", "none").style("opacity", 0).merge(_this.stars).attr("d", d3.symbol().type(d3.symbolStar).size(function (d) {
+	                        return getSize4StarByState.call(_this, d);
+	                    })).attr("transform", function (d) {
+	                        return "translate(" + (d.x * _this.gridSize + _this.gridSize / 2) + ", " + (d.y * _this.gridSize + _this.gridSize / 2) + ")";
+	                    }).on("mouseover", function (d) {
+	                        _this.eventHandlers.onMouseOver(d);
+	                    }).on("click", function (d) {
+	                        _this.eventHandlers.onClick(d);
+	                    });
+	                })();
 	            } else {
 	                this.matrix.selectAll(".star").transition('opacity').duration(500).style("opacity", 0).remove();
 	            }
@@ -55594,6 +55615,8 @@
 	                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("opacity", 1).style("fill", function (d) {
 	                    return getColorFill.call(_this, d);
+	                }).style("stroke", function (d) {
+	                    return d3.color(getColorFill.call(_this, d)).darker(5).toString();
 	                });
 	            }
 
