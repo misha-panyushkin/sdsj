@@ -33,6 +33,10 @@
             cursor: default;
             color: #fff;
         }
+        .Item:hover {
+            background-color: #868686;
+            color: #fff;
+        }
     }
     &__MonthsSort:after {
         content: 'MONTHS';
@@ -77,6 +81,10 @@
             cursor: default;
             color: #fff;
         }
+        .Item:hover {
+            background-color: #868686;
+            color: #fff;
+        }
     }
     &__DaysSort:after {
         content: 'DAYS';
@@ -112,13 +120,17 @@
             cursor: pointer;
             font-weight: 100;
             border-radius: 2px;
-            margin-right: 5px;
+            margin-right: 7px;
             color: #919191;
             border: 1px solid #c4c4c4;
         }
         .Item.Active {
             background-color: #dfdfdf;
             color: #575757;
+        }
+        .Item:hover {
+            background-color: #dfdfdf;
+            color: #595959;
         }
     }
     &__ModeWeather {}

@@ -57,13 +57,13 @@ const ByMonths = createSelector(
         
         const rowsLabels = SeriesByMonths.map(month => {
             const date = month.getIn(['info', 'date'])
-            return moment(date).format('MMM YY')
+            return moment(date).utc().format('MMM YY')
         }).toJS()
         
         const columnsLabels = SeriesByMonths.size 
-            ? SeriesByMonths.getIn([0, 'byDay']).map(d => {
+            ? SeriesByMonths.find(m => m.get('byDay').size == 31, I.Map()).get('byDay', I.List()).map(d => {
                 const date = d.getIn(['info', 'date'])
-                return moment(date).format('D')
+                return moment(date).utc().format('D')
             }).toJS()
             : []
 

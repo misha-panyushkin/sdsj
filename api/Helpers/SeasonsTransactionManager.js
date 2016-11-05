@@ -10,8 +10,8 @@ module.exports = class SeasonsTransactionManager {
     }
 
     addTransaction (data) {
-        const day = data.get('day')
-        const time = data.get('time').split(':')
+        const day = data.day
+        const time = data.time.split(':')
 
         const nextDate = this.startingPoint.clone()
             .add(day, 'd')
@@ -21,7 +21,7 @@ module.exports = class SeasonsTransactionManager {
                 second: time[2] > 59 ? 59 : time[2],
             })
 
-        const nextAmount = data.get('amount')
+        const nextAmount = data.amount
 
         const weatherData = this.WeatherStore.getIn([ nextDate.year(), nextDate.month() + 1, nextDate.date() ])
         const holidayData = this.HolidayStore.getIn([ nextDate.year(), nextDate.month() + 1, nextDate.date() ])

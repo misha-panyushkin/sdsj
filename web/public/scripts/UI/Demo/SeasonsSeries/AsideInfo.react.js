@@ -26,19 +26,19 @@ export default class AsideInfo extends Component {
                 
                 <div className={ this._b('TotalExpenses').mix('Item') }>
                     <span className={ this._b('TotalExpensesLabel') }>
-                        TOTAL EXPENSE
+                        AVERAGE EXPENSE
                     </span>
                     <span className={ this._b('TotalExpensesNumber') }>
-                        { this.__processNumberDimensions(info.total.expenses) }
+                        { this.__processNumberDimensions(info.average.expenses) }
                     </span>
                 </div>
                 
                 <div className={ this._b('TotalIncomes').mix('Item') }>
                     <span className={ this._b('TotalIncomesLabel') }>
-                        TOTAL INCOME
+                        AVERAGE INCOME
                     </span>
                     <span className={ this._b('TotalIncomesNumber') }>
-                        { this.__processNumberDimensions(info.total.incomes) }
+                        { this.__processNumberDimensions(info.average.incomes) }
                     </span>
                 </div>
                 
@@ -74,6 +74,9 @@ export default class AsideInfo extends Component {
             result.count.expenses += data.count.expenses
             result.count.incomes += data.count.incomes
 
+            result.average.expenses = result.count.expenses > 0 ? result.total.expenses / result.count.expenses : 0
+            result.average.incomes = result.count.incomes > 0 ? result.total.incomes / result.count.incomes : 0
+
             return result
         }, {
             total: {
@@ -81,6 +84,10 @@ export default class AsideInfo extends Component {
                 incomes: 0,
             },
             count: {
+                expenses: 0,
+                incomes: 0,
+            },
+            average: {
                 expenses: 0,
                 incomes: 0,
             },

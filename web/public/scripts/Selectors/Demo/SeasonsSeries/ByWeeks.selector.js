@@ -70,13 +70,13 @@ const ByWeeks = createSelector(
 
         const rowsLabels = SeriesByWeeks.map(d => {
             const date = d.getIn(['info', 'date'])
-            return moment(date).format('dd')
+            return moment(date).utc().format('dd')
         }).toJS()
         
         const columnsLabels = SeriesByWeeks.size 
             ? SeriesByWeeks.getIn([0, 'byHour']).map(d => {
                 const date = d.getIn(['info', 'date'])
-                return moment(date).format('HH')
+                return moment(date).utc().format('HH')
             }).toJS()
             : []
 

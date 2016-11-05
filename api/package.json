@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/misha-panyushkin/sdsj#readme",
   "dependencies": {
+    "async": "^2.1.2",
     "body-parser": "^1.14.2",
     "csv-parse": "^1.1.7",
     "d3": "^4.2.8",
