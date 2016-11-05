@@ -12,6 +12,7 @@ const WeekDaysTransactionCalculator = require('../Helpers/WeekDaysTransactionCal
 const SeasonsTransactionManager = require('../Helpers/SeasonsTransactionManager')
 
 const WeatherStore = require('../data/js/weather')
+const HolidayStore = require('../data/js/holidays')
 
 router.get('/init', function (req, res, next) {
     // req.body.
@@ -46,7 +47,7 @@ function setUpTransactions (nextTransactions) {
     LocalStorage.setTransactions(nextTransactions)
     nextTransactions = LocalStorage.getStore().get('transactions')
     // const WDTC = new WeekDaysTransactionCalculator(4)
-    const STM = new SeasonsTransactionManager( WeatherStore )
+    const STM = new SeasonsTransactionManager( WeatherStore, HolidayStore )
 
     nextTransactions.forEach(d => {
         // WDTC.addTransaction(d)

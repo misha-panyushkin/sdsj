@@ -57,6 +57,7 @@ export default class SeasonsSeries extends Component {
 
             weatherMode,
             gridSizeMode,
+            holidaysMode,
 
         } = this.props
 
@@ -68,19 +69,7 @@ export default class SeasonsSeries extends Component {
         
         if (data && data.length) {
             
-            if (this._d3Layer) {
-                this._d3Layer.update({
-                    data,
-                    rowsLabels,
-                    columnsLabels,
-                    gridSize,
-                    eventHandlers,
-                    smoothTransitions,
-                    sizes,
-                    weatherMode,
-                    gridSizeMode,
-                })
-            } else {
+            if (!this._d3Layer) {
                 this._d3Layer = new D3SeasonsSeries({
                     root: this.refs.svg, 
                     hub: D3DataHub,
@@ -89,18 +78,20 @@ export default class SeasonsSeries extends Component {
                     gridSize,
                     margins,
                 })
-                this._d3Layer.update({
-                    data,
-                    rowsLabels,
-                    columnsLabels,
-                    gridSize,
-                    eventHandlers,
-                    smoothTransitions,
-                    sizes,
-                    weatherMode,
-                    gridSizeMode,
-                })
             }
+            
+            this._d3Layer.update({
+                data,
+                rowsLabels,
+                columnsLabels,
+                gridSize,
+                eventHandlers,
+                smoothTransitions,
+                sizes,
+                weatherMode,
+                gridSizeMode,
+                holidaysMode,
+            })
         }
     }
 }

@@ -27,7 +27,11 @@ export default class SeasonsSeries {
         this.weatherModeColors = d3.scaleLinear()
             .range(["#283593", "#283593", "#1565C0", "#42A5F5", "#E3F2FD", "#B3E5FC", "#CDDC39", "#FFEB3B", "#FF9800", "#FF5722",  "#E53935",  "#B71C1C"])
             .domain([-20,       -15,       -10,       -5,        0,         5,         10,        15,       20,        25,         30,         35])
-            // .interpolate(d3.interpolateHcl)
+
+        // this.holidaysMode = d3.scaleLinear()
+        //     .range([])
+        //     .domain([])
+        //     // .interpolate(d3.interpolateHcl)
 
         this.weatherModeColorOpacity = d3.scaleLinear()
             .range([.6, 1])
@@ -50,6 +54,7 @@ export default class SeasonsSeries {
         sizes,
         weatherMode,
         gridSizeMode,
+        holidaysMode,
      }) {
         this.data = data
 
@@ -73,6 +78,7 @@ export default class SeasonsSeries {
 
         this.weatherMode = weatherMode
         this.gridSizeMode = gridSizeMode
+        this.holidaysMode = holidaysMode
 
         if (this.gridSizeMode) {
             this.valueBasedGridSizeExtra = d3.scaleLinear()
@@ -144,8 +150,6 @@ export default class SeasonsSeries {
 
         this.timeLabels.exit().remove()
 
-        
-
         this.cards = this.matrix.selectAll(".card").data(this.data, d => d.x + ':' + d.y)
         
         if (this.smoothTransitions) {
@@ -153,11 +157,28 @@ export default class SeasonsSeries {
                 return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
             }).style("fill", '#fff').remove()
         } else {
-            console.log('no color transition exit')
             this.cards.exit().interrupt().remove()
         }
 
-        this.enteredCards = this.cards.enter().append("rect")
+        if (this.holidaysMode) {
+            this.stars = this.matrix.selectAll(".star").data(this.data.filter(d => d.data.extra.holiday), d => d.x + ':' + d.y)
+            this.stars.exit()
+                .transition('opacity').duration(500).style("opacity", 0).remove()
+            this.enteredStars = this.stars.enter()
+                .append('path')
+                .attr("class", "star")
+                .style("fill", "none")
+                .style("opacity", 0)
+                .attr("d", d3.symbol().type(d3.symbolStar).size(this.gridSize * 2))
+                .attr("transform", d => "translate(" + ( d.x * this.gridSize + this.gridSize / 2 ) + ", " + ( d.y * this.gridSize + this.gridSize / 2 ) + ")")
+        
+        } else {
+            this.matrix.selectAll(".star")
+                .transition('opacity').duration(500).style("opacity", 0).remove()
+        }
+
+        this.enteredCards = this.cards.enter()
+            .append("rect")
             .style("fill", '#fff')
             .style("stroke", '#fff')
             .on("mouseover", d => {
@@ -240,9 +261,17 @@ export default class SeasonsSeries {
                 }).style("fill", d => getColorFill.call(this, d))
 
         } else {
-            console.log('no color transition enter')
             this.enteredCards
                 .interrupt('fill')
+                .style("fill", d => getColorFill.call(this, d))
+        }
+
+        if (this.holidaysMode) {
+            this.enteredStars
+                .transition('fill:opacity').duration((d, i) => {
+                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+                })
+                .style("opacity", 1)
                 .style("fill", d => getColorFill.call(this, d))
         }
 

@@ -33958,6 +33958,9 @@
 	                    },
 	                    gridsize: {
 	                        active: false
+	                    },
+	                    holidays: {
+	                        active: false
 	                    }
 	                }
 	            }
@@ -52123,6 +52126,12 @@
 	            });
 	            return nextState;
 
+	        case _ByMonths.BY_MONTHS_MODE_HOLIDAYS:
+	            nextState = nextState.updateIn(['ui', 'mode', 'holidays', 'active'], function (active) {
+	                return action.isActive || !active;
+	            });
+	            return nextState;
+
 	        default:
 	            return nextState;
 	    }
@@ -52143,6 +52152,7 @@
 	exports.switchModeDataType = switchModeDataType;
 	exports.switchModeWeather = switchModeWeather;
 	exports.switchModeGridSize = switchModeGridSize;
+	exports.switchModeHolidays = switchModeHolidays;
 	var BY_MONTHS_SORT = exports.BY_MONTHS_SORT = 'BY_MONTHS_SORT';
 	var BY_MONTHS_HOVER_COORDINATES = exports.BY_MONTHS_HOVER_COORDINATES = 'BY_MONTHS_HOVER_COORDINATES';
 	var BY_MONTHS_SELECTED_COORDINATES = exports.BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES';
@@ -52150,6 +52160,7 @@
 	var BY_MONTHS_MODE_DATA_TYPE = exports.BY_MONTHS_MODE_DATA_TYPE = 'BY_MONTHS_MODE_DATA_TYPE';
 	var BY_MONTHS_MODE_WEATHER = exports.BY_MONTHS_MODE_WEATHER = 'BY_MONTHS_MODE_WEATHER';
 	var BY_MONTHS_MODE_GRIDSIZE = exports.BY_MONTHS_MODE_GRIDSIZE = 'BY_MONTHS_MODE_GRIDSIZE';
+	var BY_MONTHS_MODE_HOLIDAYS = exports.BY_MONTHS_MODE_HOLIDAYS = 'BY_MONTHS_MODE_HOLIDAYS';
 
 	function setSort(_ref) {
 	    var axis = _ref.axis;
@@ -52201,6 +52212,13 @@
 	function switchModeGridSize(isActive) {
 	    return {
 	        type: BY_MONTHS_MODE_GRIDSIZE,
+	        isActive: isActive
+	    };
+	}
+
+	function switchModeHolidays(isActive) {
+	    return {
+	        type: BY_MONTHS_MODE_HOLIDAYS,
 	        isActive: isActive
 	    };
 	}
@@ -55204,6 +55222,7 @@
 	            var margins = _props2.margins;
 	            var weatherMode = _props2.weatherMode;
 	            var gridSizeMode = _props2.gridSizeMode;
+	            var holidaysMode = _props2.holidaysMode;
 
 
 	            var eventHandlers = {
@@ -55214,19 +55233,7 @@
 
 	            if (data && data.length) {
 
-	                if (this._d3Layer) {
-	                    this._d3Layer.update({
-	                        data: data,
-	                        rowsLabels: rowsLabels,
-	                        columnsLabels: columnsLabels,
-	                        gridSize: gridSize,
-	                        eventHandlers: eventHandlers,
-	                        smoothTransitions: smoothTransitions,
-	                        sizes: sizes,
-	                        weatherMode: weatherMode,
-	                        gridSizeMode: gridSizeMode
-	                    });
-	                } else {
+	                if (!this._d3Layer) {
 	                    this._d3Layer = new _SeasonsSeries2.default({
 	                        root: this.refs.svg,
 	                        hub: D3DataHub,
@@ -55235,18 +55242,20 @@
 	                        gridSize: gridSize,
 	                        margins: margins
 	                    });
-	                    this._d3Layer.update({
-	                        data: data,
-	                        rowsLabels: rowsLabels,
-	                        columnsLabels: columnsLabels,
-	                        gridSize: gridSize,
-	                        eventHandlers: eventHandlers,
-	                        smoothTransitions: smoothTransitions,
-	                        sizes: sizes,
-	                        weatherMode: weatherMode,
-	                        gridSizeMode: gridSizeMode
-	                    });
 	                }
+
+	                this._d3Layer.update({
+	                    data: data,
+	                    rowsLabels: rowsLabels,
+	                    columnsLabels: columnsLabels,
+	                    gridSize: gridSize,
+	                    eventHandlers: eventHandlers,
+	                    smoothTransitions: smoothTransitions,
+	                    sizes: sizes,
+	                    weatherMode: weatherMode,
+	                    gridSizeMode: gridSizeMode,
+	                    holidaysMode: holidaysMode
+	                });
 	            }
 	        }
 	    }]);
@@ -55304,7 +55313,7 @@
 
 
 	// module
-	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG .star {\n  stroke: #5d5d5d;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
 
 	// exports
 
@@ -55353,7 +55362,11 @@
 	        this.selectedColors = d3.scaleLinear().range(["#d1d4ff", "#363da3"]).interpolate(d3.interpolateHcl);
 
 	        this.weatherModeColors = d3.scaleLinear().range(["#283593", "#283593", "#1565C0", "#42A5F5", "#E3F2FD", "#B3E5FC", "#CDDC39", "#FFEB3B", "#FF9800", "#FF5722", "#E53935", "#B71C1C"]).domain([-20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35]);
-	        // .interpolate(d3.interpolateHcl)
+
+	        // this.holidaysMode = d3.scaleLinear()
+	        //     .range([])
+	        //     .domain([])
+	        //     // .interpolate(d3.interpolateHcl)
 
 	        this.weatherModeColorOpacity = d3.scaleLinear().range([.6, 1]);
 
@@ -55376,6 +55389,7 @@
 	            var sizes = _ref2.sizes;
 	            var weatherMode = _ref2.weatherMode;
 	            var gridSizeMode = _ref2.gridSizeMode;
+	            var holidaysMode = _ref2.holidaysMode;
 
 	            this.data = data;
 
@@ -55397,6 +55411,7 @@
 
 	            this.weatherMode = weatherMode;
 	            this.gridSizeMode = gridSizeMode;
+	            this.holidaysMode = holidaysMode;
 
 	            if (this.gridSizeMode) {
 	                this.valueBasedGridSizeExtra = d3.scaleLinear().range([this.gridSize - 5, 0]);
@@ -55479,8 +55494,21 @@
 	                    return 400 * ((Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
 	                }).style("fill", '#fff').remove();
 	            } else {
-	                console.log('no color transition exit');
 	                this.cards.exit().interrupt().remove();
+	            }
+
+	            if (this.holidaysMode) {
+	                this.stars = this.matrix.selectAll(".star").data(this.data.filter(function (d) {
+	                    return d.data.extra.holiday;
+	                }), function (d) {
+	                    return d.x + ':' + d.y;
+	                });
+	                this.stars.exit().transition('opacity').duration(500).style("opacity", 0).remove();
+	                this.enteredStars = this.stars.enter().append('path').attr("class", "star").style("fill", "none").style("opacity", 0).attr("d", d3.symbol().type(d3.symbolStar).size(this.gridSize * 2)).attr("transform", function (d) {
+	                    return "translate(" + (d.x * _this.gridSize + _this.gridSize / 2) + ", " + (d.y * _this.gridSize + _this.gridSize / 2) + ")";
+	                });
+	            } else {
+	                this.matrix.selectAll(".star").transition('opacity').duration(500).style("opacity", 0).remove();
 	            }
 
 	            this.enteredCards = this.cards.enter().append("rect").style("fill", '#fff').style("stroke", '#fff').on("mouseover", function (d) {
@@ -55556,8 +55584,15 @@
 	                    return getColorFill.call(_this, d);
 	                });
 	            } else {
-	                console.log('no color transition enter');
 	                this.enteredCards.interrupt('fill').style("fill", function (d) {
+	                    return getColorFill.call(_this, d);
+	                });
+	            }
+
+	            if (this.holidaysMode) {
+	                this.enteredStars.transition('fill:opacity').duration(function (d, i) {
+	                    return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
+	                }).style("opacity", 1).style("fill", function (d) {
 	                    return getColorFill.call(_this, d);
 	                });
 	            }
@@ -71406,6 +71441,7 @@
 	            var selectedCoordinates = _props.selectedCoordinates;
 	            var isActiveModeWeather = _props.isActiveModeWeather;
 	            var isActiveModeGridSize = _props.isActiveModeGridSize;
+	            var isActiveModeHolidays = _props.isActiveModeHolidays;
 
 
 	            var hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y);
@@ -71453,7 +71489,8 @@
 	                    },
 
 	                    weatherMode: isActiveModeWeather,
-	                    gridSizeMode: isActiveModeGridSize
+	                    gridSizeMode: isActiveModeGridSize,
+	                    holidaysMode: isActiveModeHolidays
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
 	                    className: this._b('OX'),
@@ -71675,7 +71712,8 @@
 	        hoverCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'hover'], _immutable2.default.Map()).toJS(),
 	        selectedCoordinates: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'selected'], _immutable2.default.Map()).toJS(),
 	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
-	        isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false)
+	        isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
+	        isActiveModeHolidays: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'holidays', 'active'], false)
 	    });
 	}, function (dispatch) {
 	    return {
@@ -72022,6 +72060,7 @@
 	            var dataType = _props.dataType;
 	            var isActiveModeWeather = _props.isActiveModeWeather;
 	            var isActiveModeGridSize = _props.isActiveModeGridSize;
+	            var isActiveModeHolidays = _props.isActiveModeHolidays;
 
 
 	            return _react2.default.createElement(
@@ -72113,6 +72152,13 @@
 	                        name: 'circle',
 	                        onClick: function onClick() {
 	                            return _this2.handleModeGridSizeClick();
+	                        }
+	                    }),
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        className: this._b('ModeHolidays').mix(['Item', isActiveModeHolidays ? 'Active' : '']).toString(),
+	                        name: 'star',
+	                        onClick: function onClick() {
+	                            return _this2.handleModeHolidaysClick();
 	                        }
 	                    })
 	                )
@@ -72206,6 +72252,14 @@
 
 	            ByMonthsActions.switchModeGridSize();
 	        }
+	    }, {
+	        key: 'handleModeHolidaysClick',
+	        value: function handleModeHolidaysClick() {
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeHolidays();
+	        }
 	    }]);
 
 	    return ByMonthsControls;
@@ -72218,7 +72272,8 @@
 
 	        dataType: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'datatype']),
 	        isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
-	        isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false)
+	        isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
+	        isActiveModeHolidays: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'holidays', 'active'], false)
 	    };
 	}, function (dispatch) {
 	    return {
@@ -72261,7 +72316,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 19px;\n  left: 86px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByMonthsControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
+	exports.push([module.id, ".ByMonthsControls {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n}\n.ByMonthsControls__MonthsSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  top: 154px;\n  left: -57px;\n  width: 90px;\n  transform: rotate(-90deg);\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 3px;\n}\n.ByMonthsControls__MonthsSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  transform: rotate(90deg);\n  font-weight: 100;\n}\n.ByMonthsControls__MonthsSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__MonthsSort:after {\n  content: 'MONTHS';\n  position: absolute;\n  top: 0px;\n  left: 99px;\n  font-size: 13px;\n  color: #666;\n  text-align: center;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  padding-top: 22px;\n  margin-top: 16px;\n  position: absolute;\n  top: -69px;\n  left: 139px;\n  width: 91px;\n  border-bottom: 1px dashed #ccc;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__DaysSort .Item {\n  font-size: 12px;\n  padding: 4px;\n  cursor: pointer;\n  font-weight: 100;\n  transform: rotate(-90deg);\n}\n.ByMonthsControls__DaysSort .Item.Active {\n  background-color: #868686;\n  cursor: default;\n  color: #fff;\n}\n.ByMonthsControls__DaysSort:after {\n  content: 'DAYS';\n  position: absolute;\n  top: 24px;\n  left: -51px;\n  font-size: 13px;\n  color: #666;\n  border-bottom: 1px dashed #ccc;\n  width: 45px;\n  text-align: center;\n  padding-bottom: 4px;\n}\n.ByMonthsControls__Modes {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n  position: absolute;\n  bottom: 19px;\n  left: 86px;\n}\n.ByMonthsControls__Modes .Item {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 5px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n}\n.ByMonthsControls__Modes .Item.Active {\n  background-color: #dfdfdf;\n  color: #575757;\n}\n.ByMonthsControls__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.ByMonthsControls__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n", ""]);
 
 	// exports
 

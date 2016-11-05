@@ -91,6 +91,9 @@ export default I.fromJS({
                     gridsize: {
                         active: false,
                     },
+                    holidays: {
+                        active: false,
+                    },
                 },
             },
         },

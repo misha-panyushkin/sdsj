@@ -9,6 +9,7 @@ import {
     BY_MONTHS_MODE_DATA_TYPE,
     BY_MONTHS_MODE_WEATHER,
     BY_MONTHS_MODE_GRIDSIZE,
+    BY_MONTHS_MODE_HOLIDAYS,
 } from 'Actions/Demo/SeasonsSeries/ByMonths.actions'
 
 const DEFAULT_STATE = APP_MOCKS.getIn(['DEMO', 'SEASONS_SERIES_BY_MONTHS'])
@@ -68,6 +69,10 @@ export default function ByMonthsUI (state = DEFAULT_STATE, action) {
 
         case BY_MONTHS_MODE_GRIDSIZE:
             nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => action.isActive || !active)
+            return nextState
+
+        case BY_MONTHS_MODE_HOLIDAYS:
+            nextState = nextState.updateIn(['ui', 'mode', 'holidays', 'active'], active => action.isActive || !active)
             return nextState
 
         default:

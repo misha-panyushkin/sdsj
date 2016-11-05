@@ -5,6 +5,7 @@ export const BY_MONTHS_SELECTED_COORDINATES = 'BY_MONTHS_SELECTED_COORDINATES'
 export const BY_MONTHS_MODE_DATA_TYPE = 'BY_MONTHS_MODE_DATA_TYPE'
 export const BY_MONTHS_MODE_WEATHER = 'BY_MONTHS_MODE_WEATHER'
 export const BY_MONTHS_MODE_GRIDSIZE = 'BY_MONTHS_MODE_GRIDSIZE'
+export const BY_MONTHS_MODE_HOLIDAYS = 'BY_MONTHS_MODE_HOLIDAYS'
 
 export function setSort ({ 
     axis,
@@ -57,6 +58,13 @@ export function switchModeWeather (isActive) {
 export function switchModeGridSize (isActive) {
     return {
         type: BY_MONTHS_MODE_GRIDSIZE,
+        isActive,
+    }
+}
+
+export function switchModeHolidays (isActive) {
+    return {
+        type: BY_MONTHS_MODE_HOLIDAYS,
         isActive,
     }
 }
