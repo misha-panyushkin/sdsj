@@ -52,11 +52,11 @@ export default function ByWeeksUI (state = DEFAULT_STATE, action) {
                 for (var i = 0; i < 24; i++) {
                     nextDay = nextDay.updateIn(['byHour', i], hour => hour || I.fromJS({
                         total: {
-                            expenses: 1,
+                            expenses: -1,
                             incomes: 1,
                         },
                         count: {
-                            expenses: 1,
+                            expenses: -1,
                             incomes: 1,
                         }
                     }))

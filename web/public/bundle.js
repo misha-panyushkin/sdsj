@@ -52018,11 +52018,11 @@
 	                    nextDay = nextDay.updateIn(['byHour', i], function (hour) {
 	                        return hour || _immutable2.default.fromJS({
 	                            total: {
-	                                expenses: 1,
+	                                expenses: -1,
 	                                incomes: 1
 	                            },
 	                            count: {
-	                                expenses: 1,
+	                                expenses: -1,
 	                                incomes: 1
 	                            }
 	                        });
@@ -56313,7 +56313,7 @@
 	    SeriesByWeeks.forEach(function (d, rowIndex) {
 	        return d.forEach(function (point, columnIndex) {
 	            SeriesByWeeksSumByOX[columnIndex] = SeriesByWeeksSumByOX[columnIndex] || {
-	                value: 1,
+	                value: dataType == 'expenses' ? -1 : 1,
 	                x: columnIndex,
 	                y: 0,
 	                state: {}
@@ -56326,7 +56326,7 @@
 	    SeriesByWeeks.forEach(function (d, rowIndex) {
 	        return d.forEach(function (point, columnIndex) {
 	            SeriesByWeeksSumByOY[rowIndex] = SeriesByWeeksSumByOY[rowIndex] || {
-	                value: 1,
+	                value: dataType == 'expenses' ? -1 : 1,
 	                x: 0,
 	                y: rowIndex,
 	                state: {}
@@ -72120,7 +72120,7 @@
 	    SeriesByMonths.forEach(function (d, rowIndex) {
 	        return d.forEach(function (point, columnIndex) {
 	            SeriesByMonthsSumByOX[columnIndex] = SeriesByMonthsSumByOX[columnIndex] || {
-	                value: 1,
+	                value: dataType == 'expenses' ? -1 : 1,
 	                x: columnIndex,
 	                y: 0,
 	                state: {}
@@ -72133,7 +72133,7 @@
 	    SeriesByMonths.forEach(function (d, rowIndex) {
 	        return d.forEach(function (point, columnIndex) {
 	            SeriesByMonthsSumByOY[rowIndex] = SeriesByMonthsSumByOY[rowIndex] || {
-	                value: 1,
+	                value: dataType == 'expenses' ? -1 : 1,
 	                x: 0,
 	                y: rowIndex,
 	                state: {}
