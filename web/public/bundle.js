@@ -55538,6 +55538,12 @@
 	                _this.eventHandlers.onClick(d);
 	            }).merge(this.cards).attr("rx", 4).attr("ry", 4);
 
+	            this.enteredCards.transition('opacity').duration(function (d, i) {
+	                return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min));
+	            }).attr("opacity", function (d) {
+	                return _this.holidaysMode && d.data.extra.holiday ? 0 : 1;
+	            });
+
 	            this.background.on("mouseleave", function (d) {
 	                _this.eventHandlers.onMouseOut();
 	            });

@@ -211,6 +211,12 @@ export default class SeasonsSeries {
             .attr("rx", 4)
             .attr("ry", 4)
 
+        this.enteredCards
+            .transition('opacity').duration((d, i) => {
+                return 700 * (1 - (Math.abs(d.value) - Math.abs(min)) / Math.abs(min))
+            })
+            .attr("opacity", d => this.holidaysMode && d.data.extra.holiday ? 0 : 1)
+
         this.background.on("mouseleave", d => {
                 this.eventHandlers.onMouseOut()
             })
