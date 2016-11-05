@@ -65,8 +65,8 @@ module.exports = class SeasonsTransactionManager {
 
     __calculateTotal (total, nextAmount) {
         total = total || I.Map({
-            expenses: 0,
-            incomes: 0,
+            expenses: -1,
+            incomes: 1,
         })
 
         if (nextAmount > 0)

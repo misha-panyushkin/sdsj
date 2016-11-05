@@ -1,4 +1,5 @@
 import * as d3 from "d3"
+import * as d3ScaleChromatic from 'd3-scale-chromatic'
 
 export default class SeasonsSeries {
     constructor ({ 
@@ -15,14 +16,9 @@ export default class SeasonsSeries {
         
         this.rowsLabels = rowsLabels || []
         this.columnsLabels = columnsLabels || []
-        
-        this.colors = d3.scaleLinear()
-            .range(["#fff", "#656565"])
-            .interpolate(d3.interpolateHcl)
 
-        this.selectedColors = d3.scaleLinear()
-            .range(["#d1d4ff", "#363da3"])
-            .interpolate(d3.interpolateHcl)
+        // this.colors = d3.scaleThreshold()
+        //     .range(d3SC.schemeReds[9])
 
         this.weatherModeColors = d3.scaleLinear()
             .range(["#283593", "#283593", "#1565C0", "#42A5F5", "#E3F2FD", "#B3E5FC", "#CDDC39", "#FFEB3B", "#FF9800", "#FF5722",  "#E53935",  "#B71C1C"])
@@ -55,6 +51,7 @@ export default class SeasonsSeries {
         weatherMode,
         gridSizeMode,
         holidaysMode,
+        scaleLogMode,
      }) {
         this.data = data
 
@@ -77,12 +74,38 @@ export default class SeasonsSeries {
         this.smoothTransitions = smoothTransitions
 
         this.weatherMode = weatherMode
-        this.gridSizeMode = gridSizeMode
         this.holidaysMode = holidaysMode
+        this.gridSizeMode = gridSizeMode
+        this.scaleLogMode = scaleLogMode
 
         if (this.gridSizeMode) {
-            this.valueBasedGridSizeExtra = d3.scaleLinear()
-                .range([this.gridSize - 5, 0])
+            if (this.scaleLogMode) {
+                this.valueBasedGridSizeExtra = d3.scaleLog()
+                    .range([this.gridSize - 5, 0])
+            
+            } else {
+                this.valueBasedGridSizeExtra = d3.scaleLinear()
+                    .range([this.gridSize - 5, 0])
+            }
+        }
+
+        if (this.scaleLogMode) {
+            this.colors = d3.scaleLog()
+                .range(["#fff", "#656565"])
+                .interpolate(d3.interpolateHcl)
+
+            this.selectedColors = d3.scaleLog()
+                .range(["#d1d4ff", "#363da3"])
+                .interpolate(d3.interpolateHcl)
+
+        } else {
+            this.colors = d3.scaleLinear()
+                .range(["#fff", "#656565"])
+                .interpolate(d3.interpolateHcl)
+
+            this.selectedColors = d3.scaleLinear()
+                .range(["#d1d4ff", "#363da3"])
+                .interpolate(d3.interpolateHcl)
         }
 
         this.updateWithData()

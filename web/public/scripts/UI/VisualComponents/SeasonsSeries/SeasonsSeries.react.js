@@ -58,6 +58,7 @@ export default class SeasonsSeries extends Component {
             weatherMode,
             gridSizeMode,
             holidaysMode,
+            scaleLogMode,
 
         } = this.props
 
@@ -91,6 +92,7 @@ export default class SeasonsSeries extends Component {
                 weatherMode,
                 gridSizeMode,
                 holidaysMode,
+                scaleLogMode,
             })
         }
     }

@@ -91,7 +91,7 @@ const ByWeeks = createSelector(
         const SeriesByWeeksSumByOX = []
         SeriesByWeeks.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByWeeksSumByOX[columnIndex] = (SeriesByWeeksSumByOX[columnIndex] || {
-                value: 0,
+                value: 1,
                 x: columnIndex,
                 y: 0,
                 state: {},
@@ -102,7 +102,7 @@ const ByWeeks = createSelector(
         const SeriesByWeeksSumByOY = []
         SeriesByWeeks.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByWeeksSumByOY[rowIndex] = (SeriesByWeeksSumByOY[rowIndex] || {
-                value: 0,
+                value: 1,
                 x: 0,
                 y: rowIndex,
                 state: {},

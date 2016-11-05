@@ -4,6 +4,7 @@ export const BY_WEEKS_SET_UP_WEEK_BY_DATA_POINTS = 'BY_WEEKS_SET_UP_WEEK_BY_DATA
 
 export const BY_WEEKS_MODE_DATA_TYPE = 'BY_WEEKS_MODE_DATA_TYPE'
 export const BY_WEEKS_MODE_GRIDSIZE = 'BY_WEEKS_MODE_GRIDSIZE'
+export const BY_WEEKS_MODE_SCALE_LOG = 'BY_WEEKS_MODE_SCALE_LOG'
 
 export function setSort ({ 
     axis,
@@ -44,6 +45,13 @@ export function switchModeDataType (dataType) {
 export function switchModeGridSize (isActive) {
     return {
         type: BY_WEEKS_MODE_GRIDSIZE,
+        isActive,
+    }
+}
+
+export function switchModeScaleLog (isActive) {
+    return {
+        type: BY_WEEKS_MODE_SCALE_LOG,
         isActive,
     }
 }

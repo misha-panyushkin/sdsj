@@ -74,6 +74,9 @@ export default I.fromJS({
                     gridsize: {
                         active: false,
                     },
+                    scalelog: {
+                        active: false,
+                    },
                 },
             },
         },
@@ -92,6 +95,9 @@ export default I.fromJS({
                         active: false,
                     },
                     holidays: {
+                        active: false,
+                    },
+                    scalelog: {
                         active: false,
                     },
                 },

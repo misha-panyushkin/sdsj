@@ -27,6 +27,7 @@ class ByMonthsControls extends Component {
             isActiveModeWeather,
             isActiveModeGridSize,
             isActiveModeHolidays,
+            isActiveModeScaleLog,
         } = this.props
 
         return (
@@ -100,6 +101,11 @@ class ByMonthsControls extends Component {
                         className={ this._b('ModeHolidays').mix(['Item', isActiveModeHolidays ? 'Active' : '']).toString() }
                         name="star"
                         onClick={ () => this.handleModeHolidaysClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeScaleLog').mix(['Item', isActiveModeScaleLog ? 'Active' : '']).toString() }
+                        name="gbp"
+                        onClick={ () => this.handleModeScaleLogClick() }
                         />
                 </div>
 
@@ -195,6 +201,14 @@ class ByMonthsControls extends Component {
         
         ByMonthsActions.switchModeHolidays()
     }
+
+    handleModeScaleLogClick () {
+        const {
+            ByMonthsActions,
+        } = this.props
+        
+        ByMonthsActions.switchModeScaleLog()
+    }
 }
 
 export default connect(
@@ -206,6 +220,7 @@ export default connect(
         isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
         isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
         isActiveModeHolidays: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'holidays', 'active'], false),
+        isActiveModeScaleLog: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'scalelog', 'active'], false),
     }), 
     dispatch => ({
         ByMonthsActions: bindActionCreators(ByMonthsActions, dispatch),

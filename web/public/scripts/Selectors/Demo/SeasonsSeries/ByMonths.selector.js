@@ -78,7 +78,7 @@ const ByMonths = createSelector(
         const SeriesByMonthsSumByOX = []
         SeriesByMonths.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByMonthsSumByOX[columnIndex] = (SeriesByMonthsSumByOX[columnIndex] || {
-                value: 0,
+                value: 1,
                 x: columnIndex,
                 y: 0,
                 state: {},
@@ -89,7 +89,7 @@ const ByMonths = createSelector(
         const SeriesByMonthsSumByOY = []
         SeriesByMonths.forEach((d, rowIndex) => d.forEach((point, columnIndex) => {
             SeriesByMonthsSumByOY[rowIndex] = (SeriesByMonthsSumByOY[rowIndex] || {
-                value: 0,
+                value: 1,
                 x: 0,
                 y: rowIndex,
                 state: {},

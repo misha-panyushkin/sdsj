@@ -40,6 +40,7 @@ class SeasonsSeriesByMonth extends Component {
             isActiveModeWeather,
             isActiveModeGridSize,
             isActiveModeHolidays,
+            isActiveModeScaleLog,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
@@ -82,6 +83,7 @@ class SeasonsSeriesByMonth extends Component {
                     weatherMode={ isActiveModeWeather }
                     gridSizeMode={ isActiveModeGridSize }
                     holidaysMode={ isActiveModeHolidays }
+                    scaleLogMode={ isActiveModeScaleLog }
                     />
 
                 <VisualSeasonsSeries 
@@ -289,6 +291,7 @@ export default connect(
             isActiveModeWeather: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'weather', 'active'], false),
             isActiveModeGridSize: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'gridsize', 'active'], false),
             isActiveModeHolidays: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'holidays', 'active'], false),
+            isActiveModeScaleLog: state.DemoSeasonsSeriesByMonths.getIn(['ui', 'mode', 'scalelog', 'active'], false),
         },
     ),
     dispatch => ({

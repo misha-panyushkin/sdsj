@@ -36,6 +36,7 @@ class SeasonsSeriesByWeeks extends Component {
             hoverCoordinates,
 
             isActiveModeGridSize,
+            isActiveModeScaleLog,
         } = this.props
 
         const hasHoverCoordinates = !isNaN(hoverCoordinates.x) || !isNaN(hoverCoordinates.y)
@@ -74,6 +75,7 @@ class SeasonsSeriesByWeeks extends Component {
                     } }
 
                     gridSizeMode={ isActiveModeGridSize }
+                    scaleLogMode={ isActiveModeScaleLog }
                     />
 
                 <VisualSeasonsSeries 
@@ -227,6 +229,7 @@ export default connect(
         {
             hoverCoordinates: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'hover'], I.Map()).toJS(),
             isActiveModeGridSize: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'gridsize', 'active'], false),
+            isActiveModeScaleLog: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'scalelog', 'active'], false),
         },
     ),
     dispatch => ({

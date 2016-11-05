@@ -25,6 +25,7 @@ class ByWeeksControls extends Component {
 
             dataType,
             isActiveModeGridSize,
+            isActiveModeScaleLog,
         } = this.props
 
         return (
@@ -88,6 +89,11 @@ class ByWeeksControls extends Component {
                         className={ this._b('ModeGridSize').mix(['Item', isActiveModeGridSize ? 'Active' : '']).toString() }
                         name="circle"
                         onClick={ () => this.handleModeGridSizeClick() }
+                        />
+                    <FA 
+                        className={ this._b('ModeScaleLog').mix(['Item', isActiveModeScaleLog ? 'Active' : '']).toString() }
+                        name="gbp"
+                        onClick={ () => this.handleModeScaleLogClick() }
                         />
                 </div>
 
@@ -167,6 +173,14 @@ class ByWeeksControls extends Component {
         
         ByWeeksActions.switchModeGridSize()
     }
+
+    handleModeScaleLogClick () {
+        const {
+            ByWeeksActions,
+        } = this.props
+        
+        ByWeeksActions.switchModeScaleLog()
+    }
 }
 
 export default connect(
@@ -176,6 +190,7 @@ export default connect(
         
         dataType: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'datatype']),
         isActiveModeGridSize: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'gridsize', 'active'], false),
+        isActiveModeScaleLog: state.DemoSeasonsSeriesByWeeks.getIn(['ui', 'mode', 'scalelog', 'active'], false),
     }), 
     dispatch => ({
         ByWeeksActions: bindActionCreators(ByWeeksActions, dispatch),

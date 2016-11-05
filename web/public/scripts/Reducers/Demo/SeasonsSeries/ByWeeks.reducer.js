@@ -8,6 +8,7 @@ import {
 
     BY_WEEKS_MODE_DATA_TYPE,
     BY_WEEKS_MODE_GRIDSIZE,
+    BY_WEEKS_MODE_SCALE_LOG,
 } from 'Actions/Demo/SeasonsSeries/ByWeeks.actions'
 
 const DEFAULT_STATE = APP_MOCKS.getIn(['DEMO', 'SEASONS_SERIES_BY_WEEKS'])
@@ -51,12 +52,12 @@ export default function ByWeeksUI (state = DEFAULT_STATE, action) {
                 for (var i = 0; i < 24; i++) {
                     nextDay = nextDay.updateIn(['byHour', i], hour => hour || I.fromJS({
                         total: {
-                            expenses: 0,
-                            incomes: 0,
+                            expenses: 1,
+                            incomes: 1,
                         },
                         count: {
-                            expenses: 0,
-                            incomes: 0,
+                            expenses: 1,
+                            incomes: 1,
                         }
                     }))
                 }
@@ -73,6 +74,10 @@ export default function ByWeeksUI (state = DEFAULT_STATE, action) {
 
         case BY_WEEKS_MODE_GRIDSIZE:
             nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => action.isActive || !active)
+            return nextState
+
+        case BY_WEEKS_MODE_SCALE_LOG:
+            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], active => action.isActive || !active)
             return nextState
 
         default:
