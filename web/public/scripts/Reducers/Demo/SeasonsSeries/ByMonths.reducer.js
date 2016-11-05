@@ -65,19 +65,19 @@ export default function ByMonthsUI (state = DEFAULT_STATE, action) {
             return nextState
 
         case BY_MONTHS_MODE_WEATHER:
-            nextState = nextState.updateIn(['ui', 'mode', 'weather', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'weather', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         case BY_MONTHS_MODE_GRIDSIZE:
-            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         case BY_MONTHS_MODE_HOLIDAYS:
-            nextState = nextState.updateIn(['ui', 'mode', 'holidays', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'holidays', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         case BY_MONTHS_MODE_SCALE_LOG:
-            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         default:

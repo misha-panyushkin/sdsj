@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import _b from 'bem-cn'
 
 import SeasonsSeries from './SeasonsSeries/SeasonsSeries.react'
+import Intro from './Intro/Intro.react'
 
 class Demo extends Component {
     constructor (props) {
@@ -18,6 +19,7 @@ class Demo extends Component {
         return (
             <section
                 className={ this._b }>
+                    <Intro/>
                     <SeasonsSeries />
             </section>
         )

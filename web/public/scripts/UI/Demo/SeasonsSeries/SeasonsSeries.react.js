@@ -26,6 +26,9 @@ class SeasonsSeries extends Component {
             <section
                 className={ this._b }>
                 
+                <h2 className={ this._b('SeriesTitle') }>
+                    RESOURCEFUL DASHBOARDS
+                </h2>
                 <ByWeeks className={ this._b('ByWeeks') } />
                 <ByMonths className={ this._b('ByMonths') } />
 
@@ -38,7 +41,9 @@ class SeasonsSeries extends Component {
             SeasonsSeriesActions
         } = this.props
 
-        SeasonsSeriesActions.getSeasonsSeries({})
+        // setTimeout(() => {
+            SeasonsSeriesActions.getSeasonsSeries({})
+        // }, 6000)
     }
 }
 

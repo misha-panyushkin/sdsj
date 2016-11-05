@@ -73,11 +73,11 @@ export default function ByWeeksUI (state = DEFAULT_STATE, action) {
             return nextState
 
         case BY_WEEKS_MODE_GRIDSIZE:
-            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         case BY_WEEKS_MODE_SCALE_LOG:
-            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], active => action.isActive || !active)
+            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], active => typeof action.isActive == "boolean" ? action.isActive : !active)
             return nextState
 
         default:

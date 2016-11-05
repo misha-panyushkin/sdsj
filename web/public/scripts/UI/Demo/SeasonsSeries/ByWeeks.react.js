@@ -43,14 +43,17 @@ class SeasonsSeriesByWeeks extends Component {
         const activePoints = SeriesByWeeks.filter(point => point.state.active)
 
         return (
-            <article className={ this._b.mix( className ) }>
+            <article 
+                className={ this._b.mix( className ) }
+                id="ByWeeksVisualisation"
+                >
 
                 <ByWeeksControls 
                     className={ this._b('Controls').toString() }
                     />
 
                 <VisualSeasonsSeries 
-                    className={ this._b('Main') }
+                    className={ this._b('Main').mix('ByWeeksVisualisationSeries') }
                     width={ 30 * columnsLabels.length }
                     height={ 32 * rowsLabels.length }
                     data={ SeriesByWeeks } 

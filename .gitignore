@@ -1,5 +1,6 @@
 .DS_Store
 
 web/public/data/
+api/data/csv/splits/
 api/data/csv/transactionsAll.csv
 node_modules

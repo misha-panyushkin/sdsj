@@ -88,15 +88,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _App = __webpack_require__(463);
+	var _App = __webpack_require__(466);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Index = __webpack_require__(466);
+	var _Index = __webpack_require__(469);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _reduxThunk = __webpack_require__(478);
+	var _reduxThunk = __webpack_require__(481);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -104,13 +104,13 @@
 
 	var _API2 = _interopRequireDefault(_API);
 
-	__webpack_require__(479);
+	__webpack_require__(482);
 
 	var _bemCn = __webpack_require__(299);
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
-	var _es6Promise = __webpack_require__(480);
+	var _es6Promise = __webpack_require__(483);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
@@ -52042,13 +52042,13 @@
 
 	        case _ByWeeks.BY_WEEKS_MODE_GRIDSIZE:
 	            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
 	        case _ByWeeks.BY_WEEKS_MODE_SCALE_LOG:
 	            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
@@ -52207,25 +52207,25 @@
 
 	        case _ByMonths.BY_MONTHS_MODE_WEATHER:
 	            nextState = nextState.updateIn(['ui', 'mode', 'weather', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
 	        case _ByMonths.BY_MONTHS_MODE_GRIDSIZE:
 	            nextState = nextState.updateIn(['ui', 'mode', 'gridsize', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
 	        case _ByMonths.BY_MONTHS_MODE_HOLIDAYS:
 	            nextState = nextState.updateIn(['ui', 'mode', 'holidays', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
 	        case _ByMonths.BY_MONTHS_MODE_SCALE_LOG:
 	            nextState = nextState.updateIn(['ui', 'mode', 'scalelog', 'active'], function (active) {
-	                return action.isActive || !active;
+	                return typeof action.isActive == "boolean" ? action.isActive : !active;
 	            });
 	            return nextState;
 
@@ -53090,6 +53090,10 @@
 
 	var _SeasonsSeries2 = _interopRequireDefault(_SeasonsSeries);
 
+	var _Intro = __webpack_require__(463);
+
+	var _Intro2 = _interopRequireDefault(_Intro);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53118,6 +53122,7 @@
 	                'section',
 	                {
 	                    className: this._b },
+	                _react2.default.createElement(_Intro2.default, null),
 	                _react2.default.createElement(_SeasonsSeries2.default, null)
 	            );
 	        }
@@ -53167,7 +53172,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".Demo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n", ""]);
 
 	// exports
 
@@ -53250,6 +53255,11 @@
 	                'section',
 	                {
 	                    className: this._b },
+	                _react2.default.createElement(
+	                    'h2',
+	                    { className: this._b('SeriesTitle') },
+	                    'RESOURCEFUL DASHBOARDS'
+	                ),
 	                _react2.default.createElement(_ByWeeks2.default, { className: this._b('ByWeeks') }),
 	                _react2.default.createElement(_ByMonths2.default, { className: this._b('ByMonths') })
 	            );
@@ -53259,8 +53269,10 @@
 	        value: function componentDidMount() {
 	            var SeasonsSeriesActions = this.props.SeasonsSeriesActions;
 
+	            // setTimeout(() => {
 
 	            SeasonsSeriesActions.getSeasonsSeries({});
+	            // }, 6000)
 	        }
 	    }]);
 
@@ -53310,7 +53322,7 @@
 
 
 	// module
-	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  margin: 30px 0 0 0;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 90px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 0px;\n}\n", ""]);
+	exports.push([module.id, ".SeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  padding: 0 0 20px 0;\n  margin: 80px 0;\n}\n.SeasonsSeries__SeriesTitle {\n  padding: 10px 0 0 0;\n  font-size: 60px;\n  font-weight: 100;\n  margin: 0 0 100px 0;\n  color: #afafaf;\n  border-bottom: 1px solid #eee;\n}\n.SeasonsSeries__ByWeeks {\n  margin-bottom: 90px;\n}\n.SeasonsSeries__ByMonths {\n  margin-bottom: 0px;\n}\n", ""]);
 
 	// exports
 
@@ -55421,7 +55433,7 @@
 
 
 	// module
-	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n", ""]);
+	exports.push([module.id, ".VisualSeasonsSeries {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative;\n}\n.VisualSeasonsSeries__SVG .axis--x path {\n  display: none;\n}\n.VisualSeasonsSeries__SVG .line {\n  fill: none;\n  stroke: steelblue;\n  stroke-width: 1.5px;\n}\n.VisualSeasonsSeries__SVG rect.bordered {\n  stroke: #fff;\n  stroke-width: 1px;\n}\n.VisualSeasonsSeries__SVG rect.hover {\n  fill: #5baa7f !important;\n}\n.VisualSeasonsSeries__SVG text.mono {\n  font-size: 11px;\n  fill: #aaa;\n}\n.VisualSeasonsSeries__SVG .background {\n  fill: none;\n  display: none;\n}\n.VisualSeasonsSeries__Aside {\n  width: 300px;\n  height: 100%;\n  overflow-y: scroll;\n}\n.VisualSeasonsSeries.ByMonthsVisualisationSeries rect {\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 
@@ -57422,12 +57434,15 @@
 
 	            return _react2.default.createElement(
 	                'article',
-	                { className: this._b.mix(className) },
+	                {
+	                    className: this._b.mix(className),
+	                    id: 'ByWeeksVisualisation'
+	                },
 	                _react2.default.createElement(_ByWeeksControls2.default, {
 	                    className: this._b('Controls').toString()
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
-	                    className: this._b('Main'),
+	                    className: this._b('Main').mix('ByWeeksVisualisationSeries'),
 	                    width: 30 * columnsLabels.length,
 	                    height: 32 * rowsLabels.length,
 	                    data: SeriesByWeeks,
@@ -57702,7 +57717,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByWeeks {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 60px;\n  top: 0;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: 6px;\n  top: 50px;\n}\n", ""]);
+	exports.push([module.id, ".ByWeeks {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByWeeks__OX {\n  position: absolute;\n  left: 60px;\n  top: 0;\n}\n.ByWeeks__OY {\n  position: absolute;\n  left: 6px;\n  top: 50px;\n}\n.ByWeeks:before {\n  content: 'HEAT MATRIX #1';\n  position: absolute;\n  top: 88px;\n  left: -188px;\n  transform: rotate(-90deg);\n  font-size: 35px;\n  letter-spacing: 0px;\n  color: #ccc;\n}\n", ""]);
 
 	// exports
 
@@ -73152,12 +73167,15 @@
 
 	            return _react2.default.createElement(
 	                'article',
-	                { className: this._b.mix(className) },
+	                {
+	                    className: this._b.mix(className),
+	                    id: 'ByMonthsVisualisation'
+	                },
 	                _react2.default.createElement(_ByMonthsControls2.default, {
 	                    className: this._b('Controls').toString()
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
-	                    className: this._b('Main'),
+	                    className: this._b('Main').mix('ByMonthsVisualisationSeries'),
 	                    width: 30 * columnsLabels.length,
 	                    height: 28 * rowsLabels.length,
 	                    data: SeriesByMonths,
@@ -73223,7 +73241,7 @@
 	                    }
 	                }),
 	                _react2.default.createElement(_VisualComponents.SeasonsSeries, {
-	                    className: this._b('OY'),
+	                    className: this._b('OY').mix('ByMonthsVisualisationSeries'),
 	                    width: 25,
 	                    height: 25 * rowsLabels.length,
 	                    data: SeriesByMonthsSumByOY,
@@ -73357,10 +73375,9 @@
 	        value: function componentDidMount() {
 	            var ByMonthsActions = this.props.ByMonthsActions;
 
-
-	            setTimeout(function () {
-	                ByMonthsActions.switchModeWeather();
-	            }, 2000);
+	            // setTimeout(() => {
+	            //     ByMonthsActions.switchModeWeather()
+	            // }, 2000)
 
 	            // setTimeout(() => {
 	            //     ByMonthsActions.setSort({
@@ -73535,7 +73552,7 @@
 
 
 	// module
-	exports.push([module.id, ".ByMonths {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 86px;\n  top: 0;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: 9px;\n  top: 50px;\n}\n.ByMonths__Aside {\n  width: 292px;\n}\n", ""]);
+	exports.push([module.id, ".ByMonths {\n  position: relative;\n  display: -ms-flexbox;\n  display: flex;\n}\n.ByMonths__OX {\n  position: absolute;\n  left: 86px;\n  top: 0;\n}\n.ByMonths__OY {\n  position: absolute;\n  left: 9px;\n  top: 50px;\n}\n.ByMonths__Aside {\n  width: 292px;\n}\n.ByMonths:before {\n  content: 'HEAT MATRIX #2';\n  position: absolute;\n  top: 206px;\n  left: -188px;\n  transform: rotate(-90deg);\n  font-size: 35px;\n  letter-spacing: 0px;\n  color: #ccc;\n}\n", ""]);
 
 	// exports
 
@@ -74072,6 +74089,1051 @@
 
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 
+	var _d = __webpack_require__(268);
+
+	var d3 = _interopRequireWildcard(_d);
+
+	var _d3ScaleChromatic = __webpack_require__(335);
+
+	var d3ScaleChromatic = _interopRequireWildcard(_d3ScaleChromatic);
+
+	var _ByWeeks = __webpack_require__(290);
+
+	var ByWeeksActions = _interopRequireWildcard(_ByWeeks);
+
+	var _ByMonths = __webpack_require__(292);
+
+	var ByMonthsActions = _interopRequireWildcard(_ByMonths);
+
+	var _reactFontawesome = __webpack_require__(455);
+
+	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Intro = function (_Component) {
+	    _inherits(Intro, _Component);
+
+	    function Intro(props) {
+	        _classCallCheck(this, Intro);
+
+	        var _this = _possibleConstructorReturn(this, (Intro.__proto__ || Object.getPrototypeOf(Intro)).call(this, props));
+
+	        _this.boxClassName = 'Intro';
+	        _this._b = (0, _bemCn2.default)(_this.boxClassName);
+	        return _this;
+	    }
+
+	    _createClass(Intro, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement(
+	                'section',
+	                {
+	                    className: this._b },
+	                _react2.default.createElement(
+	                    'article',
+	                    {
+	                        className: this._b('Header') },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        { className: this._b('HeaderTitle') },
+	                        'Sberbank Data Science Journey'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { className: this._b('HeaderSubTitle') },
+	                        'Startup Challenge'
+	                    )
+	                ),
+	                _react2.default.createElement('div', {
+	                    className: this._b('IntroLineStage').mix(['IntroLineStage']) }),
+	                _react2.default.createElement(
+	                    'article',
+	                    {
+	                        className: this._b('Idea') },
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('IdeaTitle') },
+	                        '\u0418\u0414\u0415\u042F'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('IdeaDescription') },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '\u041F\u043E\u0447\u0442\u0438 \u043A\u0430\u0436\u0434\u044B\u0439 \u0440\u0430\u0437, \u043A\u043E\u0433\u0434\u0430 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u043E\u0434\u0443\u043C\u0430\u0442\u044C \u043D\u0430\u0434 \u0440\u0435\u0448\u0435\u043D\u0438\u0435\u043C \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u043E\u0439 \u0437\u0430\u0434\u0430\u0447\u0438 \u0438\u043C\u0435\u044E\u0449\u0435\u0439 \u043D\u0435\u043F\u043E\u0441\u0440\u0435\u0434\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0435 \u043E\u0442\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0432 \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u043C \u043C\u0438\u0440\u0435, \u0432\u043A\u043B\u044E\u0447\u0430\u0435\u0448\u044C\u0441\u044F \u0441 \u0443\u0434\u0432\u043E\u0435\u043D\u043D\u044B\u043C\u0438 \u0441\u0438\u043B\u043E\u0439 \u0438 \u0432\u043E\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435\u043C.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '\u041D\u0430\u0447\u0430\u0432 \u0440\u0430\u0437\u043C\u044B\u0448\u043B\u044F\u0442\u044C \u043E \u0446\u0435\u043B\u044F\u0445, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043C\u043E\u0433\u0443\u0442 \u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u0435\u0440\u0435\u0434 \u0441\u043E\u0431\u043E\u0439 \u0441\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u044B\u0435 \u0431\u0430\u043D\u043A\u0438 \u0438 \u0432 \u0447\u0430\u0441\u0442\u043D\u043E\u0441\u0442\u0438 \u0421\u0431\u0435\u0440\u0431\u0430\u043D\u043A, \u044F \u0440\u0435\u0448\u0438\u043B \u043D\u0430\u0447\u0430\u0442\u044C \u0441 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u043B\u0438\u043D\u0435\u0439\u043A\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0421\u0431\u0435\u0440\u0431\u0430\u043D\u043A \u043F\u0440\u0435\u0434\u043B\u0430\u0433\u0430\u0435\u0442 \u0441\u0432\u043E\u0438\u043C \u043A\u043B\u0438\u0435\u043D\u0442\u0430\u043C. \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0432 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u0432\u0441\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0445 \u043A\u0440\u0435\u0434\u0438\u0442\u043D\u044B\u0445 \u0438 \u0434\u0435\u0431\u0435\u0442\u043E\u0432\u044B\u0445 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u0445, \u043D\u0430\u043A\u043E\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0438 \u0441\u0431\u0435\u0440\u0435\u0433\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0441\u0447\u0435\u0442\u0430\u0445, \u043F\u0440\u043E \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u044B \u043B\u043E\u044F\u043B\u044C\u043D\u043E\u0441\u0442\u0438 \u0438 \u043F\u0440\u043E \u0431\u043E\u043D\u0443\u0441\u043D\u044B\u0435 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u044F, \u044F \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u043B\u0441\u044F \u0441 \u0442\u0430\u0440\u0438\u0444\u043E\u043C \u0438 \u0440\u0435\u0448\u0438\u043B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435 \u0432 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0438. \u0411\u043E\u043B\u0435\u0435 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0445, \u043C\u0435\u043D\u044F \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043B\u0438 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u044F, \u0441 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044F\u043C\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0430 \u0447\u0430\u0441\u0442\u0438 \u043F\u043E\u0442\u0440\u0430\u0447\u0435\u043D\u043D\u044B\u0445 \u0441\u0440\u0435\u0434\u0441\u0442\u0432 \u043E\u0431\u0440\u0430\u0442\u043D\u043E \u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443. \u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0432 \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435, \u044F \u043E\u0431\u0440\u0430\u0442\u0438\u043B\u0441\u044F \u043A \u0430\u043D\u0430\u043B\u043E\u0433\u0438\u0447\u043D\u044B\u043C \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430\u043C \u0434\u0440\u0443\u0433\u0438\u0445 \u0431\u0430\u043D\u043A\u043E\u0432. \u041F\u043E \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0430\u043C \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F, \u044F \u0441\u0434\u0435\u043B\u0430\u043B \u0432\u044B\u0432\u043E\u0434 \u043E \u0442\u043E\u043C, \u0447\u0442\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043C\u0435\u043D\u044F \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043B \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0443 \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u043D\u043E\u0433\u043E \u043C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0430 \u0431\u0430\u043D\u043A\u043E\u0432. \u0422\u0435\u043C \u043D\u0435 \u043C\u0435\u043D\u0435\u0435, \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u044B \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0438\u0437 \u043D\u0438\u0445 \u0440\u0430\u0437\u043D\u044F\u0442\u044C\u0441\u044F.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '\u041E\u0441\u0442\u0430\u0432\u0430\u044F\u0441\u044C \u0432\u0435\u0440\u043D\u044B\u043C \u0441\u0432\u043E\u0438\u043C \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F\u043C \u043E \u043F\u0435\u0440\u0432\u043E\u0441\u0442\u0435\u043F\u0435\u043D\u043D\u043E\u0441\u0442\u0438 \u0438 \u0432\u0430\u0436\u043D\u043E\u0441\u0442\u0438 \u043A\u043B\u0438\u0435\u043D\u0442\u0430 \u0434\u043B\u044F \u043B\u044E\u0431\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u043F\u0440\u0438\u044F\u0442\u0438\u044F \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u044F\u044E\u0449\u0435\u0433\u043E \u0443\u0441\u043B\u0443\u0433\u0438, \u043A\u043E\u0438\u043C \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0431\u0430\u043D\u043A\u0438, \u044F \u0441\u043C\u043E\u0433 \u0441\u0444\u043E\u0440\u043C\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043E\u0444\u043E\u0440\u043C\u0438\u043B \u0432 \u0437\u0430\u0434\u0430\u0447\u0438 \u0438 \u043A \u0440\u0435\u0448\u0435\u043D\u0438\u044E \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043F\u0440\u0438\u0441\u0442\u0443\u043F\u0438\u043B \u043D\u0435\u0437\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E.'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'article',
+	                    {
+	                        className: this._b('Challenge') },
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('ChallengeTitle') },
+	                        '\u0417\u0410\u0414\u0410\u0427\u0418'
+	                    ),
+	                    _react2.default.createElement(
+	                        'ol',
+	                        {
+	                            className: this._b('ChallengeDescription') },
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: this._b('ChallengeDescriptionParagraph') },
+	                            '\u041F\u043E\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u043F\u0440\u043E\u0442\u043E\u0442\u0438\u043F \u0441\u0438\u0441\u0442\u0435\u043C\u044B \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433\u0430 \u0438 \u0432\u044B\u044F\u0432\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u043A\u043E\u043D\u043E\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u0435\u0439 (Resourceful Dashboards) \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0435 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445 \u043E \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u044F\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: this._b('ChallengeDescriptionParagraph') },
+	                            '\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0430\u043D\u0430\u043B\u0438\u0437 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043A\u043E\u043D\u043E\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u0435\u0439.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: this._b('ChallengeDescriptionParagraph') },
+	                            '\u041E\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u0442\u044C \u0433\u0440\u0443\u043F\u043F\u0443 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432, \u0434\u043B\u044F \u0443\u0447\u0430\u0441\u0442\u0438\u044F \u0438\u0445 \u0432 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0430\u0445 Cashback \u0438\u0441\u0445\u043E\u0434\u044F \u0438\u0437 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0430 \u0441\u043E\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0445 \u0438\u043C\u0438 \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0439.'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('div', {
+	                    className: this._b('IntroLineStage').mix(['IntroLineStage', 'Middle']) }),
+	                _react2.default.createElement(
+	                    'article',
+	                    {
+	                        className: this._b('Visualisation') },
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('VisualisationDescription') },
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                className: this._b('VisualisationDescriptionData') },
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionDataTransactions') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataTransactionsNumber') },
+	                                    '7M'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataTransactionsLabel') },
+	                                    '\u0442\u0430\u0439\u043C\u043B\u0430\u0439\u043D\u043E\u0432'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionDataPeriod') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataPeriodNumber') },
+	                                    '2014 - 2015'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataPeriodLabel') },
+	                                    '\u0447\u0443\u0442\u044C \u0431\u043E\u043B\u0435\u0435 \u0433\u043E\u0434\u0430'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionDataMCC') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataMCCNumber') },
+	                                    'MCC'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionDataMCCLabel') },
+	                                    '\u043A\u043E\u0434\u044B \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0439'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                className: this._b('VisualisationDescriptionTitle') },
+	                            '\u0414\u043B\u044F \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0434\u0430\u043D\u043D\u044B\u0445 \u0431\u044B\u043B\u0438 \u0432\u044B\u0431\u0440\u0430\u043D\u044B \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043C\u0430\u0442\u0440\u0438\u0446\u044B, \u0432 \u0434\u0432\u0443\u0445 \u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0430\u0445:'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                className: this._b('VisualisationDescriptionGrouping') },
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionGroupingByWeeks') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionGroupingByWeeksTitle') },
+	                                    '\u043F\u043E \u0434\u043D\u044F\u043C \u043D\u0435\u0434\u0435\u043B\u0438 \u0438 \u0447\u0430\u0441\u0430\u043C'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionGroupingByWeeksElements') },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeIncome').mix(['ModeItem']).toString(),
+	                                            name: 'plus'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043E\u0445\u043E\u0434\u043E\u0432'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeExpense').mix(['ModeItem']).toString(),
+	                                            name: 'minus'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
+	                                            name: 'circle'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0430\u0437\u043C\u0435\u0440 \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0440\u0430\u0437\u043C\u0435\u0440\u0430 \u0442\u043E\u0447\u043A\u0438'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
+	                                            name: 'gbp'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043B\u043E\u0433\u0430\u0440\u0438\u0444\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0448\u043A\u0430\u043B\u044B'
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionGroupingByMonths') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionGroupingByMonthsTitle') },
+	                                    '\u043F\u043E \u043C\u0435\u0441\u044F\u0446\u0430\u043C \u0438 \u0434\u043D\u044F\u043C'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionGroupingByMonthsElements') },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeIncome').mix(['ModeItem']).toString(),
+	                                            name: 'plus'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043E\u0445\u043E\u0434\u043E\u0432'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeExpense').mix(['ModeItem']).toString(),
+	                                            name: 'minus'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeWeather').mix(['ModeItem']).toString(),
+	                                            name: 'cloud'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043A\u043E\u0440\u0440\u0435\u043B\u044F\u0446\u0438\u0438 \u0441 \u043C\u0435\u0442\u0435\u043E\u0440\u043E\u043B\u043E\u0433\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0435\u0439'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
+	                                            name: 'circle'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0430\u0437\u043C\u0435\u0440 \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0440\u0430\u0437\u043C\u0435\u0440\u0430 \u0442\u043E\u0447\u043A\u0438'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeHolidays').mix(['ModeItem']).toString(),
+	                                            name: 'star'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043A\u043E\u0440\u0440\u0435\u043B\u044F\u0446\u0438\u0438 \u0441 \u043E\u0431\u0449\u0435\u0433\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u043C\u0438 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430\u043C\u0438'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('Mode')
+	                                        },
+	                                        _react2.default.createElement(_reactFontawesome2.default, {
+	                                            className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
+	                                            name: 'gbp'
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeDescription') },
+	                                            '\u0440\u0435\u0436\u0438\u043C \u043B\u043E\u0433\u0430\u0440\u0438\u0444\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0448\u043A\u0430\u043B\u044B'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                className: this._b('VisualisationDescriptionSandbox') },
+	                            '\u041E\u0434\u043D\u0438 \u0438\u0437 \u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0445 \u043A\u043E\u043C\u0431\u0438\u043D\u0430\u0446\u0438\u0439 \u043F\u0435\u0441\u043E\u0447\u043D\u0438\u0446\u044B \u043F\u043E \u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0430\u043C:',
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionSandboxSubTitle') },
+	                                '\u044D\u0442\u043E \u0434\u0435\u043C\u043E \u0441\u0435\u043A\u0446\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u043F\u043E\u043C\u043E\u0436\u0435\u0442 \u0438\u0437\u0443\u0447\u0438\u0442\u044C \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                className: this._b('VisualisationDescriptionSandboxGrouping') },
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionSandboxGroupingByWeeks') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionSandboxGroupingCombos') },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoMaxByWeeks();
+	                                                }
+	                                            },
+	                                            'MAX VALUES'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u043D\u0430\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u044F \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0432 \u0441\u0435\u0440\u0438\u044F\u0445'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoMinByWeeks();
+	                                                }
+	                                            },
+	                                            'MIN VALUES'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u043D\u0430\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u044F \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0432 \u0441\u0435\u0440\u0438\u044F\u0445'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoLogByWeeks();
+	                                                }
+	                                            },
+	                                            'LOG SCALE'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043B\u043E\u0433\u0430\u0440\u0438\u0444\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0448\u043A\u0430\u043B\u044B \u0432 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0438 \u0441 \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F\u043C\u0438 \u043F\u043E \u0447\u0430\u0441\u0430\u043C'
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('VisualisationDescriptionSandboxGroupingByMonths') },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    {
+	                                        className: this._b('VisualisationDescriptionSandboxGroupingCombos') },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoMaxByMonths();
+	                                                }
+	                                            },
+	                                            'MAX VALUES'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u043D\u0430\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u044F \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0432 \u0441\u0435\u0440\u0438\u044F\u0445'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoMinByMonths();
+	                                                }
+	                                            },
+	                                            'MIN VALUES'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u043D\u0430\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u044F \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0432 \u0441\u0435\u0440\u0438\u044F\u0445'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoLogByMonths();
+	                                                }
+	                                            },
+	                                            'LOG SCALE'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043B\u043E\u0433\u0430\u0440\u0438\u0444\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0448\u043A\u0430\u043B\u044B \u0432 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0438 \u0441 \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F\u043C\u0438 \u043F\u043E \u0447\u0430\u0441\u0430\u043C'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoSimpleSelectByMonths();
+	                                                }
+	                                            },
+	                                            'SIMPLE SELECT'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0432 \u0442\u043E\u0447\u043A\u0435 \u0438 \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u044B\u0445 \u043F\u043E \u043C\u0435\u0441\u044F\u0446\u0430\u043C'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        {
+	                                            className: this._b('SandboxCombo') },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            {
+	                                                className: this._b('SandboxComboName'),
+	                                                onClick: function onClick() {
+	                                                    return _this2.handleDemoWeatherComboByMonths();
+	                                                }
+	                                            },
+	                                            'WEATHER COMBO'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('SandboxComboDescription') },
+	                                            '\u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u043E\u0440\u0440\u0435\u043B\u044F\u0446\u0438\u0438 \u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432 \u0432 \u0437\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438 \u043E\u0442 \u043F\u043E\u0433\u043E\u0434\u044B \u0432 \u041C\u043E\u0441\u043A\u0432\u0435 \u0438 \u043E\u0431\u0449\u0435\u0433\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u043E\u0432'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('VisualisationHeatMatricesInfo') },
+	                        '\u0422\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043C\u0430\u0442\u0440\u0438\u0446\u044B \u0441\u043A\u043E\u0440\u0440\u0435\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u044B \u043C\u0435\u0436\u0434\u0443 \u0441\u043E\u0431\u043E\u0439 \u0442\u0430\u043A\u0438\u043C \u043E\u0431\u0440\u0430\u0437\u043E\u043C, \u0447\u0442\u043E \u0432\u044B\u0431\u0438\u0440\u0430\u044F \u0442\u043E\u0447\u043A\u0443 \u0438\u0437 ',
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#ByMonthsVisualisation', className: this._b('InternalLink') },
+	                            '\u0432\u0442\u043E\u0440\u043E\u0439 \u043C\u0430\u0442\u0440\u0438\u0446\u044B'
+	                        ),
+	                        ' (\u0441\u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0439 \u043F\u043E \u043C\u0435\u0441\u044F\u0446\u0430\u043C) \u043C\u044B \u0432\u0438\u0434\u0435\u043C \u0440\u0430\u0441\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0438\u0435 \u0432\u0435\u043B\u0438\u0447\u0438\u043D \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u043E ',
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#ByWeeksVisualisation', className: this._b('InternalLink') },
+	                            '\u043F\u0435\u0440\u0432\u043E\u0439 \u043C\u0430\u0442\u0440\u0438\u0446\u044B'
+	                        ),
+	                        ' (\u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0430 \u043F\u043E \u043D\u0435\u0434\u0435\u043B\u044F\u043C), \u0430\u043D\u0430\u043B\u043E\u0433\u0438\u0447\u043D\u044B\u043C \u043E\u0431\u0440\u0430\u0437\u043E\u043C \u043C\u044B \u043C\u043E\u0436\u0435\u043C \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0446\u0435\u043B\u0438\u043A\u043E\u043C \u0432\u0435\u0441\u044C \u043C\u0435\u0441\u044F\u0446 \u0438 \u0443\u0432\u0438\u0434\u0435\u0442\u044C \u0440\u0430\u0441\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0438\u0435 \u0432\u0435\u043B\u0438\u0447\u0438\u043D \u0432 \u044D\u0442\u043E\u043C \u043C\u0435\u0441\u044F\u0446\u0435 \u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u043F\u0435\u0440\u0432\u043E\u0439 \u0442\u0435\u043F\u043B\u043E\u0432\u043E\u0439 \u043A\u0430\u0440\u0442\u044B.'
+	                    )
+	                ),
+	                _react2.default.createElement('div', {
+	                    className: this._b('IntroLineStage').mix(['IntroLineStage', 'Middle']) })
+	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            setTimeout(function () {
+	                lineDrawer();
+	            }, 1500);
+	        }
+	    }, {
+	        key: 'handleDemoMaxByWeeks',
+	        value: function handleDemoMaxByWeeks() {
+	            var ByWeeksVisualisation = document.getElementById('ByWeeksVisualisation');
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeGridSize(false);
+	            ByWeeksActions.switchModeScaleLog(false);
+	            ByWeeksActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByWeeksActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByWeeksVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByWeeksActions.setSort({
+	                    axis: 'x',
+	                    order: 'desc'
+	                });
+	            }, 700);
+
+	            setTimeout(function () {
+	                ByWeeksActions.setSort({
+	                    axis: 'y',
+	                    order: 'asc'
+	                });
+	            }, 1800);
+
+	            setTimeout(function () {
+	                ByWeeksActions.switchModeGridSize(true);
+	            }, 2800);
+	        }
+	    }, {
+	        key: 'handleDemoMinByWeeks',
+	        value: function handleDemoMinByWeeks() {
+	            var ByWeeksVisualisation = document.getElementById('ByWeeksVisualisation');
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeGridSize(false);
+	            ByWeeksActions.switchModeScaleLog(false);
+	            ByWeeksActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByWeeksActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByWeeksVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByWeeksActions.setSort({
+	                    axis: 'x',
+	                    order: 'asc'
+	                });
+	            }, 700);
+
+	            setTimeout(function () {
+	                ByWeeksActions.setSort({
+	                    axis: 'y',
+	                    order: 'desc'
+	                });
+	            }, 1800);
+
+	            setTimeout(function () {
+	                ByWeeksActions.switchModeGridSize(true);
+	            }, 2800);
+	        }
+	    }, {
+	        key: 'handleDemoLogByWeeks',
+	        value: function handleDemoLogByWeeks() {
+	            var ByWeeksVisualisation = document.getElementById('ByWeeksVisualisation');
+	            var ByWeeksActions = this.props.ByWeeksActions;
+
+
+	            ByWeeksActions.switchModeGridSize(false);
+	            ByWeeksActions.switchModeScaleLog(false);
+	            ByWeeksActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByWeeksActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByWeeksVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByWeeksActions.switchModeGridSize(true);
+	            }, 1500);
+
+	            setTimeout(function () {
+	                ByWeeksActions.switchModeScaleLog(true);
+	            }, 3000);
+	        }
+	    }, {
+	        key: 'handleDemoMaxByMonths',
+	        value: function handleDemoMaxByMonths() {
+	            var ByMonthsVisualisation = document.getElementById('ByMonthsVisualisation');
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeGridSize(false);
+	            ByMonthsActions.switchModeScaleLog(false);
+	            ByMonthsActions.switchModeWeather(false);
+	            ByMonthsActions.switchModeHolidays(false);
+	            ByMonthsActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByMonthsActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByMonthsVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByMonthsActions.setSort({
+	                    axis: 'x',
+	                    order: 'desc'
+	                });
+	            }, 700);
+
+	            setTimeout(function () {
+	                ByMonthsActions.setSort({
+	                    axis: 'y',
+	                    order: 'asc'
+	                });
+	            }, 1800);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeGridSize(true);
+	            }, 2800);
+	        }
+	    }, {
+	        key: 'handleDemoMinByMonths',
+	        value: function handleDemoMinByMonths() {
+	            var ByMonthsVisualisation = document.getElementById('ByMonthsVisualisation');
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeGridSize(false);
+	            ByMonthsActions.switchModeScaleLog(false);
+	            ByMonthsActions.switchModeWeather(false);
+	            ByMonthsActions.switchModeHolidays(false);
+	            ByMonthsActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByMonthsActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByMonthsVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByMonthsActions.setSort({
+	                    axis: 'x',
+	                    order: 'asc'
+	                });
+	            }, 700);
+
+	            setTimeout(function () {
+	                ByMonthsActions.setSort({
+	                    axis: 'y',
+	                    order: 'desc'
+	                });
+	            }, 1800);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeGridSize(true);
+	            }, 2800);
+	        }
+	    }, {
+	        key: 'handleDemoLogByMonths',
+	        value: function handleDemoLogByMonths() {
+	            var ByMonthsVisualisation = document.getElementById('ByMonthsVisualisation');
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeGridSize(false);
+	            ByMonthsActions.switchModeScaleLog(false);
+	            ByMonthsActions.switchModeWeather(false);
+	            ByMonthsActions.switchModeHolidays(false);
+	            ByMonthsActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByMonthsActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByMonthsVisualisation.offsetTop - 50);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeGridSize(true);
+	            }, 1500);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeScaleLog(true);
+	            }, 3000);
+	        }
+	    }, {
+	        key: 'handleDemoSimpleSelectByMonths',
+	        value: function handleDemoSimpleSelectByMonths() {
+	            var ByMonthsVisualisation = document.getElementById('ByMonthsVisualisation');
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeGridSize(false);
+	            ByMonthsActions.switchModeScaleLog(false);
+	            ByMonthsActions.switchModeWeather(false);
+	            ByMonthsActions.switchModeHolidays(false);
+	            ByMonthsActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByMonthsActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            window.scrollTo(0, ByMonthsVisualisation.offsetTop - 50);
+
+	            for (var i = 0; i < 4; i++) {
+	                setTimeout(function () {
+	                    ByMonthsActions.setHoverCoordinates({
+	                        x: Math.floor(Math.random() * 1e1)
+	                    });
+	                }, 1000 * i);
+	            }
+
+	            setTimeout(function () {
+	                for (var i = 0; i < 4; i++) {
+	                    setTimeout(function () {
+	                        ByMonthsActions.setHoverCoordinates({
+	                            y: Math.floor(Math.random() * 1e1)
+	                        });
+	                    }, 1000 * i);
+	                }
+	            }, 4000);
+
+	            setTimeout(function () {
+	                for (var i = 0; i < 5; i++) {
+	                    setTimeout(function () {
+	                        ByMonthsActions.setHoverCoordinates({
+	                            x: i + Math.floor(Math.random() * 1e1),
+	                            y: 12 - Math.floor(Math.random() * 1e1)
+	                        });
+	                    }, 1000 * i);
+	                }
+	            }, 8000);
+	        }
+	    }, {
+	        key: 'handleDemoWeatherComboByMonths',
+	        value: function handleDemoWeatherComboByMonths() {
+	            var ByMonthsVisualisation = document.getElementById('ByMonthsVisualisation');
+	            var ByMonthsActions = this.props.ByMonthsActions;
+
+
+	            ByMonthsActions.switchModeGridSize(false);
+	            ByMonthsActions.switchModeScaleLog(false);
+	            ByMonthsActions.switchModeWeather(false);
+	            ByMonthsActions.switchModeHolidays(false);
+	            ByMonthsActions.setSort({
+	                axis: 'x',
+	                order: null
+	            });
+	            ByMonthsActions.setSort({
+	                axis: 'y',
+	                order: null
+	            });
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeWeather(true);
+	            }, 1500);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeHolidays(true);
+	            }, 2500);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeDataType('expenses');
+	            }, 3500);
+
+	            setTimeout(function () {
+	                ByMonthsActions.switchModeGridSize(true);
+	            }, 4500);
+
+	            window.scrollTo(0, ByMonthsVisualisation.offsetTop - 50);
+	        }
+	    }]);
+
+	    return Intro;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+	    return {};
+	}, function (dispatch) {
+	    return {
+	        ByWeeksActions: (0, _redux.bindActionCreators)(ByWeeksActions, dispatch),
+	        ByMonthsActions: (0, _redux.bindActionCreators)(ByMonthsActions, dispatch)
+	    };
+	})(Intro);
+
+
+	function lineDrawer() {
+	    var w = window.innerWidth;
+	    var h = 190;
+	    var l = 20;
+	    var maxHeight = 1e1;
+
+	    var iterableList = "fklgsadfkjgasfgaskjfgskagfklgsadfkjgasfgaskjfgskag".split('');
+	    var colors = d3.scaleOrdinal(d3ScaleChromatic.schemeGreys[9]).domain([0, iterableList.length]);
+	    var durations = d3.scaleLinear().range([5000, 32000]).domain(colors.domain());
+
+	    var svg = d3.selectAll(".IntroLineStage").append("svg").attr("width", w).attr("height", h).attr("id", "visualization");
+
+	    var x = d3.scaleLinear().domain([0, 10]).range([0, w]);
+	    var y = d3.scaleLinear().domain([0, maxHeight]).range([10, h - 10]);
+
+	    var line = d3.line().curve(d3.curveBasis).x(function (d, i) {
+	        return x(i);
+	    }).y(function (d) {
+	        return y(d);
+	    });
+
+	    iterableList.forEach(function (d, index) {
+	        var path = svg.append("path").attr("d", function (d) {
+	            var data = d3.range(l).map(function (v, i) {
+	                return Math.random() * maxHeight;
+	            });
+	            return line(data);
+	        }).attr("stroke", function () {
+	            var color = d3.color(index % 10 ? index % 5 ? colors(index) : d3ScaleChromatic.interpolateBlues(Math.random()) : d3ScaleChromatic.interpolateReds(Math.random()));
+	            color.opacity = Math.random() / 5;
+	            return color.toString();
+	        }).attr("stroke-width", Math.random() * 1e1 / 5).attr("fill", "none");
+
+	        var totalLength = path.node().getTotalLength();
+
+	        path.attr("stroke-dasharray", totalLength + " " + totalLength).attr("stroke-dashoffset", totalLength).transition().duration(durations(index)).ease(d3.easeLinear).attr("stroke-dashoffset", 0);
+	    });
+	}
+
+/***/ },
+/* 464 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(465);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(297)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./Intro.less", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/autoprefixer-loader/index.js?{browsers:[\"last 2 version\"]}!./../../../../../node_modules/less-loader/index.js!./Intro.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 465 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(296)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".Intro {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 17px;\n  width: 100%;\n  color: #7c7c7c;\n}\n.Intro__Header {\n  text-align: center;\n  display: block;\n  margin: 30px 0 100px 0;\n}\n.Intro__HeaderTitle {\n  font-size: 65px;\n  color: #828a86;\n  margin: 20px 0 10px 0;\n  font-weight: 100;\n}\n.Intro__HeaderSubTitle {\n  font-size: 47px;\n  color: #767676;\n  margin: 0;\n  font-weight: 200;\n  line-height: 31px;\n}\n.Intro__IntroLineStage {\n  width: 100%;\n  height: 1px;\n  margin-top: -75px;\n  padding-bottom: 95px;\n}\n.Intro__IntroLineStage .Start {\n  stroke: #474747;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__IntroLineStage .Middle {\n  stroke: #ccc;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__Idea {\n  width: 769px;\n  text-align: justify;\n  margin: 100px;\n}\n.Intro__IdeaTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__IdeaDescription {\n  color: #6c6c6c;\n}\n.Intro__Challenge {\n  width: 569px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__ChallengeTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 15px 0;\n}\n.Intro__ChallengeDescription {\n  color: #6c6c6c;\n}\n.Intro__ChallengeDescriptionParagraph {\n  padding: 12px 0;\n}\n.Intro__Visualisation {\n  width: 900px;\n  text-align: justify;\n  margin: 100px 0 10px 0;\n}\n.Intro__VisualisationTitle {\n  text-align: center;\n  font-size: 25px;\n  padding: 21px 0;\n}\n.Intro__VisualisationDescription {\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionData {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__VisualisationDescriptionDataTransactions {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataTransactionsNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataTransactionsLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataPeriod {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataPeriodNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataPeriodLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataMCC {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataMCCNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataMCCLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionTitle {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 10px 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__VisualisationDescriptionGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__Mode {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__Mode .ModeItem {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: default;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n}\n.Intro__ModeDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__ModeDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionSandbox {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n  line-height: 30px;\n}\n.Intro__VisualisationDescriptionSandboxSubTitle {\n  font-size: 23px;\n  color: #bcbcbc;\n  border-bottom: 1px solid #f5f5f5;\n  display: inline-block;\n}\n.Intro__VisualisationDescriptionSandboxGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionSandboxGroupingCombos {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__SandboxCombo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__SandboxComboName {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n  position: relative;\n}\n.Intro__SandboxComboName:hover {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {\n  content: '\\44D\\442\\438   \\43A\\43D\\43E\\43F\\43A\\438   \\430\\43A\\442\\438\\432\\43D\\44B\\435   -';\n  position: absolute;\n  top: 3px;\n  left: -143px;\n  color: #828282 !important;\n}\n.Intro__SandboxComboDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__SandboxComboDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__VisualisationHeatMatricesInfo {\n  font-size: 28px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__InternalLink {\n  color: inherit;\n  text-decoration: none;\n  border-bottom: 1px solid #919191;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 466 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(467);
+
+	var _classnames = __webpack_require__(298);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(256);
+
+	var _redux = __webpack_require__(173);
+
+	var _bemCn = __webpack_require__(299);
+
+	var _bemCn2 = _interopRequireDefault(_bemCn);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74115,13 +75177,13 @@
 	})(App);
 
 /***/ },
-/* 464 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(465);
+	var content = __webpack_require__(468);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -74141,7 +75203,7 @@
 	}
 
 /***/ },
-/* 465 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -74149,13 +75211,13 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  margin: 0;\n}\n.App {\n  font-style: normal;\n  font-family: \"PT Serif\", serif;\n  line-height: 1.45;\n  font-weight: 100;\n  letter-spacing: .999px;\n  color: #2A2622;\n}\n.unselectable {\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -o-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.selectable-text {\n  -moz-user-select: text;\n  -webkit-user-select: text;\n  -o-user-select: text;\n  -ms-user-select: text;\n  user-select: text;\n}\n", ""]);
+	exports.push([module.id, "body {\n  margin: 0;\n}\n.App {\n  font-style: normal;\n  font-family: \"Myriad Set Pro\", \"Helvetica Neue\", \"Helvetica\", \"Arial\", sans-serif;\n  line-height: 1.45;\n  font-weight: 100;\n  letter-spacing: .999px;\n  color: #2A2622;\n}\n.unselectable {\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -o-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.selectable-text {\n  -moz-user-select: text;\n  -webkit-user-select: text;\n  -o-user-select: text;\n  -ms-user-select: text;\n  user-select: text;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74166,7 +75228,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(467);
+	__webpack_require__(470);
 
 	var _classnames = __webpack_require__(298);
 
@@ -74196,15 +75258,15 @@
 
 	var MccCodesActions = _interopRequireWildcard(_MccCodes);
 
-	var _Visualisation = __webpack_require__(469);
+	var _Visualisation = __webpack_require__(472);
 
 	var _Visualisation2 = _interopRequireDefault(_Visualisation);
 
-	var _Settings = __webpack_require__(472);
+	var _Settings = __webpack_require__(475);
 
 	var _Settings2 = _interopRequireDefault(_Settings);
 
-	var _Header = __webpack_require__(475);
+	var _Header = __webpack_require__(478);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -74280,13 +75342,13 @@
 	})(Index);
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(468);
+	var content = __webpack_require__(471);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -74306,7 +75368,7 @@
 	}
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -74320,7 +75382,7 @@
 
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74333,7 +75395,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(470);
+	__webpack_require__(473);
 
 	var _classnames = __webpack_require__(298);
 
@@ -74452,13 +75514,13 @@
 	})(Visualisation);
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(471);
+	var content = __webpack_require__(474);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -74478,7 +75540,7 @@
 	}
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -74492,7 +75554,7 @@
 
 
 /***/ },
-/* 472 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74503,7 +75565,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(473);
+	__webpack_require__(476);
 
 	var _classnames = __webpack_require__(298);
 
@@ -74973,13 +76035,13 @@
 	}(_react.Component);
 
 /***/ },
-/* 473 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(474);
+	var content = __webpack_require__(477);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -74999,7 +76061,7 @@
 	}
 
 /***/ },
-/* 474 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -75013,7 +76075,7 @@
 
 
 /***/ },
-/* 475 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -75024,7 +76086,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(476);
+	__webpack_require__(479);
 
 	var _classnames = __webpack_require__(298);
 
@@ -75125,13 +76187,13 @@
 	})(Header);
 
 /***/ },
-/* 476 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(477);
+	var content = __webpack_require__(480);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(297)(content, {});
@@ -75151,7 +76213,7 @@
 	}
 
 /***/ },
-/* 477 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(296)();
@@ -75165,7 +76227,7 @@
 
 
 /***/ },
-/* 478 */
+/* 481 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -75193,7 +76255,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 479 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! Moment Duration Format v1.3.0
@@ -75681,7 +76743,7 @@
 
 
 /***/ },
-/* 480 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -75816,7 +76878,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(481);
+	    var vertx = __webpack_require__(484);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -76841,7 +77903,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 481 */
+/* 484 */
 /***/ function(module, exports) {
 
 	/* (ignored) */

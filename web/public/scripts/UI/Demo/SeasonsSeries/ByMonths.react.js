@@ -48,14 +48,17 @@ class SeasonsSeriesByMonth extends Component {
         const activePoints = SeriesByMonths.filter(point => point.state.active)
         
         return (
-            <article className={ this._b.mix( className ) }>
+            <article 
+                className={ this._b.mix( className ) }
+                id="ByMonthsVisualisation"
+                >
 
                 <ByMonthsControls 
                     className={ this._b('Controls').toString() }
                     />
                     
                 <VisualSeasonsSeries 
-                    className={ this._b('Main') }
+                    className={ this._b('Main').mix('ByMonthsVisualisationSeries') }
                     width={ 30 * columnsLabels.length }
                     height={ 28 * rowsLabels.length }
                     data={ SeriesByMonths } 
@@ -113,7 +116,7 @@ class SeasonsSeriesByMonth extends Component {
                     />
 
                 <VisualSeasonsSeries 
-                    className={ this._b('OY') }
+                    className={ this._b('OY').mix('ByMonthsVisualisationSeries') }
                     width={ 25 }
                     height={ 25 * rowsLabels.length }
                     data={ SeriesByMonthsSumByOY } 
@@ -234,9 +237,9 @@ class SeasonsSeriesByMonth extends Component {
             ByMonthsActions,
         } = this.props
 
-        setTimeout(() => {
-            ByMonthsActions.switchModeWeather()
-        }, 2000)
+        // setTimeout(() => {
+        //     ByMonthsActions.switchModeWeather()
+        // }, 2000)
 
         // setTimeout(() => {
         //     ByMonthsActions.setSort({

@@ -1,0 +1,408 @@
+.Intro {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-size: 17px;
+    width: 100%;
+    color: #7c7c7c;
+
+    &__Header {
+        text-align: center;
+        display: block;
+        margin: 30px 0 100px 0;
+    }
+
+    &__HeaderTitle {
+        font-size: 65px;
+        color: #828a86;
+        margin: 20px 0 10px 0;
+        font-weight: 100;
+    }
+    &__HeaderSubTitle {
+        font-size: 47px;
+        color: #767676;
+        margin: 0;
+        font-weight: 200;
+        line-height: 31px;
+    }
+
+
+
+    &__IntroLineStage {
+        width: 100%;
+        height: 1px;
+        margin-top: -75px;
+        padding-bottom: 95px;
+
+        .Start {
+            stroke: #474747;
+            stroke-width: 1;
+            fill: "none";
+        }
+
+        .Middle {
+            stroke: #ccc;
+            stroke-width: 1;
+            fill: "none";
+        }
+    }
+
+
+
+    &__Idea {
+        width: 769px;
+        text-align: justify;
+        margin: 100px;
+    }
+    &__IdeaTitle {
+        text-align: center;
+        font-size: 44px;
+        color: #474747;
+        letter-spacing: 6px;
+        padding: 23px 0;
+    }
+    &__IdeaDescription {
+        color: #6c6c6c;
+    }
+
+    &__Challenge {
+        width: 569px;
+        text-align: justify;
+        margin: 100px 0 200px 0;
+    }
+    &__ChallengeTitle {
+        text-align: center;
+        font-size: 44px;
+        color: #474747;
+        letter-spacing: 6px;
+        padding: 15px 0;
+    }
+    &__ChallengeDescription {
+        color: #6c6c6c;
+    }
+    &__ChallengeDescriptionParagraph {
+        padding: 12px 0;
+    }
+
+
+    &__Visualisation {
+        width: 900px;
+        text-align: justify;
+        margin: 100px 0 10px 0;
+    }
+    &__VisualisationTitle {
+        text-align: center;
+        font-size: 25px;
+        padding: 21px 0;
+    }
+    &__VisualisationDescription {
+        color: #6c6c6c;
+    }
+    &__VisualisationDescriptionData {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+    }
+    
+    &__VisualisationDescriptionDataTransactions {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+    &__VisualisationDescriptionDataTransactionsNumber {
+        font-size: 50px;
+    }
+    &__VisualisationDescriptionDataTransactionsLabel {
+        font-size: 18px;
+    }
+    
+    &__VisualisationDescriptionDataPeriod {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+    &__VisualisationDescriptionDataPeriodNumber {
+        font-size: 50px;
+    }
+    &__VisualisationDescriptionDataPeriodLabel {
+        font-size: 18px;
+    }
+    
+    &__VisualisationDescriptionDataMCC {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+    &__VisualisationDescriptionDataMCCNumber {
+        font-size: 50px;
+    }
+    &__VisualisationDescriptionDataMCCLabel {
+        font-size: 18px;
+    }
+
+    &__VisualisationDescriptionTitle {
+        font-size: 30px;
+        margin-top: 50px;
+        padding: 50px 0 10px 0;
+        color: #8d8d91;
+        text-align: center;
+    }
+
+
+
+    &__VisualisationDescriptionGrouping {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        margin: 70px 0;
+    }
+    &__VisualisationDescriptionGroupingByWeeks {
+        width: 50%;        
+        padding-right: 50px;
+    }
+    &__VisualisationDescriptionGroupingByWeeksTitle {
+        font-size: 30px;
+        font-weight: 100;
+        color: #6c6c6c;
+    }
+    &__VisualisationDescriptionGroupingByWeeksElements {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 20px 10px 10px 10px;
+    }
+    &__Mode {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 10px 0;
+
+        .ModeItem {
+            font-size: 12px;
+            padding: 4px 4px 3px 4px;
+            cursor: default;
+            font-weight: 100;
+            border-radius: 2px;
+            margin-right: 7px;
+            color: #919191;
+            border: 1px solid #c4c4c4;
+            white-space: nowrap;
+        }
+    }
+    &__ModeDescription {
+        padding-left: 25px;
+        position: relative;
+        text-align: left;
+    }
+    &__ModeDescription:before {
+        content: '\2010';
+        padding: 0 10px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    &__ModeWeather {}
+    &__ModeWeather.Active {}
+    &__ModeWeather:after {
+        content: 'WEATHER';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeIncome {}
+    &__ModeIncome.Active {}
+    &__ModeIncome:after {
+        content: 'INCOME';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+    &__ModeExpense {}
+    &__ModeExpense.Active {}
+    &__ModeExpense:after {
+        content: 'EXPENSE';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeGridSize {}
+    &__ModeGridSize.Active {}
+    &__ModeGridSize:after {
+        content: 'GRID SIZE';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeScaleLog {}
+    &__ModeScaleLog.Active {}
+    &__ModeScaleLog:after {
+        content: 'SCALE LOG';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__VisualisationDescriptionGroupingByMonths {
+        width: 50%;
+        padding-left: 50px;
+        border-left: 1px solid #ccc;
+    }
+    &__VisualisationDescriptionGroupingByMonthsTitle {
+        font-size: 30px;
+        font-weight: 100;
+        color: #6c6c6c;
+    }
+    &__VisualisationDescriptionGroupingByMonthsElements {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 20px 10px 10px 10px;
+    }
+    &__ModeWeather {}
+    &__ModeWeather.Active {}
+    &__ModeWeather:after {
+        content: 'WEATHER';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeIncome {}
+    &__ModeIncome.Active {}
+    &__ModeIncome:after {
+        content: 'INCOME';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+    &__ModeExpense {}
+    &__ModeExpense.Active {}
+    &__ModeExpense:after {
+        content: 'EXPENSE';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeGridSize {}
+    &__ModeGridSize.Active {}
+    &__ModeGridSize:after {
+        content: 'GRID SIZE';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeHolidays {}
+    &__ModeHolidays.Active {}
+    &__ModeHolidays:after {
+        content: 'HOLIDAYS';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+    &__ModeScaleLog {}
+    &__ModeScaleLog.Active {}
+    &__ModeScaleLog:after {
+        content: 'SCALE LOG';
+        font-size: 13px;
+        padding-left: 4px;
+    }
+
+
+
+    &__VisualisationDescriptionSandbox {
+        font-size: 30px;
+        margin-top: 50px;
+        padding: 50px 0 0 0;
+        color: #8d8d91;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    &__VisualisationDescriptionSandboxSubTitle {
+        font-size: 23px;
+        color: #bcbcbc;
+        border-bottom: 1px solid #f5f5f5;
+        display: inline-block;
+    }
+
+    &__VisualisationDescriptionSandboxGrouping {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        margin: 70px 0;
+    }
+    &__VisualisationDescriptionSandboxGroupingByWeeks {
+        width: 50%;        
+        padding-right: 50px;
+    }
+    &__VisualisationDescriptionSandboxGroupingByMonths {
+        width: 50%;
+        padding-left: 50px;
+        border-left: 1px solid #ccc;
+    }
+
+    &__VisualisationDescriptionSandboxGroupingCombos {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 20px 10px 10px 10px;
+    }
+
+    &__SandboxCombo {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+    &__SandboxComboName {
+        font-size: 12px;
+        padding: 4px 4px 3px 4px;
+        cursor: pointer;
+        font-weight: 100;
+        border-radius: 2px;
+        margin-right: 7px;
+        color: #919191;
+        border: 1px solid #c4c4c4;
+        white-space: nowrap;
+        position: relative;
+    }
+    &__SandboxComboName:hover {
+        background-color: #868686;
+        color: #fff;
+    }
+    &__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {
+        background-color: #868686;
+        color: #fff;   
+    }
+    &__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {
+        content: 'эти кнопки активные -';
+        position: absolute;
+        top: 3px;
+        left: -143px;
+        color: #828282 !important;
+    }
+    &__SandboxComboDescription {}
+    &__SandboxComboDescription {
+        padding-left: 25px;
+        position: relative;
+        text-align: left;
+    }
+    &__SandboxComboDescription:before {
+        content: '\2010';
+        padding: 0 10px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    &__VisualisationHeatMatricesInfo {
+        font-size: 28px;
+        margin-top: 50px;
+        padding: 50px 0 0 0;
+        color: #8d8d91;
+        text-align: center;
+    }
+
+    &__InternalLink {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid #919191;
+    }
+}
+
