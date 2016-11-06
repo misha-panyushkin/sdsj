@@ -7,6 +7,7 @@ import _b from 'bem-cn'
 
 import SeasonsSeries from './SeasonsSeries/SeasonsSeries.react'
 import Intro from './Intro/Intro.react'
+import Footer from './Intro/Footer.react'
 
 class Demo extends Component {
     constructor (props) {
@@ -21,6 +22,7 @@ class Demo extends Component {
                 className={ this._b }>
                     <Intro/>
                     <SeasonsSeries />
+                    <Footer />
             </section>
         )
     }
