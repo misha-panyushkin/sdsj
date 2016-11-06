@@ -41,10 +41,14 @@ class Intro extends Component {
 
                     <article
                         className={ this._b('About') }>
-                        <img 
+                        <a 
                             className={ this._b('AboutPortrait') }
-                            src="/materials/portrait.jpg" 
-                            />
+                            href="http://misha.panyushk.in/"
+                            target="_blank">
+                            <img 
+                                src="/materials/portrait.jpg" 
+                                />
+                        </a>
                         <div 
                             className={ this._b('AboutDescription') }>
                             <p className={ this._b('AboutDescriptionParagraph').mix('FirstLetterParagraph') }>

@@ -1,5 +1,5 @@
 nginx:
-    image: mpanyushkin/aloudly:nginx
+    image: mpanyushkin/sdsj:nginx
     links:
         - web:web
         - api:api
@@ -7,20 +7,20 @@ nginx:
         - "80:80"
 
 web:
-    image: mpanyushkin/aloudly:web
+    image: mpanyushkin/sdsj:web
     links:
         - redis
     ports:
         - "8080"
 
 api:
-    image: mpanyushkin/aloudly:api
+    image: mpanyushkin/sdsj:api
     links:
         - redis
     ports:
         - "8080"
 
 redis:
-    image: mpanyushkin/aloudly:redis
+    image: mpanyushkin/sdsj:redis
     ports:
         - "6379"
