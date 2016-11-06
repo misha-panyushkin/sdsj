@@ -15,7 +15,7 @@ class App extends Component {
     render () {
         return (
             <section
-                className={this._b.mix('unselectable')}>
+                className={ this._b }>
                 {this.props.children}
             </section>
         )

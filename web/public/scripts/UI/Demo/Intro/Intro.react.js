@@ -40,7 +40,31 @@ class Intro extends Component {
                     </div>
 
                     <article
-                        className={ this._b('Idea') }>
+                        className={ this._b('About') }>
+                        <img 
+                            className={ this._b('AboutPortrait') }
+                            src="/materials/portrait.jpg" 
+                            />
+                        <div 
+                            className={ this._b('AboutDescription') }>
+                            <p className={ this._b('AboutDescriptionParagraph').mix('FirstLetterParagraph') }>
+                                Добро пожаловать на демо страницу, посвящённую решению задачи конкурса стартапов!
+                            </p>
+                            <p className={ this._b('AboutDescriptionParagraph') }>
+                                Свой проект я назвал <span className={ this._b('AboutDescriptionProjectName') }>"Resourceful Dashboards"</span>, подразумевая под своим названием не только систему мониторинга, но, в тоже время, достаточно ресурсоёмкую, чтобы на основе результатов её работы можно было бы принимать взвешенные решения. 
+                            </p>
+                            <p className={ this._b('AboutDescriptionParagraph') }>
+                                Проект аккумулировал в себе подходы из разных областей знания. В то же время, он находится в стадии <i>прототипа</i>. В общей сложности, работа над ним велась на протяжении всего месяца, отведённого на конкурс.
+                            </p>
+                            <p className={ this._b('AboutDescriptionParagraph') }>
+                                Данная страница содержит последовательно несколько разделов, каждый из которых последовательно знакомит читателя с этапами разработки: сначала пришла <a href="#IdeaPart" className={ this._b('InternalLink') }>идея</a>, после были сформулированы <a href="#ChallengePart" className={ this._b('InternalLink') }>основные задачи</a> на проект, далее перешли к <a href="#TechPart" className={ this._b('InternalLink') }>выбору технологии</a> и раздел посвещённый <a href="#DashboardPart" className={ this._b('InternalLink') }>созданной системе анализа</a>.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article
+                        className={ this._b('Idea') }
+                        id="IdeaPart">
                         <div 
                             className={ this._b('IdeaTitle') }>
                             ИДЕЯ
@@ -63,23 +87,51 @@ class Intro extends Component {
                     </article>
 
                     <article
-                        className={ this._b('Challenge') }>
+                        className={ this._b('Challenge') }
+                        id="ChallengePart">
                         <div 
                             className={ this._b('ChallengeTitle') }>
                             ЗАДАЧИ
                         </div>
-                        <ol 
+                        <div 
                             className={ this._b('ChallengeDescription') }>
-                            <li className={ this._b('ChallengeDescriptionParagraph') }>
-                                Построить прототип системы мониторинга и выявления закономерностей (Resourceful Dashboards) на основе предоставленных данных о транзакциях клиентов.
-                            </li>
-                            <li className={ this._b('ChallengeDescriptionParagraph') }>
-                                Провести анализ полученных закономерностей.
-                            </li>
-                            <li className={ this._b('ChallengeDescriptionParagraph') }>
-                                Определить группу клиентов, для участия их в программах Cashback исходя из характера совершённых ими транзакций.
-                            </li>
-                        </ol>
+                            После проведения исследования, перед проектом были поставлены два типа задач: технические и бизнес. С технической точнки зрения, необходимо было решить задачу компактного представления 7 миллионов транзакций без перегрузки пользователя излишней информацией. Вторая по важности задача заключалась в создании быстрой системы, способной оперировать большими объёмами данных без ущерба в производительности. Основной бизнес задачей является определение целевого множества лояльных клиентов, по отношению к заданным поставщикам услуг или товаров. 
+                        </div>
+                        <div 
+                            className={ this._b('ChallengeLists') }>
+                            <div 
+                                className={ this._b('ChallengeList').mix('Technological') }>
+                                <div 
+                                    className={ this._b('ChallengeListTitle') }>
+                                    технические
+                                </div>
+                                <ol 
+                                    className={ this._b('ChallengeDescriptionTechnological') }>
+                                    <li className={ this._b('ChallengeDescriptionParagraph') }>
+                                        Решить задачу кластеризации и упаковки большого числа данных
+                                    </li>
+                                    <li className={ this._b('ChallengeDescriptionParagraph') }>
+                                        Решить задачу построения гибкой и быстроработающей архитектуры по обмену данными
+                                    </li>
+                                    <li className={ this._b('ChallengeDescriptionParagraph') }>
+                                        Решить задачу создания быстрого интерфейса визуализации данных
+                                    </li>
+                                </ol>
+                            </div>
+                            <div 
+                                className={ this._b('ChallengeList').mix('Business') }>
+                                <div 
+                                    className={ this._b('ChallengeListTitle') }>
+                                    бизнес
+                                </div>
+                                <ol 
+                                    className={ this._b('ChallengeDescriptionBusiness') }>
+                                    <li className={ this._b('ChallengeDescriptionParagraph') }>
+                                        Проработать модель определения множества лояльных клиентов 
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
                     </article>
 
                     <div
@@ -87,7 +139,8 @@ class Intro extends Component {
                     </div>
 
                     <article
-                        className={ this._b('Visualisation') }>
+                        className={ this._b('Visualisation') }
+                        id="DashboardPart">
                         <div 
                             className={ this._b('VisualisationDescription') }>
                             <div 

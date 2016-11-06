@@ -74161,7 +74161,78 @@
 	                _react2.default.createElement(
 	                    'article',
 	                    {
-	                        className: this._b('Idea') },
+	                        className: this._b('About') },
+	                    _react2.default.createElement('img', {
+	                        className: this._b('AboutPortrait'),
+	                        src: '/materials/portrait.jpg'
+	                    }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('AboutDescription') },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: this._b('AboutDescriptionParagraph').mix('FirstLetterParagraph') },
+	                            '\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C \u043D\u0430 \u0434\u0435\u043C\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443, \u043F\u043E\u0441\u0432\u044F\u0449\u0451\u043D\u043D\u0443\u044E \u0440\u0435\u0448\u0435\u043D\u0438\u044E \u0437\u0430\u0434\u0430\u0447\u0438 \u043A\u043E\u043D\u043A\u0443\u0440\u0441\u0430 \u0441\u0442\u0430\u0440\u0442\u0430\u043F\u043E\u0432!'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: this._b('AboutDescriptionParagraph') },
+	                            '\u0421\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u044F \u043D\u0430\u0437\u0432\u0430\u043B ',
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: this._b('AboutDescriptionProjectName') },
+	                                '"Resourceful Dashboards"'
+	                            ),
+	                            ', \u043F\u043E\u0434\u0440\u0430\u0437\u0443\u043C\u0435\u0432\u0430\u044F \u043F\u043E\u0434 \u0441\u0432\u043E\u0438\u043C \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C \u043D\u0435 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0438\u0441\u0442\u0435\u043C\u0443 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433\u0430, \u043D\u043E, \u0432 \u0442\u043E\u0436\u0435 \u0432\u0440\u0435\u043C\u044F, \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0451\u043C\u043A\u0443\u044E, \u0447\u0442\u043E\u0431\u044B \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u0435\u0451 \u0440\u0430\u0431\u043E\u0442\u044B \u043C\u043E\u0436\u043D\u043E \u0431\u044B\u043B\u043E \u0431\u044B \u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0442\u044C \u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u044F.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: this._b('AboutDescriptionParagraph') },
+	                            '\u041F\u0440\u043E\u0435\u043A\u0442 \u0430\u043A\u043A\u0443\u043C\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043B \u0432 \u0441\u0435\u0431\u0435 \u043F\u043E\u0434\u0445\u043E\u0434\u044B \u0438\u0437 \u0440\u0430\u0437\u043D\u044B\u0445 \u043E\u0431\u043B\u0430\u0441\u0442\u0435\u0439 \u0437\u043D\u0430\u043D\u0438\u044F. \u0412 \u0442\u043E \u0436\u0435 \u0432\u0440\u0435\u043C\u044F, \u043E\u043D \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0432 \u0441\u0442\u0430\u0434\u0438\u0438 ',
+	                            _react2.default.createElement(
+	                                'i',
+	                                null,
+	                                '\u043F\u0440\u043E\u0442\u043E\u0442\u0438\u043F\u0430'
+	                            ),
+	                            '. \u0412 \u043E\u0431\u0449\u0435\u0439 \u0441\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u0438, \u0440\u0430\u0431\u043E\u0442\u0430 \u043D\u0430\u0434 \u043D\u0438\u043C \u0432\u0435\u043B\u0430\u0441\u044C \u043D\u0430 \u043F\u0440\u043E\u0442\u044F\u0436\u0435\u043D\u0438\u0438 \u0432\u0441\u0435\u0433\u043E \u043C\u0435\u0441\u044F\u0446\u0430, \u043E\u0442\u0432\u0435\u0434\u0451\u043D\u043D\u043E\u0433\u043E \u043D\u0430 \u043A\u043E\u043D\u043A\u0443\u0440\u0441.'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: this._b('AboutDescriptionParagraph') },
+	                            '\u0414\u0430\u043D\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u043F\u043E\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0440\u0430\u0437\u0434\u0435\u043B\u043E\u0432, \u043A\u0430\u0436\u0434\u044B\u0439 \u0438\u0437 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043F\u043E\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442 \u0447\u0438\u0442\u0430\u0442\u0435\u043B\u044F \u0441 \u044D\u0442\u0430\u043F\u0430\u043C\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438: \u0441\u043D\u0430\u0447\u0430\u043B\u0430 \u043F\u0440\u0438\u0448\u043B\u0430 ',
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#IdeaPart', className: this._b('InternalLink') },
+	                                '\u0438\u0434\u0435\u044F'
+	                            ),
+	                            ', \u043F\u043E\u0441\u043B\u0435 \u0431\u044B\u043B\u0438 \u0441\u0444\u043E\u0440\u043C\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u044B ',
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#ChallengePart', className: this._b('InternalLink') },
+	                                '\u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0437\u0430\u0434\u0430\u0447\u0438'
+	                            ),
+	                            ' \u043D\u0430 \u043F\u0440\u043E\u0435\u043A\u0442, \u0434\u0430\u043B\u0435\u0435 \u043F\u0435\u0440\u0435\u0448\u043B\u0438 \u043A ',
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#TechPart', className: this._b('InternalLink') },
+	                                '\u0432\u044B\u0431\u043E\u0440\u0443 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0438'
+	                            ),
+	                            ' \u0438 \u0440\u0430\u0437\u0434\u0435\u043B \u043F\u043E\u0441\u0432\u0435\u0449\u0451\u043D\u043D\u044B\u0439 ',
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#DashboardPart', className: this._b('InternalLink') },
+	                                '\u0441\u043E\u0437\u0434\u0430\u043D\u043D\u043E\u0439 \u0441\u0438\u0441\u0442\u0435\u043C\u0435 \u0430\u043D\u0430\u043B\u0438\u0437\u0430'
+	                            ),
+	                            '.'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'article',
+	                    {
+	                        className: this._b('Idea'),
+	                        id: 'IdeaPart' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        {
@@ -74192,7 +74263,8 @@
 	                _react2.default.createElement(
 	                    'article',
 	                    {
-	                        className: this._b('Challenge') },
+	                        className: this._b('Challenge'),
+	                        id: 'ChallengePart' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        {
@@ -74200,23 +74272,66 @@
 	                        '\u0417\u0410\u0414\u0410\u0427\u0418'
 	                    ),
 	                    _react2.default.createElement(
-	                        'ol',
+	                        'div',
 	                        {
 	                            className: this._b('ChallengeDescription') },
+	                        '\u041F\u043E\u0441\u043B\u0435 \u043F\u0440\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u044F \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F, \u043F\u0435\u0440\u0435\u0434 \u043F\u0440\u043E\u0435\u043A\u0442\u043E\u043C \u0431\u044B\u043B\u0438 \u043F\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u044B \u0434\u0432\u0430 \u0442\u0438\u043F\u0430 \u0437\u0430\u0434\u0430\u0447: \u0442\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0438 \u0431\u0438\u0437\u043D\u0435\u0441. \u0421 \u0442\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u0442\u043E\u0447\u043D\u043A\u0438 \u0437\u0440\u0435\u043D\u0438\u044F, \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0431\u044B\u043B\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 \u043A\u043E\u043C\u043F\u0430\u043A\u0442\u043D\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F 7 \u043C\u0438\u043B\u043B\u0438\u043E\u043D\u043E\u0432 \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0439 \u0431\u0435\u0437 \u043F\u0435\u0440\u0435\u0433\u0440\u0443\u0437\u043A\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0438\u0437\u043B\u0438\u0448\u043D\u0435\u0439 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0435\u0439. \u0412\u0442\u043E\u0440\u0430\u044F \u043F\u043E \u0432\u0430\u0436\u043D\u043E\u0441\u0442\u0438 \u0437\u0430\u0434\u0430\u0447\u0430 \u0437\u0430\u043A\u043B\u044E\u0447\u0430\u043B\u0430\u0441\u044C \u0432 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0438 \u0431\u044B\u0441\u0442\u0440\u043E\u0439 \u0441\u0438\u0441\u0442\u0435\u043C\u044B, \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0439 \u043E\u043F\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0438\u043C\u0438 \u043E\u0431\u044A\u0451\u043C\u0430\u043C\u0438 \u0434\u0430\u043D\u043D\u044B\u0445 \u0431\u0435\u0437 \u0443\u0449\u0435\u0440\u0431\u0430 \u0432 \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u0438. \u041E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0431\u0438\u0437\u043D\u0435\u0441 \u0437\u0430\u0434\u0430\u0447\u0435\u0439 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0438\u0435 \u0446\u0435\u043B\u0435\u0432\u043E\u0433\u043E \u043C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0430 \u043B\u043E\u044F\u043B\u044C\u043D\u044B\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432, \u043F\u043E \u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u044E \u043A \u0437\u0430\u0434\u0430\u043D\u043D\u044B\u043C \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430\u043C \u0443\u0441\u043B\u0443\u0433 \u0438\u043B\u0438 \u0442\u043E\u0432\u0430\u0440\u043E\u0432.'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            className: this._b('ChallengeLists') },
 	                        _react2.default.createElement(
-	                            'li',
-	                            { className: this._b('ChallengeDescriptionParagraph') },
-	                            '\u041F\u043E\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u043F\u0440\u043E\u0442\u043E\u0442\u0438\u043F \u0441\u0438\u0441\u0442\u0435\u043C\u044B \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433\u0430 \u0438 \u0432\u044B\u044F\u0432\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u043A\u043E\u043D\u043E\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u0435\u0439 (Resourceful Dashboards) \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0435 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445 \u043E \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u044F\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432.'
+	                            'div',
+	                            {
+	                                className: this._b('ChallengeList').mix('Technological') },
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('ChallengeListTitle') },
+	                                '\u0442\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0435'
+	                            ),
+	                            _react2.default.createElement(
+	                                'ol',
+	                                {
+	                                    className: this._b('ChallengeDescriptionTechnological') },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: this._b('ChallengeDescriptionParagraph') },
+	                                    '\u0420\u0435\u0448\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 \u043A\u043B\u0430\u0441\u0442\u0435\u0440\u0438\u0437\u0430\u0446\u0438\u0438 \u0438 \u0443\u043F\u0430\u043A\u043E\u0432\u043A\u0438 \u0431\u043E\u043B\u044C\u0448\u043E\u0433\u043E \u0447\u0438\u0441\u043B\u0430 \u0434\u0430\u043D\u043D\u044B\u0445'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: this._b('ChallengeDescriptionParagraph') },
+	                                    '\u0420\u0435\u0448\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 \u043F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u044F \u0433\u0438\u0431\u043A\u043E\u0439 \u0438 \u0431\u044B\u0441\u0442\u0440\u043E\u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0449\u0435\u0439 \u0430\u0440\u0445\u0438\u0442\u0435\u043A\u0442\u0443\u0440\u044B \u043F\u043E \u043E\u0431\u043C\u0435\u043D\u0443 \u0434\u0430\u043D\u043D\u044B\u043C\u0438'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: this._b('ChallengeDescriptionParagraph') },
+	                                    '\u0420\u0435\u0448\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430 \u0432\u0438\u0437\u0443\u0430\u043B\u0438\u0437\u0430\u0446\u0438\u0438 \u0434\u0430\u043D\u043D\u044B\u0445'
+	                                )
+	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            'li',
-	                            { className: this._b('ChallengeDescriptionParagraph') },
-	                            '\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0430\u043D\u0430\u043B\u0438\u0437 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043A\u043E\u043D\u043E\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u0435\u0439.'
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            { className: this._b('ChallengeDescriptionParagraph') },
-	                            '\u041E\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u0442\u044C \u0433\u0440\u0443\u043F\u043F\u0443 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432, \u0434\u043B\u044F \u0443\u0447\u0430\u0441\u0442\u0438\u044F \u0438\u0445 \u0432 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0430\u0445 Cashback \u0438\u0441\u0445\u043E\u0434\u044F \u0438\u0437 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0430 \u0441\u043E\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0445 \u0438\u043C\u0438 \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0439.'
+	                            'div',
+	                            {
+	                                className: this._b('ChallengeList').mix('Business') },
+	                            _react2.default.createElement(
+	                                'div',
+	                                {
+	                                    className: this._b('ChallengeListTitle') },
+	                                '\u0431\u0438\u0437\u043D\u0435\u0441'
+	                            ),
+	                            _react2.default.createElement(
+	                                'ol',
+	                                {
+	                                    className: this._b('ChallengeDescriptionBusiness') },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: this._b('ChallengeDescriptionParagraph') },
+	                                    '\u041F\u0440\u043E\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u044C \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0438\u044F \u043C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0430 \u043B\u043E\u044F\u043B\u044C\u043D\u044B\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432'
+	                                )
+	                            )
 	                        )
 	                    )
 	                ),
@@ -74225,7 +74340,8 @@
 	                _react2.default.createElement(
 	                    'article',
 	                    {
-	                        className: this._b('Visualisation') },
+	                        className: this._b('Visualisation'),
+	                        id: 'DashboardPart' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        {
@@ -75099,7 +75215,7 @@
 
 
 	// module
-	exports.push([module.id, ".Intro {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 17px;\n  width: 100%;\n  color: #7c7c7c;\n}\n.Intro__Header {\n  text-align: center;\n  display: block;\n  margin: 30px 0 100px 0;\n}\n.Intro__HeaderTitle {\n  font-size: 65px;\n  color: #828a86;\n  margin: 20px 0 10px 0;\n  font-weight: 100;\n}\n.Intro__HeaderSubTitle {\n  font-size: 47px;\n  color: #767676;\n  margin: 0;\n  font-weight: 200;\n  line-height: 31px;\n}\n.Intro__IntroLineStage {\n  width: 100%;\n  height: 1px;\n  margin-top: -75px;\n  padding-bottom: 95px;\n}\n.Intro__IntroLineStage .Start {\n  stroke: #474747;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__IntroLineStage .Middle {\n  stroke: #ccc;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__Idea {\n  width: 769px;\n  text-align: justify;\n  margin: 100px;\n}\n.Intro__IdeaTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__IdeaDescription {\n  color: #6c6c6c;\n}\n.Intro__Challenge {\n  width: 569px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__ChallengeTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 15px 0;\n}\n.Intro__ChallengeDescription {\n  color: #6c6c6c;\n}\n.Intro__ChallengeDescriptionParagraph {\n  padding: 12px 0;\n}\n.Intro__Visualisation {\n  width: 900px;\n  text-align: justify;\n  margin: 100px 0 10px 0;\n}\n.Intro__VisualisationTitle {\n  text-align: center;\n  font-size: 25px;\n  padding: 21px 0;\n}\n.Intro__VisualisationDescription {\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionData {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__VisualisationDescriptionDataTransactions {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataTransactionsNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataTransactionsLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataPeriod {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataPeriodNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataPeriodLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataMCC {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataMCCNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataMCCLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionTitle {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 10px 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__VisualisationDescriptionGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__Mode {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__Mode .ModeItem {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: default;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n}\n.Intro__ModeDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__ModeDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionSandbox {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n  line-height: 30px;\n}\n.Intro__VisualisationDescriptionSandboxSubTitle {\n  font-size: 23px;\n  color: #bcbcbc;\n  border-bottom: 1px solid #f5f5f5;\n  display: inline-block;\n}\n.Intro__VisualisationDescriptionSandboxGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionSandboxGroupingCombos {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__SandboxCombo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__SandboxComboName {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n  position: relative;\n}\n.Intro__SandboxComboName:hover {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {\n  content: '\\44D\\442\\438   \\43A\\43D\\43E\\43F\\43A\\438   \\430\\43A\\442\\438\\432\\43D\\44B\\435   -';\n  position: absolute;\n  top: 3px;\n  left: -143px;\n  color: #828282 !important;\n}\n.Intro__SandboxComboDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__SandboxComboDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__VisualisationHeatMatricesInfo {\n  font-size: 28px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__InternalLink {\n  color: inherit;\n  text-decoration: none;\n  border-bottom: 1px solid #919191;\n}\n", ""]);
+	exports.push([module.id, ".Intro {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 17px;\n  width: 100%;\n  color: #404040;\n}\n.Intro__Header {\n  text-align: center;\n  display: block;\n  margin: 30px 0 100px 0;\n}\n.Intro__HeaderTitle {\n  font-size: 65px;\n  color: #828a86;\n  margin: 20px 0 10px 0;\n  font-weight: 100;\n}\n.Intro__HeaderSubTitle {\n  font-size: 47px;\n  color: #767676;\n  margin: 0;\n  font-weight: 200;\n  line-height: 31px;\n}\n.Intro__IntroLineStage {\n  width: 100%;\n  height: 1px;\n  margin-top: -75px;\n  padding-bottom: 95px;\n}\n.Intro__IntroLineStage .Start {\n  stroke: #474747;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__IntroLineStage .Middle {\n  stroke: #ccc;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__About {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 120px 0 0 0;\n  color: #2a2a2a;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__AboutPortrait {\n  width: auto;\n  height: 300px;\n}\n.Intro__AboutDescription {\n  width: 500px;\n  margin: 0 20px 0 20px;\n  border-left: 1px solid #e5e5e5;\n  padding-left: 10px;\n}\n.Intro__AboutDescriptionParagraph {\n  margin: 0 0 20px 0;\n  font-weight: 200;\n}\n.Intro__AboutDescriptionParagraph:last-child {\n  margin-bottom: 0;\n}\n.Intro__AboutDescriptionProjectName {\n  font-weight: 400;\n  color: #23219d;\n}\n.Intro__Idea {\n  width: 769px;\n  text-align: justify;\n  margin: 150px 0 100px 0;\n}\n.Intro__IdeaTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__Challenge {\n  width: 1000px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__ChallengeTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__ChallengeDescription {\n  font-size: 20px;\n  padding: 15px 0;\n}\n.Intro__ChallengeLists {\n  color: #6c6c6c;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__ChallengeList {\n  width: 440px;\n  text-align: left;\n}\n.Intro__ChallengeList.Technological {\n  color: #15158a;\n}\n.Intro__ChallengeList.Business {\n  color: #9b0e0e;\n}\n.Intro__ChallengeListTitle {\n  font-size: 32px;\n  text-align: center;\n  line-height: 31px;\n  margin: 45px 0px 30px 0;\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionTechnological {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionBusiness {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionParagraph {\n  padding: 12px 0;\n}\n.Intro__Visualisation {\n  width: 900px;\n  text-align: justify;\n  margin: 100px 0 10px 0;\n}\n.Intro__VisualisationTitle {\n  text-align: center;\n  font-size: 25px;\n  padding: 21px 0;\n}\n.Intro__VisualisationDescriptionData {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__VisualisationDescriptionDataTransactions {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataTransactionsNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataTransactionsLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataPeriod {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataPeriodNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataPeriodLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataMCC {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataMCCNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataMCCLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionTitle {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 10px 0;\n  color: #3a3a3a;\n  text-align: center;\n}\n.Intro__VisualisationDescriptionGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__Mode {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__Mode .ModeItem {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: default;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n}\n.Intro__ModeDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__ModeDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionSandbox {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #5f5f5f;\n  text-align: center;\n  line-height: 30px;\n}\n.Intro__VisualisationDescriptionSandboxSubTitle {\n  font-size: 23px;\n  color: #828282;\n  border-bottom: 1px solid #f5f5f5;\n  display: inline-block;\n}\n.Intro__VisualisationDescriptionSandboxGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionSandboxGroupingCombos {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__SandboxCombo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__SandboxComboName {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 200;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #8d8d8d;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n  position: relative;\n}\n.Intro__SandboxComboName:hover {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {\n  content: '\\44D\\442\\438   \\43A\\43D\\43E\\43F\\43A\\438   \\430\\43A\\442\\438\\432\\43D\\44B\\435   -';\n  position: absolute;\n  top: 3px;\n  left: -143px;\n  color: #828282 !important;\n}\n.Intro__SandboxComboDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__SandboxComboDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__VisualisationHeatMatricesInfo {\n  font-size: 28px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__InternalLink {\n  color: inherit;\n  text-decoration: none;\n  border-bottom: 1px solid #919191;\n}\n.FirstLetterParagraph::first-letter {\n  color: '#f00';\n}\n", ""]);
 
 	// exports
 
@@ -75161,7 +75277,7 @@
 	            return _react2.default.createElement(
 	                'section',
 	                {
-	                    className: this._b.mix('unselectable') },
+	                    className: this._b },
 	                this.props.children
 	            );
 	        }
