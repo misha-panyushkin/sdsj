@@ -8,19 +8,10 @@ nginx:
 
 web:
     image: mpanyushkin/sdsj:web
-    links:
-        - redis
     ports:
         - "8080"
 
 api:
     image: mpanyushkin/sdsj:api
-    links:
-        - redis
     ports:
         - "8080"
-
-redis:
-    image: mpanyushkin/sdsj:redis
-    ports:
-        - "6379"

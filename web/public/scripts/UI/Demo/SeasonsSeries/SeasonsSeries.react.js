@@ -24,7 +24,8 @@ class SeasonsSeries extends Component {
     render () {
         return (
             <section
-                className={ this._b }>
+                className={ this._b }
+                id="SeasonsSeries">
                 
                 <h2 className={ this._b('SeriesTitle') }>
                     RESOURCEFUL DASHBOARDS
