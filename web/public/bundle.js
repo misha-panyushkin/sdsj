@@ -51367,11 +51367,7 @@
 	        path: '/demo/seasonsSeries',
 	        params: _immutable2.default.Map({
 	            method: 'GET',
-	            credentials: 'same-origin',
-	            headers: new Headers({
-	                'Accept': 'application/json',
-	                'Content-Type': 'application/json'
-	            })
+	            credentials: 'same-origin'
 	        })
 	    })
 	});
