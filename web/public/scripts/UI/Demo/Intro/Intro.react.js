@@ -249,10 +249,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeIncome').mix(['ModeItem']).toString() }
-                                                name="plus"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeIncome').mix(['ModeItem']).toString() }
+                                                    name="plus"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим отображения доходов
                                             </div>
@@ -260,10 +262,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeExpense').mix(['ModeItem']).toString() }
-                                                name="minus"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeExpense').mix(['ModeItem']).toString() }
+                                                    name="minus"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим отображения расходов
                                             </div>
@@ -271,10 +275,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeGridSize').mix(['ModeItem']).toString() }
-                                                name="circle"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeGridSize').mix(['ModeItem']).toString() }
+                                                    name="circle"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 размер относительного размера точки
                                             </div>
@@ -282,10 +288,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeScaleLog').mix(['ModeItem']).toString() }
-                                                name="gbp"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeScaleLog').mix(['ModeItem']).toString() }
+                                                    name="gbp"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим логарифмической шкалы
                                             </div>
@@ -305,10 +313,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeIncome').mix(['ModeItem']).toString() }
-                                                name="plus"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeIncome').mix(['ModeItem']).toString() }
+                                                    name="plus"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим отображения доходов
                                             </div>
@@ -316,10 +326,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeExpense').mix(['ModeItem']).toString() }
-                                                name="minus"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeExpense').mix(['ModeItem']).toString() }
+                                                    name="minus"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим отображения расходов
                                             </div>
@@ -327,10 +339,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeWeather').mix(['ModeItem']).toString() }
-                                                name="cloud"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeWeather').mix(['ModeItem']).toString() }
+                                                    name="cloud"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим корреляции с метеорологической информацией
                                             </div>
@@ -338,10 +352,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeGridSize').mix(['ModeItem']).toString() }
-                                                name="circle"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeGridSize').mix(['ModeItem']).toString() }
+                                                    name="circle"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 размер относительного размера точки
                                             </div>
@@ -349,10 +365,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeHolidays').mix(['ModeItem']).toString() }
-                                                name="star"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeHolidays').mix(['ModeItem']).toString() }
+                                                    name="star"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим корреляции с общегосударственными праздниками
                                             </div>
@@ -360,10 +378,12 @@ class Intro extends Component {
                                         <div 
                                             className={ this._b('Mode') }
                                             >
-                                            <FA 
-                                                className={ this._b('ModeScaleLog').mix(['ModeItem']).toString() }
-                                                name="gbp"
-                                                />
+                                            <div className={ this._b('ModeIcon') }>
+                                                <FA 
+                                                    className={ this._b('ModeScaleLog').mix(['ModeItem']).toString() }
+                                                    name="gbp"
+                                                    />
+                                            </div>
                                             <div className={ this._b('ModeDescription') }>
                                                 режим логарифмической шкалы
                                             </div>
@@ -394,7 +414,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoMaxByWeeks() }
                                                 > 
-                                                MAX VALUES
+                                                <div className={ this._b('SandboxComboNameText') }>MAX VALUES</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 выделение максимальных значений в сериях
@@ -407,7 +427,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoMinByWeeks() }
                                                 > 
-                                                MIN VALUES
+                                                <div className={ this._b('SandboxComboNameText') }>MIN VALUES</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 выделение минимальных значений в сериях
@@ -420,7 +440,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoLogByWeeks() }
                                                 > 
-                                                LOG SCALE
+                                                <div className={ this._b('SandboxComboNameText') }>LOG SCALE</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 включение логарифмической шкалы в сравнении с относительными значениями по часам
@@ -439,7 +459,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoMaxByMonths() }
                                                 > 
-                                                MAX VALUES
+                                                <div className={ this._b('SandboxComboNameText') }>MAX VALUES</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 выделение максимальных значений в сериях
@@ -452,7 +472,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoMinByMonths() }
                                                 > 
-                                                MIN VALUES
+                                                <div className={ this._b('SandboxComboNameText') }>MIN VALUES</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 выделение минимальных значений в сериях
@@ -465,7 +485,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoLogByMonths() }
                                                 > 
-                                                LOG SCALE
+                                                <div className={ this._b('SandboxComboNameText') }>LOG SCALE</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 включение логарифмической шкалы в сравнении с относительными значениями по часам
@@ -478,7 +498,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoSimpleSelectByMonths() }
                                                 > 
-                                                SIMPLE SELECT
+                                                <div className={ this._b('SandboxComboNameText') }>SIMPLE SELECT</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 просмотр значений в точке и суммарных по месяцам
@@ -491,7 +511,7 @@ class Intro extends Component {
                                                 className={ this._b('SandboxComboName') }
                                                 onClick={ () => this.handleDemoWeatherComboByMonths() }
                                                 > 
-                                                WEATHER COMBO
+                                                <div className={ this._b('SandboxComboNameText') }>WEATHER COMBO</div>
                                             </div>
                                             <div className={ this._b('SandboxComboDescription') }> 
                                                 установление корреляции расходов в зависимости от погоды в Москве и общегосударственных праздников

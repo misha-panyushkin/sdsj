@@ -284,6 +284,9 @@
         position: relative;
         text-align: left;
     }
+    &__ModeIcon {
+        min-width: 130px;
+    }
     &__ModeDescription:before {
         content: '\2010';
         padding: 0 10px;
@@ -441,6 +444,10 @@
         padding: 10px 0;
     }
     &__SandboxComboName {
+        position: relative;
+        min-width: 130px;
+    }
+    &__SandboxComboNameText {
         font-size: 12px;
         padding: 4px 4px 3px 4px;
         cursor: pointer;
@@ -450,14 +457,13 @@
         color: #8d8d8d;
         border: 1px solid #c4c4c4;
         white-space: nowrap;
-        position: relative;
         display: inline-block;
     }
-    &__SandboxComboName:hover {
+    &__SandboxComboNameText:hover {
         background-color: #868686;
         color: #fff;
     }
-    &__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {
+    &__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboNameText {
         background-color: #868686;
         color: #fff;   
     }
@@ -465,8 +471,9 @@
         content: 'эти кнопки активные -';
         position: absolute;
         top: 3px;
-        left: -143px;
+        left: -146px;
         color: #828282 !important;
+        font-size: 13px;
     }
     &__SandboxComboDescription {}
     &__SandboxComboDescription {

@@ -74573,10 +74573,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeIncome').mix(['ModeItem']).toString(),
-	                                            name: 'plus'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeIncome').mix(['ModeItem']).toString(),
+	                                                name: 'plus'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74588,10 +74592,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeExpense').mix(['ModeItem']).toString(),
-	                                            name: 'minus'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeExpense').mix(['ModeItem']).toString(),
+	                                                name: 'minus'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74603,10 +74611,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
-	                                            name: 'circle'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
+	                                                name: 'circle'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74618,10 +74630,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
-	                                            name: 'gbp'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
+	                                                name: 'gbp'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74649,10 +74665,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeIncome').mix(['ModeItem']).toString(),
-	                                            name: 'plus'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeIncome').mix(['ModeItem']).toString(),
+	                                                name: 'plus'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74664,10 +74684,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeExpense').mix(['ModeItem']).toString(),
-	                                            name: 'minus'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeExpense').mix(['ModeItem']).toString(),
+	                                                name: 'minus'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74679,10 +74703,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeWeather').mix(['ModeItem']).toString(),
-	                                            name: 'cloud'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeWeather').mix(['ModeItem']).toString(),
+	                                                name: 'cloud'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74694,10 +74722,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
-	                                            name: 'circle'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeGridSize').mix(['ModeItem']).toString(),
+	                                                name: 'circle'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74709,10 +74741,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeHolidays').mix(['ModeItem']).toString(),
-	                                            name: 'star'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeHolidays').mix(['ModeItem']).toString(),
+	                                                name: 'star'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74724,10 +74760,14 @@
 	                                        {
 	                                            className: this._b('Mode')
 	                                        },
-	                                        _react2.default.createElement(_reactFontawesome2.default, {
-	                                            className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
-	                                            name: 'gbp'
-	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: this._b('ModeIcon') },
+	                                            _react2.default.createElement(_reactFontawesome2.default, {
+	                                                className: this._b('ModeScaleLog').mix(['ModeItem']).toString(),
+	                                                name: 'gbp'
+	                                            })
+	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: this._b('ModeDescription') },
@@ -74789,7 +74829,11 @@
 	                                                    return _this2.handleDemoMaxByWeeks();
 	                                                }
 	                                            },
-	                                            'MAX VALUES'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'MAX VALUES'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74809,7 +74853,11 @@
 	                                                    return _this2.handleDemoMinByWeeks();
 	                                                }
 	                                            },
-	                                            'MIN VALUES'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'MIN VALUES'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74829,7 +74877,11 @@
 	                                                    return _this2.handleDemoLogByWeeks();
 	                                                }
 	                                            },
-	                                            'LOG SCALE'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'LOG SCALE'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74859,7 +74911,11 @@
 	                                                    return _this2.handleDemoMaxByMonths();
 	                                                }
 	                                            },
-	                                            'MAX VALUES'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'MAX VALUES'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74879,7 +74935,11 @@
 	                                                    return _this2.handleDemoMinByMonths();
 	                                                }
 	                                            },
-	                                            'MIN VALUES'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'MIN VALUES'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74899,7 +74959,11 @@
 	                                                    return _this2.handleDemoLogByMonths();
 	                                                }
 	                                            },
-	                                            'LOG SCALE'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'LOG SCALE'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74919,7 +74983,11 @@
 	                                                    return _this2.handleDemoSimpleSelectByMonths();
 	                                                }
 	                                            },
-	                                            'SIMPLE SELECT'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'SIMPLE SELECT'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -74939,7 +75007,11 @@
 	                                                    return _this2.handleDemoWeatherComboByMonths();
 	                                                }
 	                                            },
-	                                            'WEATHER COMBO'
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: this._b('SandboxComboNameText') },
+	                                                'WEATHER COMBO'
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -75373,7 +75445,7 @@
 
 
 	// module
-	exports.push([module.id, ".Intro {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 17px;\n  width: 100%;\n  color: #404040;\n}\n.Intro__Header {\n  text-align: center;\n  display: block;\n  margin: 30px 0 100px 0;\n}\n.Intro__HeaderTitle {\n  font-size: 65px;\n  color: #828a86;\n  margin: 20px 0 10px 0;\n  font-weight: 100;\n}\n.Intro__HeaderSubTitle {\n  font-size: 47px;\n  color: #767676;\n  margin: 0;\n  font-weight: 200;\n  line-height: 31px;\n}\n.Intro__IntroLineStage {\n  width: 100%;\n  height: 1px;\n  margin-top: -75px;\n  padding-bottom: 95px;\n}\n.Intro__IntroLineStage .Start {\n  stroke: #474747;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__IntroLineStage .Middle {\n  stroke: #ccc;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__About {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 120px 0 0 0;\n  color: #2a2a2a;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__AboutPortrait {\n  text-decoration: none;\n}\n.Intro__AboutPortrait img {\n  width: auto;\n  height: 300px;\n}\n.Intro__AboutDescription {\n  width: 500px;\n  margin: 0 20px 0 20px;\n  border-left: 1px solid #e5e5e5;\n  padding-left: 10px;\n}\n.Intro__AboutDescriptionParagraph {\n  margin: 0 0 20px 0;\n  font-weight: 200;\n}\n.Intro__AboutDescriptionParagraph:last-child {\n  margin-bottom: 0;\n}\n.Intro__AboutDescriptionList {\n  margin: 0;\n}\n.Intro__AboutDescriptionProjectName {\n  font-weight: 400;\n  color: #23219d;\n}\n.Intro__Idea {\n  width: 769px;\n  text-align: justify;\n  margin: 150px 0 100px 0;\n}\n.Intro__IdeaTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__Challenge {\n  width: 1000px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__ChallengeTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__ChallengeDescription {\n  font-size: 20px;\n  padding: 15px 0;\n}\n.Intro__ChallengeLists {\n  color: #6c6c6c;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__ChallengeList {\n  width: 440px;\n  text-align: left;\n}\n.Intro__ChallengeList.Technological {\n  color: #15158a;\n}\n.Intro__ChallengeList.Business {\n  color: #9b0e0e;\n}\n.Intro__ChallengeListTitle {\n  font-size: 32px;\n  text-align: center;\n  line-height: 31px;\n  margin: 45px 0px 30px 0;\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionTechnological {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionBusiness {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionParagraph {\n  padding: 12px 0;\n}\n.Intro__Technology {\n  width: 800px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__TechnologyTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__TechnologyDescription {\n  font-size: 20px;\n  padding: 15px 0;\n}\n.Intro__Visualisation {\n  width: 900px;\n  text-align: justify;\n  margin: 100px 0 10px 0;\n}\n.Intro__VisualisationTitle {\n  text-align: center;\n  font-size: 25px;\n  padding: 21px 0;\n}\n.Intro__VisualisationDescriptionData {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__VisualisationDescriptionDataTransactions {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataTransactionsNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataTransactionsLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataPeriod {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataPeriodNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataPeriodLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataMCC {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataMCCNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataMCCLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionTitle {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 10px 0;\n  color: #3a3a3a;\n  text-align: center;\n}\n.Intro__VisualisationDescriptionGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__Mode {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__Mode .ModeItem {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: default;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n}\n.Intro__Mode .ModeItem:after {\n  display: inline-block;\n}\n.Intro__ModeDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__ModeDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionSandbox {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #5f5f5f;\n  text-align: center;\n  line-height: 30px;\n}\n.Intro__VisualisationDescriptionSandboxSubTitle {\n  font-size: 23px;\n  color: #828282;\n  border-bottom: 1px solid #f5f5f5;\n  display: inline-block;\n}\n.Intro__VisualisationDescriptionSandboxGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionSandboxGroupingCombos {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__SandboxCombo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__SandboxComboName {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 200;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #8d8d8d;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n  position: relative;\n  display: inline-block;\n}\n.Intro__SandboxComboName:hover {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {\n  content: '\\44D\\442\\438   \\43A\\43D\\43E\\43F\\43A\\438   \\430\\43A\\442\\438\\432\\43D\\44B\\435   -';\n  position: absolute;\n  top: 3px;\n  left: -143px;\n  color: #828282 !important;\n}\n.Intro__SandboxComboDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__SandboxComboDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__VisualisationHeatMatricesInfo {\n  font-size: 28px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__InternalLink {\n  color: inherit;\n  text-decoration: none;\n  border-bottom: 1px solid #919191;\n}\n.FirstLetterParagraph {\n  font-weight: 400;\n}\n.FirstLetterParagraph::first-letter {\n  color: '#f00';\n}\n", ""]);
+	exports.push([module.id, ".Intro {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 17px;\n  width: 100%;\n  color: #404040;\n}\n.Intro__Header {\n  text-align: center;\n  display: block;\n  margin: 30px 0 100px 0;\n}\n.Intro__HeaderTitle {\n  font-size: 65px;\n  color: #828a86;\n  margin: 20px 0 10px 0;\n  font-weight: 100;\n}\n.Intro__HeaderSubTitle {\n  font-size: 47px;\n  color: #767676;\n  margin: 0;\n  font-weight: 200;\n  line-height: 31px;\n}\n.Intro__IntroLineStage {\n  width: 100%;\n  height: 1px;\n  margin-top: -75px;\n  padding-bottom: 95px;\n}\n.Intro__IntroLineStage .Start {\n  stroke: #474747;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__IntroLineStage .Middle {\n  stroke: #ccc;\n  stroke-width: 1;\n  fill: \"none\";\n}\n.Intro__About {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 120px 0 0 0;\n  color: #2a2a2a;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__AboutPortrait {\n  text-decoration: none;\n}\n.Intro__AboutPortrait img {\n  width: auto;\n  height: 300px;\n}\n.Intro__AboutDescription {\n  width: 500px;\n  margin: 0 20px 0 20px;\n  border-left: 1px solid #e5e5e5;\n  padding-left: 10px;\n}\n.Intro__AboutDescriptionParagraph {\n  margin: 0 0 20px 0;\n  font-weight: 200;\n}\n.Intro__AboutDescriptionParagraph:last-child {\n  margin-bottom: 0;\n}\n.Intro__AboutDescriptionList {\n  margin: 0;\n}\n.Intro__AboutDescriptionProjectName {\n  font-weight: 400;\n  color: #23219d;\n}\n.Intro__Idea {\n  width: 769px;\n  text-align: justify;\n  margin: 150px 0 100px 0;\n}\n.Intro__IdeaTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__Challenge {\n  width: 1000px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__ChallengeTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__ChallengeDescription {\n  font-size: 20px;\n  padding: 15px 0;\n}\n.Intro__ChallengeLists {\n  color: #6c6c6c;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__ChallengeList {\n  width: 440px;\n  text-align: left;\n}\n.Intro__ChallengeList.Technological {\n  color: #15158a;\n}\n.Intro__ChallengeList.Business {\n  color: #9b0e0e;\n}\n.Intro__ChallengeListTitle {\n  font-size: 32px;\n  text-align: center;\n  line-height: 31px;\n  margin: 45px 0px 30px 0;\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionTechnological {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionBusiness {\n  font-weight: 200;\n}\n.Intro__ChallengeDescriptionParagraph {\n  padding: 12px 0;\n}\n.Intro__Technology {\n  width: 800px;\n  text-align: justify;\n  margin: 100px 0 200px 0;\n}\n.Intro__TechnologyTitle {\n  text-align: center;\n  font-size: 44px;\n  color: #474747;\n  letter-spacing: 6px;\n  padding: 23px 0;\n}\n.Intro__TechnologyDescription {\n  font-size: 20px;\n  padding: 15px 0;\n}\n.Intro__Visualisation {\n  width: 900px;\n  text-align: justify;\n  margin: 100px 0 10px 0;\n}\n.Intro__VisualisationTitle {\n  text-align: center;\n  font-size: 25px;\n  padding: 21px 0;\n}\n.Intro__VisualisationDescriptionData {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.Intro__VisualisationDescriptionDataTransactions {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataTransactionsNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataTransactionsLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataPeriod {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataPeriodNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataPeriodLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionDataMCC {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.Intro__VisualisationDescriptionDataMCCNumber {\n  font-size: 50px;\n}\n.Intro__VisualisationDescriptionDataMCCLabel {\n  font-size: 18px;\n}\n.Intro__VisualisationDescriptionTitle {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 10px 0;\n  color: #3a3a3a;\n  text-align: center;\n}\n.Intro__VisualisationDescriptionGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByWeeksElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__Mode {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__Mode .ModeItem {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: default;\n  font-weight: 100;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #919191;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n}\n.Intro__Mode .ModeItem:after {\n  display: inline-block;\n}\n.Intro__ModeDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__ModeIcon {\n  min-width: 130px;\n}\n.Intro__ModeDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsTitle {\n  font-size: 30px;\n  font-weight: 100;\n  color: #6c6c6c;\n}\n.Intro__VisualisationDescriptionGroupingByMonthsElements {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__ModeWeather:after {\n  content: 'WEATHER';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeIncome:after {\n  content: 'INCOME';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeExpense:after {\n  content: 'EXPENSE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeGridSize:after {\n  content: 'GRID SIZE';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeHolidays:after {\n  content: 'HOLIDAYS';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__ModeScaleLog:after {\n  content: 'SCALE LOG';\n  font-size: 13px;\n  padding-left: 4px;\n}\n.Intro__VisualisationDescriptionSandbox {\n  font-size: 30px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #5f5f5f;\n  text-align: center;\n  line-height: 30px;\n}\n.Intro__VisualisationDescriptionSandboxSubTitle {\n  font-size: 23px;\n  color: #828282;\n  border-bottom: 1px solid #f5f5f5;\n  display: inline-block;\n}\n.Intro__VisualisationDescriptionSandboxGrouping {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  margin: 70px 0;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks {\n  width: 50%;\n  padding-right: 50px;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByMonths {\n  width: 50%;\n  padding-left: 50px;\n  border-left: 1px solid #ccc;\n}\n.Intro__VisualisationDescriptionSandboxGroupingCombos {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: column nowrap;\n      flex-flow: column nowrap;\n  padding: 20px 10px 10px 10px;\n}\n.Intro__SandboxCombo {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: start;\n      align-items: flex-start;\n  padding: 10px 0;\n}\n.Intro__SandboxComboName {\n  position: relative;\n  min-width: 130px;\n}\n.Intro__SandboxComboNameText {\n  font-size: 12px;\n  padding: 4px 4px 3px 4px;\n  cursor: pointer;\n  font-weight: 200;\n  border-radius: 2px;\n  margin-right: 7px;\n  color: #8d8d8d;\n  border: 1px solid #c4c4c4;\n  white-space: nowrap;\n  display: inline-block;\n}\n.Intro__SandboxComboNameText:hover {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboNameText {\n  background-color: #868686;\n  color: #fff;\n}\n.Intro__VisualisationDescriptionSandboxGroupingByWeeks .Intro__SandboxCombo:first-of-type .Intro__SandboxComboName:before {\n  content: '\\44D\\442\\438   \\43A\\43D\\43E\\43F\\43A\\438   \\430\\43A\\442\\438\\432\\43D\\44B\\435   -';\n  position: absolute;\n  top: 3px;\n  left: -146px;\n  color: #828282 !important;\n  font-size: 13px;\n}\n.Intro__SandboxComboDescription {\n  padding-left: 25px;\n  position: relative;\n  text-align: left;\n}\n.Intro__SandboxComboDescription:before {\n  content: '\\2010';\n  padding: 0 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.Intro__VisualisationHeatMatricesInfo {\n  font-size: 28px;\n  margin-top: 50px;\n  padding: 50px 0 0 0;\n  color: #8d8d91;\n  text-align: center;\n}\n.Intro__InternalLink {\n  color: inherit;\n  text-decoration: none;\n  border-bottom: 1px solid #919191;\n}\n.FirstLetterParagraph {\n  font-weight: 400;\n}\n.FirstLetterParagraph::first-letter {\n  color: '#f00';\n}\n", ""]);
 
 	// exports
 
