@@ -1,8 +1,14 @@
 .ByMonths {
     position: relative;
     display: flex;
+    justify-content: flex-start;
 
-    &__Main {}
+    &__Main {
+        // padding-right: 20px;
+        @media (max-width: 1300px) {
+            padding-right: 0;
+        }
+    }
 
     &__OX {
         position: absolute;
@@ -17,7 +23,18 @@
     }
 
     &__Aside {
-        width: 292px;
+        width: 300px;
+        @media (max-width: 1300px) {
+            width: 150px;
+        }
+        @media (max-width: 1150px) {
+            width: 80px;
+        }
+        & .Item {
+            @media (min-width: 1300px) {
+                width: 292px;
+            }
+        }
     }
 }
 

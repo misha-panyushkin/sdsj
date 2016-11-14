@@ -59,7 +59,7 @@ class SeasonsSeriesByMonth extends Component {
                     
                 <VisualSeasonsSeries 
                     className={ this._b('Main').mix('ByMonthsVisualisationSeries') }
-                    width={ 30 * columnsLabels.length }
+                    width={ 28.39 * columnsLabels.length }
                     height={ 28 * rowsLabels.length }
                     data={ SeriesByMonths } 
                     rowsLabels={ rowsLabels }
@@ -87,6 +87,12 @@ class SeasonsSeriesByMonth extends Component {
                     gridSizeMode={ isActiveModeGridSize }
                     holidaysMode={ isActiveModeHolidays }
                     scaleLogMode={ isActiveModeScaleLog }
+
+                    spinner={ true }
+                    spinnerBoxStyles={{
+                        width: 880,
+                        height: 420,
+                    }}
                     />
 
                 <VisualSeasonsSeries 

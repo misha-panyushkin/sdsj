@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import _b from 'bem-cn'
 
+import FA from 'react-fontawesome'
 import D3SeasonsSeries from './SeasonsSeries.d3'
 
 export default class SeasonsSeries extends Component {
@@ -20,15 +21,38 @@ export default class SeasonsSeries extends Component {
             
             width,
             height,
+            spinner,
+            spinnerBoxStyles,
         } = this.props
 
+        const isSpinner = (width == 0 || height == 0) && spinner
+
         return (
-            <div className={ this._b.mix( className ) }>
-                <svg className={ this._b('SVG') } ref="svg" width={ width } height={ height } />
+            <div className={ this._b.mix( className ).state({ spinner: isSpinner }) }
+                style={
+                    isSpinner
+                    ? spinnerBoxStyles
+                    : null
+                }>
+                {
+                    isSpinner
+                    ? this.renderLoader()
+                    : <svg className={ this._b('SVG') } ref="svg" width={ width } height={ height } />
+                }
             </div>
         )
 
         // <aside  className={ this._b('Aside') }></aside>
+    }
+
+    renderLoader () {
+        return (
+            <FA
+                className={ this._b('Spinner').toString() }
+                name="spinner"
+                spin
+            />
+        )
     }
 
     componentDidMount () {

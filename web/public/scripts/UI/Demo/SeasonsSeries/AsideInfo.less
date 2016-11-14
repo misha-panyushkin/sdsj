@@ -1,13 +1,12 @@
 .AsideInfo {
     display: flex;
     flex-flow: row wrap;
-    align-items: flex-start;
+    align-items: center;
 
     width: 500px;
 
     .Item {
         margin: 10px;
-        width: 200px;
         overflow: hidden;
     }
 
@@ -65,5 +64,25 @@
         font-size: 45px;
         line-height: 40px;
         color: #494949;
+    }
+}
+
+@media (max-width: 1300px) {
+    .AsideInfo {
+        width: 200px;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: flex-start;
+
+        & .Item:first-of-type {
+            margin-top: 0;
+        }
+        & .ItemLabel {
+            font-size: 13px;
+        }
+        & .ItemNumber {
+            font-size: 20px;
+            line-height: 20px;
+        }
     }
 }

@@ -25,37 +25,37 @@ export default class AsideInfo extends Component {
                 className={ this._b.mix(className) }>
                 
                 <div className={ this._b('TotalExpenses').mix('Item') }>
-                    <span className={ this._b('TotalExpensesLabel') }>
+                    <span className={ this._b('TotalExpensesLabel').mix('ItemLabel') }>
                         AVERAGE EXPENSE
                     </span>
-                    <span className={ this._b('TotalExpensesNumber') }>
+                    <span className={ this._b('TotalExpensesNumber').mix('ItemNumber') }>
                         { this.__processNumberDimensions(info.average.expenses) }
                     </span>
                 </div>
                 
                 <div className={ this._b('TotalIncomes').mix('Item') }>
-                    <span className={ this._b('TotalIncomesLabel') }>
+                    <span className={ this._b('TotalIncomesLabel').mix('ItemLabel') }>
                         AVERAGE INCOME
                     </span>
-                    <span className={ this._b('TotalIncomesNumber') }>
+                    <span className={ this._b('TotalIncomesNumber').mix('ItemNumber') }>
                         { this.__processNumberDimensions(info.average.incomes) }
                     </span>
                 </div>
                 
                 <div className={ this._b('CountExpenses').mix('Item') }>
-                    <span className={ this._b('CountExpensesLabel') }>
+                    <span className={ this._b('CountExpensesLabel').mix('ItemLabel') }>
                         EXPENSE TRANS. NUMBER
                     </span>
-                    <span className={ this._b('CountExpensesNumber') }>
+                    <span className={ this._b('CountExpensesNumber').mix('ItemNumber') }>
                         { this.__processNumberDimensions(info.count.expenses) }
                     </span>
                 </div>
                 
                 <div className={ this._b('CountIncomes').mix('Item') }>
-                    <span className={ this._b('CountIncomesLabel') }>
+                    <span className={ this._b('CountIncomesLabel').mix('ItemLabel') }>
                         INCOME TRANS. NUMBER
                     </span>
-                    <span className={ this._b('CountIncomesNumber') }>
+                    <span className={ this._b('CountIncomesNumber').mix('ItemNumber') }>
                         { this.__processNumberDimensions(info.count.incomes) }
                     </span>
                 </div>

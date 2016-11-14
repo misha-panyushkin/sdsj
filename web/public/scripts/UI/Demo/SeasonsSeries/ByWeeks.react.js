@@ -54,7 +54,7 @@ class SeasonsSeriesByWeeks extends Component {
 
                 <VisualSeasonsSeries 
                     className={ this._b('Main').mix('ByWeeksVisualisationSeries') }
-                    width={ 30 * columnsLabels.length }
+                    width={ 28.39 * columnsLabels.length }
                     height={ 32 * rowsLabels.length }
                     data={ SeriesByWeeks } 
                     rowsLabels={ rowsLabels }
@@ -79,6 +79,12 @@ class SeasonsSeriesByWeeks extends Component {
 
                     gridSizeMode={ isActiveModeGridSize }
                     scaleLogMode={ isActiveModeScaleLog }
+
+                    spinner={ true }
+                    spinnerBoxStyles={{
+                        width: 681,
+                        height: 224,
+                    }}
                     />
 
                 <VisualSeasonsSeries 
@@ -134,6 +140,7 @@ class SeasonsSeriesByWeeks extends Component {
                     />
 
                 <AsideInfo
+                    className={ this._b('Aside') }
                     points={ activePoints }
                     />
 

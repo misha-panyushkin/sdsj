@@ -1,6 +1,7 @@
 .ByWeeks {
     position: relative;
     display: flex;
+    justify-content: flex-start;
 
     &__Main {}
 
@@ -14,6 +15,20 @@
         position: absolute;
         left: 6px;
         top: 50px;
+    }
+
+    &__Aside {
+        @media (max-width: 1150px) {
+            width: 150px !important;
+        }
+        & .Item {
+            @media (max-width: 1150px) {
+                margin: 5px !important;
+            }
+            @media (min-width: 1300px) {
+                width: 200px;
+            }
+        }
     }
 }
 
